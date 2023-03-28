@@ -1,0 +1,17 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.2;
+  font-family: monospace;
+}
+pre {
+  /* position: absolute; */
+  margin:0;
+  padding:0;
+  left:0;
+  top:0;
+  width:50vw;
+  height:50vh;
+  font-family: inherit;
+}

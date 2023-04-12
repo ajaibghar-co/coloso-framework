@@ -5,24 +5,30 @@
 */
 
 export const settings = {
-	fontSize: '18px',
 	backgroundColor: '#222'
 }
 
 
-const { sin, cos, tan, PI } = Math
-import { density1, density2, rdensity } from "./utils/density.js"
+import { densities, density1, density2, rdensity } from "./utils/density.js"
 import { floor, mulN, vec2 } from '../src/modules/vec2.js'
 import { fract } from "../src/modules/num.js"
 import { random } from "../sugarrush/generative.js"
-import { rcolor } from "./utils/colors.js"
+import { colors } from "./utils/colors.js"
 import { sdSegment } from '../src/modules/sdf.js'
+import { pattern2 } from "./utils/pattern.js"
 
-const density = rdensity
+let iColor = 0
+let iDensity = Math.floor(Math.random() * densities.length)
+
+let sColors = [...colors, '#222']
+let sDensity = densities[iDensity]
+
+console.log("colors: ", sColors)
+console.log("sDensity: ", sDensity)
+
 const seed = Math.random()
 const seedx = Math.floor(Math.random()*1200)
 const seedy = Math.floor(Math.random()*1200)
-// const colors = rcolor
 
 export function main(coord, context, cursor, buffer) {
 
@@ -49,14 +55,14 @@ export function main(coord, context, cursor, buffer) {
 
 	// -1 for even lines, 1 for odd lines
 	const sign = y % 2 * 2 - 1
-	let index = (cols + y + x * sign) % density.length
+	let index = (cols + y + x * sign) % sDensity.length
 
 	let mody = 6 - floor((y / rows) * 6) + 1
-	let cx = Math.floor(sin(x * seedx) * density.length)
-	let cy = Math.floor(sin(y * seedy) * density.length)
+	let cx = Math.floor(Math.sin(x * seedx) * sDensity.length)
+	let cy = Math.floor(Math.sin(y * seedy) * sDensity.length)
 
-	index = Math.floor(sin(x*y) * density.length)
-	// index = (cx + cy) % density.length
+	index = Math.floor(Math.sin(x*y) * sDensity.length)
+	// index = (cx + cy) % sDensity.length
 
 	let st1 = floor(mulN(st, 6))
 	let rx = (random(st1.y+seed))
@@ -64,14 +70,16 @@ export function main(coord, context, cursor, buffer) {
 
 	let s1 = sdSegment(st, vec2(-rx, st.y), vec2(rx, st.y), 0.01)
 
-	let move = Math.sin(rx+t)
+	let move = Math.sin(rx+t) 
 
-	index = Math.floor(index + move) % density.length
+	index = Math.floor(index + move) % sDensity.length
+
+	let mod2 = pattern2(y, 20)
 
 	// return mody
 	return {
-		char: density[index],
-		char: s1 < 0.0 ? density[index] : '',
-		color: s1 < 0.0 ? rcolor : 'white',
+		char: sDensity[index],
+		char: s1 < 0.0 ? sDensity[index] : '',
+		color: s1 < 0.0 ? sColors[mod2] : 'white',
 	}
 }

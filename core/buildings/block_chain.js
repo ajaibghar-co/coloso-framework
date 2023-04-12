@@ -5,26 +5,29 @@
 
 export const settings = {
   backgroundColor: '#222',
-	fontSize: '12px',
 }
 
-import { sdCircle, sdSegment, opSmoothUnion } from '../src/modules/sdf.js'
+import { sdSegment, opSmoothUnion } from '../src/modules/sdf.js'
 import { length, max, vec2, add, sub, mulN } from '../src/modules/vec2.js'
 import { vec3 } from '../src/modules/vec3.js'
-import { mix, map, smoothstep, smootherstep, fract } from '../src/modules/num.js';
+import {fract } from '../src/modules/num.js';
 import { random, gnoise } from '../sugarrush/generative.js'
-import { density1, density2, density3, densities } from './utils/density.js'
-import { colors_wha } from './utils/colors.js'
+import { densities } from './utils/density.js'
+import { colors } from './utils/colors.js'
 import { circleSDF } from '../sugarrush/sdf.js'
-import { addN } from '../src/modules/vec2.js'
 import { clamp } from '../src/modules/num.js'
-const { floor, sin, cos, tan, PI, abs } = Math
+import { movement2 } from './utils/movement.js';
 
-let density = densities[Math.floor(Math.random() * densities.length)]
-density = density.split('').sort((a, b) => 0.5 - Math.random()).join('')
+let iColor = 0
+let iDensity = Math.floor(Math.random() * densities.length)
+
+let sColors = [...colors]
+let sDensity = densities[iDensity]
+
+console.log("colors: ", sColors)
+console.log("sDensity: ", sDensity)
 
 const seed = Math.random()*10000.0
-const colors = colors_wha
 
 let points = []
 
@@ -62,7 +65,7 @@ export function main(coord, context, cursor, buffer) {
 
   let dim = 4.0
   let fy = Math.floor((st.y*dim))
-  let rn = gnoise(fy+dim+1+random(seed)+t*0.5)
+  let rn = gnoise(fy+dim+1+Math.random(seed)+t*0.5)
   let y = clamp(st.y, -0.8, 0.8)
   
   // let sdf1 = sdSegment(st, vec2(-rn, fract(st.y*4.0)*fy), vec2(rn, fract(st.y*4.0)*fy), 0.6)
@@ -86,19 +89,17 @@ export function main(coord, context, cursor, buffer) {
 	}
 
   let sign = Math.floor(st.y * 20.0) % 2 == 0 ? 1 : -1
-  let mod1 = Math.floor(Math.abs((coord.x/context.rows)*10.0 + sin(st.y*2.0)*2.0*sign + t*2.0*sign)) % density.length
+  let mod1 = Math.floor(Math.abs((coord.x/context.rows)*10.0 + Math.sin(st.y*2.0)*2.0*sign + t*2.0*sign)) % sDensity.length
 
-	// let mod2 = Math.floor(Math.abs((fract(cf)) )) % density.length
-  let mod2 = Math.floor(Math.abs(sin(cf*2.0)*2.0* sin(st.y*10.0 + st.x *10.0 + t) * colors.length)) 
-	mod2 = Math.floor(Math.abs(sin(st.y*10.0 + st.x *10.0 + t)) + length(addN((vec2(cf, cf)), -t*0.1)) * colors.length * 4.0 )
+	let move = movement2(coord, context, sColors, cf)	
 
 
   return {
-    char: sdf1  < 0.0 ? density[mod2 % density.length] : '',
-    // char: density[mod2],
-    // color: 'white',
-    color: colors[mod2 % colors.length],
-    // color: 'white',
+    char: sdf1  < 0.0 ? sDensity[move % sDensity.length] : '',
+    // char: sDensity[mod2],
+    
+    color: sColors[move % sColors.length],
+   
     // backgroundColor: sdf1  < 0.0 ? colors[mod2 % colors.length] : '#222',
   }
 }

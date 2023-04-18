@@ -7,6 +7,7 @@ import GalleryItem from "./routes/GalleryItem";
 import Generator from "./routes/Generator";
 import GeneratorFlower from "./routes/GeneratorFlower";
 import Home from "./routes/Home";
+import Landing from "./routes/Landing";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     element: <Home />,
     errorElement: <Error />,
     children: [
+      {
+        path: "landing",
+        element: <Landing />,
+      },
       {
         path: "generator",
         element: <Generator />,
@@ -36,7 +41,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ height: "100vh" }}>
       <RouterProvider router={router} />
     </div>
   );

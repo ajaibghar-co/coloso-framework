@@ -1,13 +1,16 @@
 import { Outlet, Link } from "react-router-dom";
-import { Row } from "../components/Layout";
+import { Box, Row } from "../components/Layout";
+import styled from "styled-components";
 
 export default function Home() {
   return (
     <div>
-      <h1>CoLoSo</h1>
+      {/* <h1>CoLoSo</h1>
       <nav>
         <Row>
           <Link to="/">home</Link>
+
+          <Link to="/landing">landing</Link>
 
           <Link to="/generator">generator</Link>
 
@@ -16,7 +19,8 @@ export default function Home() {
           <Link to="/gallery">gallery</Link>
         </Row>
       </nav>
-      <hr />
+      <hr /> */}
+
       <Outlet />
     </div>
   );

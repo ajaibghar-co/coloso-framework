@@ -15,6 +15,7 @@ const Box = styled.div`
   width: fit-content;
   height: fit-content;
   align-items: center;
+  background-color: ${(props) => props.$bg};
 `;
 
 export { Row, Column, Box };

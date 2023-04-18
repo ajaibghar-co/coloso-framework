@@ -4,6 +4,7 @@ html, body {
   font-size: 1em;
   line-height: 1.2;
   font-family: monospace;
+  height:100%;
 }
 pre {
   /* position: absolute; */
@@ -11,7 +12,7 @@ pre {
   padding:0;
   left:0;
   top:0;
-  width:50vw;
-  height:50vh;
+  width:100vw;
+  height:100vh;
   font-family: inherit;
 }

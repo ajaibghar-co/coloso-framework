@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { Grommet } from "grommet";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Error } from "./routes/Error";
 import Gallery from "./routes/Gallery";
@@ -8,6 +8,7 @@ import Generator from "./routes/Generator";
 import GeneratorFlower from "./routes/GeneratorFlower";
 import Home from "./routes/Home";
 import Landing from "./routes/Landing";
+import Theme from "./components/Theme";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
-        path: "generator",
+        path: "generator/:monumentName",
         element: <Generator />,
       },
       {
@@ -42,7 +43,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div className="App" style={{ height: "100vh" }}>
-      <RouterProvider router={router} />
+      <Grommet full theme={Theme}>
+        <RouterProvider router={router} />
+      </Grommet>
     </div>
   );
 }

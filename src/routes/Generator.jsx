@@ -9,30 +9,21 @@ import GeneratorWordSelector from "../components/GeneratorWordSelector";
 const structureMap = {
   Tiny: "Mandelbrot",
   Mirror: "Mandelbrot",
-  Sweaty: "Madelbrot",
+  Sweaty: "Mandelbrot",
   Closed: "Blockchain",
   Sticky: "Mandelbrot",
   Open: "Blockchain",
   Massive: "Blockchain",
   Community: "Mandelbrot",
-  Shoddy: "Blockhain",
+  Shoddy: "Blockchain",
   Sketchy: "Blockchain",
   Hard: "Blockchain",
   Fluffy: "Mandelbrot",
 };
-
-function getStructure(selections) {
-  const counts = {
-    Mandelbrot: 0,
-    Blockchain: 0,
-  };
-  for (selection of selections) {
-    counts[structureMap[selection]]++;
-  }
-  const voteRatios = [];
-  for (count of counts) {
-  }
-}
+const structureIndices = {
+  Mandelbrot: 0,
+  Blockchain: 1,
+};
 
 const colorMap = {
   Glory: "Stone",
@@ -49,26 +40,35 @@ const colorMap = {
   Neon: "Pistachio",
   Glitzy: "Stone",
 };
+const colorIndices = {
+  Stone: 1,
+  Pistachio: 2,
+  Lavender: 3,
+};
 
 const movementMap = {
-  Discoball: 1,
-  Naughty: 1,
-  Dance: 1,
-  Heartbeat: 1,
-  Performance: 1,
-  Vogueing: 1,
-  Bubbles: 1,
-  Confetti: 1,
-  Druggy: 1,
-  Notorious: 1,
-  Intense: 1,
+  Discoball: "pattern2",
+  Naughty: "pattern2",
+  Dance: "pattern2",
+  Heartbeat: "pattern2",
+  Performance: "pattern2",
+  Vogueing: "pattern3",
+  Bubbles: "pattern3",
+  Confetti: "pattern3",
+  Druggy: "pattern3",
+  Notorious: "pattern3",
+  Intense: "pattern3",
+};
+const movementIndices = {
+  pattern2: 1,
+  pattern3: 2,
 };
 
 export default function Generator() {
   const generatorRef = useRef(null);
-  const [structure, setStructure] = useState(0);
-  const [color, setColor] = useState(0);
-  const [movement, setMovement] = useState(0);
+  const [structure, setStructure] = useState(-1);
+  const [color, setColor] = useState(-1);
+  const [movement, setMovement] = useState(-1);
 
   function render() {
     if (generatorRef) {
@@ -95,18 +95,19 @@ export default function Generator() {
 
   useEffect(() => {
     render();
+    console.log({ structure, color, movement });
   }, [structure, color, movement]);
 
-  function onHarvestClickedForFirstBox() {
-    console.log("first is here");
+  function onHarvestClickedForFirstBox(value) {
+    setStructure(structureIndices[value]);
   }
 
-  function onHarvestClickedForSecondBox() {
-    console.log("second is here");
+  function onHarvestClickedForSecondBox(value) {
+    setColor(colorIndices[value]);
   }
 
-  function onHarvestClickedForThirdBox() {
-    console.log("third is here");
+  function onHarvestClickedForThirdBox(value) {
+    setMovement(movementIndices[value]);
   }
 
   return (
@@ -139,18 +140,24 @@ export default function Generator() {
             <GeneratorWordSelector
               choiceWords={structureMap}
               onHarvestClicked={onHarvestClickedForFirstBox}
+              active={true}
+              cta={"Harvest"}
             />
           </Box>
           <Box gap={"medium"} pad={"small"}>
             <GeneratorWordSelector
               choiceWords={colorMap}
               onHarvestClicked={onHarvestClickedForSecondBox}
+              active={structure != -1}
+              cta={"Crystallize"}
             />
           </Box>
           <Box gap={"medium"} pad={"small"}>
             <GeneratorWordSelector
               choiceWords={movementMap}
               onHarvestClicked={onHarvestClickedForThirdBox}
+              active={structure != -1}
+              cta={"Distil"}
             />
           </Box>
         </Box>

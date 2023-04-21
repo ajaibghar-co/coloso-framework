@@ -1,73 +1,120 @@
-import { Box, Text, Button } from "grommet";
+import { Box, Text, Button, Stack } from "grommet";
 import { ClearOption } from "grommet-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const choiceWords = {
-  Tiny: "Mandelbrot",
-  Mirror: "Mandelbrot",
-  Sweaty: "Madelbrot",
-  Closed: "Blockchain",
-  Sticky: "Mandelbrot",
-  Open: "Blockchain",
-  Massive: "Blockchain",
-  Community: "Mandelbrot",
-  Shoddy: "Blockhain",
-  Sketchy: "Blockchain",
-  Hard: "Blockchain",
-  Fluffy: "Mandelbrot",
-};
+// source : https://stackoverflow.com/a/19270021/2767642
+function getRandom(arr, n) {
+  var result = new Array(n),
+    len = arr.length,
+    taken = new Array(len);
+  if (n > len)
+    throw new RangeError("getRandom: more elements taken than available");
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
+}
 
-function GeneratorWordSelector({ choiceWords, onHarvestClicked }) {
+function GeneratorWordSelector({ choiceWords, onHarvestClicked, active, cta }) {
+  const [sampledChoices, setSampledChoices] = useState(
+    getRandom(Object.keys(choiceWords), 5)
+  );
   const [choices, setChoices] = useState([]);
-  // const sampledChoices = Object.keys(choiceWords);
+
+  function resampleChoices() {
+    setSampledChoices(getRandom(Object.keys(choiceWords), 5));
+    setChoices([]);
+  }
 
   function computeOutput() {
     // map the selection to keyword
+    let value = 0;
+    // console.log({ choiceWords });
+    // console.log({ sampledChoices });
+    // console.log({ choices });
+    let count = {};
+    for (const choice of choices) {
+      // console.log(choice);
+      if (!count[choiceWords[choice]]) {
+        count[choiceWords[choice]] = 0;
+      }
+      count[choiceWords[choice]]++;
+    }
+    let maxCount = 0;
+    let maxLabel = "";
+    // console.log({ count });
+    for (const choiceCount in count) {
+      // console.log(choiceCount);
+      if (maxCount < count[choiceCount]) {
+        maxCount = count[choiceCount];
+        maxLabel = choiceCount;
+      }
+    }
+
+    onHarvestClicked(maxLabel);
   }
 
   return (
-    <Box background={"white"} pad={"xsmall"} gap={"medium"}>
-      <Box direction={"row-responsive"}>
-        <Box>
-          <Text color={"black"}>Pick 3 out of 5</Text>
-        </Box>
-        <Box flex={"grow"}></Box>
-        <ClearOption color={"black"} size="medium" />
-      </Box>
-      <Box>
-        <Box align="center">
-          {Object.keys(choiceWords)
-            .slice(0, 5)
-            .map((choice, ix) => (
-              <Button
-                plain
-                key={ix}
-                onClick={() => {
-                  if (choices.length < 3) {
-                    setChoices([...choices, choice]);
-                  }
-                }}
+    <Box background={"white"} pad={"xsmall"}>
+      <Stack anchor={"center"} fill={true}>
+        <Box gap={"medium"}>
+          <Box direction={"row-responsive"}>
+            <Box>
+              <Text color={"black"}>Pick 3 out of 5</Text>
+            </Box>
+            <Box flex={"grow"}></Box>
+            <Button
+              icon={<ClearOption color={"black"} size="medium" />}
+              plain
+              onClick={resampleChoices}
+            />
+          </Box>
+          <Box>
+            <Box align="center">
+              {sampledChoices.slice(0, 5).map((choice, ix) => (
+                <Button
+                  plain
+                  key={ix}
+                  onClick={() => {
+                    if (choices.length < 3) {
+                      setChoices([...choices, choice]);
+                    }
+                  }}
+                >
+                  <Box>
+                    <Text color={choices.includes(choice) ? "black" : "gray"}>
+                      {choice}
+                    </Text>
+                  </Box>
+                </Button>
+              ))}
+            </Box>
+          </Box>
+
+          <Box align="center">
+            <Button
+              plain
+              active={active && choices.length === 3}
+              onClick={computeOutput}
+            >
+              <Box
+                background={active && choices.length === 3 ? "#E6D7B3" : "grey"}
+                alignSelf="center"
+                width={"fit-content"}
+                pad={"xxsmall"}
+                round={"xxsmall"}
               >
-                <Box>
-                  <Text color={choices.includes(choice) ? "black" : "gray"}>
-                    {choice}
-                  </Text>
-                </Box>
-              </Button>
-            ))}
+                <Text size={"small"}>{cta}</Text>
+              </Box>
+            </Button>
+          </Box>
         </Box>
-      </Box>
-      <Box
-        background={choices.length === 3 ? "#E6D7B3" : "grey"}
-        alignSelf="center"
-        width={"fit-content"}
-        pad={"xxsmall"}
-        round={"xxsmall"}
-      >
-        <Button plain active={choices.length === 3} onClick={onHarvestClicked}>
-          <Text size={"small"}>Harvest</Text>
-        </Button>
-      </Box>
+        {/* <Box background={"red"} fill flex={"grow"}>
+          hi
+        </Box> */}
+      </Stack>
     </Box>
   );
 }

@@ -33,7 +33,7 @@ const can = new Canvas();
 // can.display(document.body, 10, 10)
 const image = new Image();
 // image.src = '/src/coloso2.png';
-image.src = "/src/coloso12.jpg";
+image.src = "/coloso12.jpg";
 
 const density = sort(" ○•◘", "Simple Console", false);
 // const density = sort('█▓▒░ ', 'Simple Console',false)

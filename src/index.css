@@ -6,6 +6,9 @@ html, body {
   font-family: monospace;
   height:100%;
 }
+
+
+
 pre {
   /* position: absolute; */
   margin:0;
@@ -15,4 +18,57 @@ pre {
   width:100vw;
   height:100vh;
   font-family: inherit;
+  font-family: 'Simple Console', monospace;
 }
+
+@font-face {
+  font-family: "wethard";
+  src: url("/WetHard-Regular.otf") format("opentype");
+}
+
+/* @font-face {
+  font-family: "Lithops";
+  src: url("../src/fonts/lithops-main/lithops-main/fonts/webfonts/Lithops-Regular.woff")
+      format("woff"),
+    url("../src/fonts/lithops-main/lithops-main/fonts/webfonts/Lithops-Regular.woff2")
+      format("woff2");
+}
+@font-face {
+  font-family: "Montchauve";
+  src: url("../src/fonts/montchauve/montchauve/Montchauve.otf") format("otf");
+}
+
+@font-face {
+  font-family: "VTF_Mixo";
+  src: url("../src/fonts/mixo/mixo/VTF_Mixo.otf") format("otf");
+  src: url("../src/fonts/mixo/mixo/webfonts/VTF_Mixo-Regular_web.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "pilowlava";
+  src: url("../src/fonts/pilowlava-master/pilowlava-master/Fonts/webfonts/Pilowlava-Regular.eot")
+    format("eot");
+  src: url("../src/fonts/pilowlava-master/pilowlava-master/Fonts/webfonts/Pilowlava-Regular.woff")
+      format("woff"),
+    url("../src/fonts/pilowlava-master/pilowlava-master/Fonts/webfonts/Pilowlava-Regular.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "tiny";
+  src: url("../src/fonts/tinyfonts-master/tinyfonts-master/fonts/webfonts/TINY5x3-140.woff")
+      format("woff"),
+    url("../src/fontstinyfonts-master/tinyfonts-master/fonts/webfonts/TINY5x3-140.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "tinyvar";
+  src: url("../src/fonts/tinyfonts-master/tinyfonts-master/fonts/variable/TINY5x3GX.ttf");
+}
+
+@font-face {
+  font-family: "wethard";
+  src: url("/css/WetHard-Regular.otf") format("opentype");
+} */

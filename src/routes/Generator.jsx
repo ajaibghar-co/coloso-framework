@@ -2,23 +2,65 @@ import { run } from "../../core/src/run";
 // import * as program from "../../core/buildings/monument12.js";
 import * as program from "../../core/buildings/demo.js";
 import { useRef, useEffect, useState } from "react";
-import styled from "styled-components";
+import { Box, Column, Row } from "../components/Layout";
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
+const structureMap = {
+  Tiny: "Mandelbrot",
+  Mirror: "Mandelbrot",
+  Sweaty: "Madelbrot",
+  Closed: "Blockchain",
+  Sticky: "Mandelbrot",
+  Open: "Blockchain",
+  Massive: "Blockchain",
+  Community: "Mandelbrot",
+  Shoddy: "Blockhain",
+  Sketchy: "Blockchain",
+  Hard: "Blockchain",
+  Fluffy: "Mandelbrot",
+};
 
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+function getStructure(selections) {
+  const counts = {
+    Mandelbrot: 0,
+    Blockchain: 0,
+  };
+  for (selection of selections) {
+    counts[structureMap[selection]]++;
+  }
+  const voteRatios = [];
+  for (count of counts) {
+  }
+}
 
-const Box = styled.div`
-  width: fit-content;
-  height: fit-content;
-  align-items: center;
-`;
+const colorMap = {
+  Glory: "Stone",
+  Light: "Stone",
+  Dark: "Pistachio",
+  Cocktails: "Lavender",
+  Glitter: "Stone",
+  Hip: "Lavender",
+  Sinister: "Pistachio",
+  Pink: "Lavender",
+  Love: "Lavender",
+  Nature: "Pistachio",
+  Colorful: "Pistachio",
+  Neon: "Pistachio",
+  Glitzy: "Stone",
+};
+
+const movementMap = {
+  Discoball: 1,
+  Naughty: 1,
+  Dance: 1,
+  Heartbeat: 1,
+  Performance: 1,
+  Vogueing: 1,
+  Bubbles: 1,
+  Confetti: 1,
+  Druggy: 1,
+  Notorious: 1,
+  Intense: 1,
+};
 
 export default function Generator() {
   const generatorRef = useRef(null);

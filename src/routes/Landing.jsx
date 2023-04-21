@@ -4,22 +4,8 @@ import * as program from "../../core/src/programs/demo8.js";
 import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Box = styled.div`
-  width: fit-content;
-  height: fit-content;
-  align-items: center;
-`;
+import "./Landing.css";
+import { Box } from "../components/Layout";
 
 const Layer = styled.div`
   position: absolute;
@@ -57,15 +43,15 @@ export default function Landing() {
         <pre ref={generatorRef}></pre>
       </Layer>
       <Layer z={4}>
-        <Box bg={"red"}>
-          <h1 style={{ color: "black", fontSize: "24em" }}>Coloso</h1>
-          <input
+        <Box id={"title"}>
+          <h1 id="welcome">COLOSO</h1>
+          {/* <input
             // style={{ visibility: "hidden" }}
             autoFocus={true}
             onChange={() => {
               navigate("/generator");
             }}
-          />
+          /> */}
         </Box>
       </Layer>
     </div>

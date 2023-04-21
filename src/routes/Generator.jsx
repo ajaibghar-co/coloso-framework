@@ -1,6 +1,10 @@
 import { run } from "../../core/src/run";
 // import * as program from "../../core/buildings/monument12.js";
-import * as program from "../../core/buildings/demo.js";
+// import * as program from "../../core/buildings/demo.js";
+import * as flower from "../../core/buildings/flower.js";
+import * as lissajous from "../../core/buildings/lissajous.js";
+import * as mandelbrot from "../../core/buildings/mandelbrot";
+import * as blockchain from "../../core/buildings/block_chain";
 import { useRef, useEffect, useState } from "react";
 import { Box, Text, Button } from "grommet";
 import { ClearOption } from "grommet-icons";
@@ -70,11 +74,13 @@ export default function Generator() {
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
 
+  const programs = [mandelbrot, blockchain];
+
   function render() {
-    if (generatorRef) {
+    if (generatorRef && structure != -1) {
       // console.log("here");
       run(
-        program,
+        programs[structure],
         { element: generatorRef.current, cols: 53, rows: 20 },
         { structure, color, movement }
       )
@@ -111,7 +117,7 @@ export default function Generator() {
   }
 
   return (
-    <Box fill background="black">
+    <Box fill background="#222">
       <Box direction="row-responsive" pad={"small"}>
         <Box align="end">
           <Text size={"xlarge"} color="#E1C79C" margin={"none"}>
@@ -161,8 +167,10 @@ export default function Generator() {
             />
           </Box>
         </Box>
-        <Box flex={"grow"} background={"aqua"}>
-          C
+        <Box flex={"grow"} background={"#222"}>
+          <Box>
+            <pre ref={generatorRef}></pre>
+          </Box>
         </Box>
       </Box>
     </Box>

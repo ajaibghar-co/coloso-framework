@@ -138,7 +138,7 @@ export default function Landing() {
           animation={false}
           background={"none"}
           full={true}
-          modal={"false"}
+          modal={false}
           plain={true}
           position="center"
           style={{ justifyContent: "center" }}

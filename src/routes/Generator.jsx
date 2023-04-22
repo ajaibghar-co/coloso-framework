@@ -1,10 +1,10 @@
 import { run } from "../../core/src/run";
 // import * as program from "../../core/buildings/monument12.js";
 // import * as program from "../../core/buildings/demo.js";
-import * as flower from "../../core/buildings/flower.js";
-import * as lissajous from "../../core/buildings/lissajous.js";
-import * as mandelbrot from "../../core/buildings/mandelbrot";
-import * as blockchain from "../../core/buildings/block_chain";
+import * as flower from "../../core/buildings/final/flower";
+import * as lissajous from "../../core/buildings/final/lissajous";
+import * as mandelbrot from "../../core/buildings/final/mandelbrot";
+import * as blockchain from "../../core/buildings/final/block_chain";
 import * as demo from "../../core/buildings/demo";
 import { useRef, useEffect, useState } from "react";
 import { Box, Text, Button, Image, Heading, Layer, TextInput } from "grommet";
@@ -99,10 +99,10 @@ export default function Generator() {
         // flower,
         {
           element: generatorRef.current,
-          cols: 50,
-          rows: 20,
-          width: 50,
-          height: 100,
+          // cols: 50,
+          // rows: 20,
+          // width: 50,
+          // height: 100,
         },
         { structure, color, movement }
       )

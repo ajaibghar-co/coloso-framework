@@ -9,18 +9,18 @@ export const settings = {
 }
 
 
-import { sdCircle, sdSegment, opSmoothUnion, opSmoothIntersection, opSmoothSubtraction } from '../src/modules/sdf'
-import { clamp, map, fract } from '../src/modules/num.js'
-import { vec2, length, add } from '../src/modules/vec2.js'
-import { densities, density1, density2, density3, density4, density6, rdensity } from './utils/density.js';
-import { sort } from '../src/modules/sort.js'
-import { mulN, sub, subN } from '../src/modules/vec2.js';
-import { gnoise, random, vrandom } from '../sugarrush/generative.js';
-import { colors, colors_wha, green, lavender, rcolor, stone } from './utils/colors.js';
-import { circleSDF, polySDF, starSDF } from '../sugarrush/sdf.js';
-import { fill, stroke } from '../sugarrush/draw.js'
-import { pattern1, pattern2 } from './utils/pattern.js';
-import { movement1, movement2 } from './utils/movement';
+import { sdCircle, sdSegment, opSmoothUnion, opSmoothIntersection, opSmoothSubtraction } from '../../src/modules/sdf'
+import { clamp, map, fract } from '../../src/modules/num.js'
+import { vec2, length, add } from '../../src/modules/vec2.js'
+import { densities, density1, density2, density3, density4, rdensity } from '../utils/density.js';
+import { sort } from '../../src/modules/sort.js'
+import { mulN, sub, subN } from '../../src/modules/vec2.js';
+import { gnoise, random, vrandom } from '../../sugarrush/generative.js';
+import { colors, colors_wha, green, lavender, rcolor, stone } from '../utils/colors.js';
+import { circleSDF, polySDF, starSDF } from '../../sugarrush/sdf.js';
+import { fill, stroke } from '../../sugarrush/draw.js'
+import { pattern1, pattern2 } from '../utils/pattern.js';
+import { movement1, movement2 } from '../utils/movement';
 
 
 let iColor = 0

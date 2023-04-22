@@ -44,8 +44,8 @@ const colors = [
   "deeppink",
 ];
 
-export function block1(coord, context, top, bottom, cursor, buffer) {
-  const t = context.time * 0.001;
+export function block1(coord, context, data, top, bottom, cursor, buffer) {
+  let t = data.movement != -1 ? context.time * 0.001 : 0;
   const m = Math.min(context.cols, context.rows);
   const a = context.metrics.aspect;
 

@@ -5,6 +5,8 @@ import * as flower from "../../core/buildings/final/flower";
 import * as lissajous from "../../core/buildings/final/lissajous";
 import * as mandelbrot from "../../core/buildings/final/mandelbrot";
 import * as blockchain from "../../core/buildings/final/block_chain";
+import * as spiral from "../../core/buildings/final/spiral";
+import * as watermelon from "../../core/buildings/final/watermelon";
 import * as demo from "../../core/buildings/demo";
 import { useRef, useEffect, useState } from "react";
 import { Box, Text, Button, Image, Heading, Layer, TextInput } from "grommet";

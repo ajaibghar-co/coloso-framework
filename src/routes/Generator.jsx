@@ -50,10 +50,10 @@ const colorMap = {
   Glitzy: "Stone",
 };
 const colorIndices = {
-  None: 0,
-  Stone: 1,
-  Pistachio: 2,
-  Lavender: 3,
+  None: -1,
+  Stone: 0,
+  Pistachio: 1,
+  Lavender: 2,
 };
 
 const movementMap = {
@@ -70,9 +70,9 @@ const movementMap = {
   Intense: "pattern3",
 };
 const movementIndices = {
-  None: 0,
-  pattern2: 1,
-  pattern3: 2,
+  None: -1,
+  pattern2: 0,
+  pattern3: 1,
 };
 
 const DEBUG = false;
@@ -80,9 +80,9 @@ const DEBUG = false;
 export default function Generator() {
   const generatorRef = useRef(null);
   const [monumentName, setMonumentName] = useState("");
-  const [structure, setStructure] = useState(2);
-  const [color, setColor] = useState(0);
-  const [movement, setMovement] = useState(0);
+  const [structure, setStructure] = useState(-1);
+  const [color, setColor] = useState(-1);
+  const [movement, setMovement] = useState(-1);
   const location = useLocation();
   const [showSaveModel, setShowSaveModel] = useState(false);
   const [creatorName, setCreatorName] = useState("");

@@ -7,12 +7,12 @@ import * as mandelbrot from "../../core/buildings/mandelbrot";
 import * as blockchain from "../../core/buildings/block_chain";
 import * as demo from "../../core/buildings/demo";
 import { useRef, useEffect, useState } from "react";
-import { Box, Text, Button, Image, Heading } from "grommet";
+import { Box, Text, Button, Image, Heading, Layer, TextInput } from "grommet";
 import { ClearOption } from "grommet-icons";
 import GeneratorWordSelector from "../components/GeneratorWordSelector";
 import StaticSketch from "../components/StaticSketch";
 import "./Generator.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const structureMap = {
   Tiny: "Mandelbrot",
@@ -84,6 +84,9 @@ export default function Generator() {
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
   const location = useLocation();
+  const [showSaveModel, setShowSaveModel] = useState(false);
+  const [creatorName, setCreatorName] = useState("");
+  const navigate = useNavigate();
 
   const programs = [mandelbrot, blockchain];
 
@@ -232,7 +235,7 @@ export default function Generator() {
             ></Box>
             <Box align="center">
               <Heading level={4}>{monumentName}</Heading>
-              <Button plain>
+              <Button plain onClick={() => setShowSaveModel(true)}>
                 <Box
                   pad={"xsmall"}
                   round="xsmall"
@@ -246,6 +249,39 @@ export default function Generator() {
             </Box>
           </Box>
         </Box>
+        {showSaveModel ? (
+          <Layer
+            modal={false}
+            background={{ opacity: true, clip: "border-box" }}
+            position={"center"}
+            animation={false}
+          >
+            <Box
+              width={"medium"}
+              height={"fit-content"}
+              background={"white"}
+              pad={"medium"}
+            >
+              <Heading level="4">Store in warehouse</Heading>
+              <Text>Creator Name</Text>
+              <TextInput
+                value={creatorName}
+                onChange={(e) => setCreatorName(e.target.value)}
+              ></TextInput>
+              <Button plain onClick={() => navigate("/gallery")}>
+                <Box
+                  pad={"xsmall"}
+                  background="#E1C79C"
+                  width={"fit-content"}
+                  alignSelf="center"
+                  margin={{ top: "small" }}
+                >
+                  <Text>Save</Text>
+                </Box>
+              </Button>
+            </Box>
+          </Layer>
+        ) : null}
       </Box>
     </Box>
   );

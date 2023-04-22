@@ -3,6 +3,19 @@ body {
     background: radial-gradient(circle, #E0C7A3 0%, rgb(15, 15, 15) 100%);
 }
 
+#langingpre {
+    /* position: absolute; */
+    margin:0;
+    padding:0;
+    left:0;
+    top:0;
+    width:100vw;
+    height:100vh;
+    font-family: inherit;
+    font-family: 'Simple Console', monospace;
+  }
+  
+
 #title {
     /* float: right; */
     display: flex;

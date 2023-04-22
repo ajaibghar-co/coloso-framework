@@ -5,10 +5,14 @@ import * as flower from "../../core/buildings/flower.js";
 import * as lissajous from "../../core/buildings/lissajous.js";
 import * as mandelbrot from "../../core/buildings/mandelbrot";
 import * as blockchain from "../../core/buildings/block_chain";
+import * as demo from "../../core/buildings/demo";
 import { useRef, useEffect, useState } from "react";
-import { Box, Text, Button } from "grommet";
+import { Box, Text, Button, Image, Heading } from "grommet";
 import { ClearOption } from "grommet-icons";
 import GeneratorWordSelector from "../components/GeneratorWordSelector";
+import StaticSketch from "../components/StaticSketch";
+import "./Generator.css";
+import { useLocation } from "react-router-dom";
 
 const structureMap = {
   Tiny: "Mandelbrot",
@@ -25,6 +29,7 @@ const structureMap = {
   Fluffy: "Mandelbrot",
 };
 const structureIndices = {
+  None: -1,
   Mandelbrot: 0,
   Blockchain: 1,
 };
@@ -45,6 +50,7 @@ const colorMap = {
   Glitzy: "Stone",
 };
 const colorIndices = {
+  None: -1,
   Stone: 1,
   Pistachio: 2,
   Lavender: 3,
@@ -64,15 +70,20 @@ const movementMap = {
   Intense: "pattern3",
 };
 const movementIndices = {
+  None: -1,
   pattern2: 1,
   pattern3: 2,
 };
 
+const DEBUG = false;
+
 export default function Generator() {
   const generatorRef = useRef(null);
+  const [monumentName, setMonumentName] = useState("");
   const [structure, setStructure] = useState(-1);
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
+  const location = useLocation();
 
   const programs = [mandelbrot, blockchain];
 
@@ -81,7 +92,14 @@ export default function Generator() {
       // console.log("here");
       run(
         programs[structure],
-        { element: generatorRef.current, cols: 53, rows: 20 },
+        // demo,
+        {
+          element: generatorRef.current,
+          cols: 50,
+          rows: 20,
+          width: 50,
+          height: 50,
+        },
         { structure, color, movement }
       )
         .then(function (e) {
@@ -96,6 +114,8 @@ export default function Generator() {
   }
 
   useEffect(() => {
+    let nameFromPath = location.pathname.split("/")[2];
+    setMonumentName(nameFromPath);
     render();
   }, [generatorRef]);
 
@@ -167,9 +187,63 @@ export default function Generator() {
             />
           </Box>
         </Box>
-        <Box flex={"grow"} background={"#222"}>
-          <Box>
-            <pre ref={generatorRef}></pre>
+        <Box
+          flex={"grow"}
+          background={"#222"}
+          border={DEBUG ? { color: "red" } : false}
+          height={"fit-content"}
+        >
+          <Box direction="row-responsive" justify="center">
+            <Box
+              width={"small"}
+              height={"medium"}
+              border={DEBUG ? { color: "aqua" } : false}
+            >
+              <Image fit="contain" src="/sample-sketch01.png" />
+            </Box>
+            <Box
+              width={"large"}
+              height={"fit-content"}
+              border={DEBUG ? { color: "green" } : false}
+            >
+              {structure != -1 ? (
+                <pre ref={generatorRef}></pre>
+              ) : (
+                <Box alignSelf="center">
+                  <Box fill={true} />
+                  <Text>Waiting for selection...</Text>
+                </Box>
+              )}
+            </Box>
+            <Box
+              width={"small"}
+              height={"medium"}
+              border={DEBUG ? { color: "aqua" } : false}
+            >
+              <Image fit="contain" src="/sample-sketch02.png" />
+            </Box>
+          </Box>
+          <Box width={"xlarge"} alignSelf="center">
+            <Box
+              width={"xlarge"}
+              height="0.4em"
+              background={"#808080"}
+              alignSelf="center"
+            ></Box>
+            <Box align="center">
+              <Heading level={4}>{monumentName}</Heading>
+              <Button plain>
+                <Box
+                  pad={"xsmall"}
+                  round="xsmall"
+                  background={"white"}
+                  width={"xsmall"}
+                  align="center"
+                >
+                  <Text>SAVE</Text>{" "}
+                </Box>
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Box>

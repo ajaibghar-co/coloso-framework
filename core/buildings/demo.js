@@ -1,8 +1,8 @@
 export const settings = {
-  backgroundColor: "#222",
+  backgroundColor: "yellow",
   fontSize: "12px",
   color: "white",
-  cols: 53,
+  cols: 50,
   rows: 20,
 };
 

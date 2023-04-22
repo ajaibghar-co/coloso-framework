@@ -26,6 +26,7 @@ function GeneratorWordSelector({ choiceWords, onHarvestClicked, active, cta }) {
   function resampleChoices() {
     setSampledChoices(getRandom(Object.keys(choiceWords), 5));
     setChoices([]);
+    onHarvestClicked("None");
   }
 
   function computeOutput() {
@@ -83,7 +84,9 @@ function GeneratorWordSelector({ choiceWords, onHarvestClicked, active, cta }) {
                     }
                   }}
                 >
-                  <Box>
+                  <Box
+                    background={choices.includes(choice) ? "#E6D7B3" : "white"}
+                  >
                     <Text color={choices.includes(choice) ? "black" : "gray"}>
                       {choice}
                     </Text>

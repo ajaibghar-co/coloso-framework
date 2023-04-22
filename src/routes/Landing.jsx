@@ -132,7 +132,7 @@ export default function Landing() {
     >
       <div style={{ height: "100vh" }}>
         <Box full>
-          <pre ref={generatorRef}></pre>
+          <pre id="langingpre" ref={generatorRef}></pre>
         </Box>
         <Layer
           animation={false}

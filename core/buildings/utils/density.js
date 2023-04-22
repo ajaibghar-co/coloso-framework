@@ -1,9 +1,11 @@
 export const density1 = '█▓▒░ ';
 export const density2 = '┃━┏┓┗┛┣┫┳┻╋'
 export const density3 =  ' ○•◘█'
-export const density4 = '╱ ╲ ╳'
-export const density5 = 'Ñ@#W$9876543210?!abc;:+=-,._ '
-export const density6 = '|/-\\'
+export const density4 = '╣║╗╝╚╔╩╦╠═╬'
+export const djapanese = '大一花'
+export const dkannada = 'ೞಲಇಐ'
+export const density5 = '█ ';
+
 
 
 export const densities = [density1, density2, density3, density4, density5]

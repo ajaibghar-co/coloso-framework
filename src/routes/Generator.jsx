@@ -200,13 +200,13 @@ export default function Generator() {
           height={"fit-content"}
         >
           <Box direction="row-responsive" justify="center">
-            <Box
+            {/* <Box
               width={"small"}
               height={"medium"}
               border={DEBUG ? { color: "aqua" } : false}
             >
               <Image fit="contain" src="/sample-sketch01.png" />
-            </Box>
+            </Box> */}
             <Box
               width={"large"}
               height={"large"}
@@ -221,21 +221,21 @@ export default function Generator() {
                 </Box>
               )}
             </Box>
-            <Box
+            {/* <Box
               width={"small"}
               height={"medium"}
               border={DEBUG ? { color: "aqua" } : false}
             >
               <Image fit="contain" src="/sample-sketch02.png" />
-            </Box>
+            </Box> */}
           </Box>
           <Box width={"xlarge"} alignSelf="center">
-            <Box
+            {/* <Box
               width={"xlarge"}
               height="0.4em"
               background={"#808080"}
               alignSelf="center"
-            ></Box>
+            ></Box> */}
             <Box align="center">
               <Heading level={4}>{monumentName}</Heading>
               <Button plain onClick={() => setShowSaveModel(true)}>

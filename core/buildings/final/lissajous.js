@@ -19,22 +19,23 @@ import { pattern1, pattern2, pattern3, pattern4, pattern5, patterns } from "../u
 import { circleSDF } from "../../sugarrush/sdf.js"
 import { fill } from "../../sugarrush/draw.js"
 
-// let iColor = Math.floor(Math.random() * colors.length)
 let iDensity = Math.floor(Math.random() * densities.length)
-// let iPattern1 = Math.floor(Math.random() * patterns.length)
-// let iPattern2 = Math.floor(Math.random() * patterns.length)
-
-// let sColors = [colors[iColor]]
-// let sColors = colors_wha
 let sDensity = densities[iDensity]
-// let sPattern1 = patterns[iPattern1]
-// let sPattern2 = patterns[iPattern2]
-
-// console.log("colors: ", sColors)
 console.log("sDensity: ", sDensity)
 
-const x1 = Math.random() * 10
-const y1 = Math.random() * 10
+// storage variables 
+let x1 = localStorage.getItem('sketch-x1')
+let y1 = localStorage.getItem('sketch-y1')
+if(x1 == null || y1 == null) {
+	x1 = Math.random() * 10
+	y1 = Math.random() * 10
+	localStorage.setItem('sketch-x1', x1)
+	localStorage.setItem('sketch-y1', y1)
+}
+else {
+	x1 = parseFloat(x1)
+	y1 = parseFloat(y1)
+}
 
 export function main(coord, context, cursor, buffer, data) {
 	let sColors = data.color != -1 ? [colors[data.color]] : ['white']

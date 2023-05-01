@@ -20,21 +20,9 @@ import { colors, colors_wha, green, lavender, rcolor, stone } from '../utils/col
 import { circleSDF, polySDF, starSDF } from '../../sugarrush/sdf.js';
 import { fill, stroke } from '../../sugarrush/draw.js'
 import { pattern1, pattern2, pattern4, patterns } from '../utils/pattern.js';
-import { movement1, movement2 } from '../utils/movement.js';
 
-
-// let iColor = Math.floor(Math.random() * colors.length)
 let iDensity = Math.floor(Math.random() * densities.length)
-// let iPattern1 = Math.floor(Math.random() * patterns.length)
-// let iPattern2 = Math.floor(Math.random() * patterns.length)
-
-// let sColors = colors_wha
-// let sColors = [colors[iColor]]
 let sDensity = densities[iDensity]
-// let sPattern1 = patterns[iPattern1]
-// let sPattern2 = pattern4
-
-// console.log("colors: ", sColors)
 console.log("sDensity: ", sDensity)
 
 let d1 = rdensity
@@ -68,11 +56,6 @@ export function main(coord, context, cursor, buffer, data) {
 	let s = s1 + s2 + s3 + s4
 	// s = s2
 
-	// let st1 = {
-	// 	x: coord.x/context.cols ,
-	// 	y: coord.y/context.rows
-	// }
-	// st = st1
 	let y = fract(st.x*4.0) < 0.5 ? st.y+st.x : st.y-st.x
 	// let mod1 = Math.floor(pattern1(y, 20)) % density1.length
 	let mod1 = pattern2(coord, context) % d1.length

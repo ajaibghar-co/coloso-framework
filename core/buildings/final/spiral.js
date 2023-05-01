@@ -20,23 +20,18 @@ import { colors, colors_wha, rcolor } from "../utils/colors.js"
 import { sdSegment } from '../../src/modules/sdf.js'
 import { patterns } from "../utils/pattern.js"
 
-// let iColor = Math.floor(Math.random() * colors.length)
 let iDensity = Math.floor(Math.random() * densities.length)
-// let iPattern1 = Math.floor(Math.random() * patterns.length)
-// let iPattern2 = Math.floor(Math.random() * patterns.length)
-
-
-// let sColors = colors_wha
-// let sColors = [colors[iColor]]
 let sDensity = densities[iDensity]
-// let sPattern1 = patterns[iPattern1]
-// let sPattern2 = patterns[iPattern2]
 
-const seed = Math.random()*1000
-const seedx = Math.floor(Math.random()*2400)
-const seedy = Math.floor(Math.random()*2400)
-
-const swidth = Math.random() * 10
+// storage variables
+let swidth = localStorage.getItem('sketch-swidth')
+if(swidth == null) {
+	swidth = Math.random() * 10
+	localStorage.setItem('sketch-swidth', swidth)
+}
+else {
+	swidth = parseFloat(swidth)
+}
 
 export function main(coord, context, cursor, buffer, data) {
   let sColors = data.color != -1 ? [colors[data.color]] : ['white']

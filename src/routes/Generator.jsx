@@ -82,7 +82,7 @@ const DEBUG = false;
 export default function Generator() {
   const generatorRef = useRef(null);
   const [monumentName, setMonumentName] = useState("");
-  const [structure, setStructure] = useState(-1);
+  const [structure, setStructure] = useState(1);
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
   const location = useLocation();
@@ -96,8 +96,8 @@ export default function Generator() {
     if (generatorRef && structure != -1) {
       // console.log("here");
       run(
-        programs[structure],
-        // demo,
+        // programs[structure],
+        watermelon,
         // flower,
         {
           element: generatorRef.current,

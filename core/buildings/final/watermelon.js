@@ -14,7 +14,7 @@ import { vec2, length, add } from '../../src/modules/vec2.js'
 import { densities, rdensity } from '../utils/density.js';
 import { sort } from '../../src/modules/sort.js'
 import { mul, mulN, sub, subN } from '../../src/modules/vec2.js';
-import { colors, colors_wha } from '../utils/colors.js';
+import { colors } from '../utils/colors.js';
 import { block1 } from '../blocks/block1.js';
 import { pattern6, patterns } from '../utils/pattern.js';
 
@@ -51,8 +51,10 @@ let d2 = rdensity
 let d3 = rdensity
 let d4 = rdensity
 
+console.log(colors[0])
+
 export function main(coord, context, cursor, buffer, data) {
-  let sColors = data.color != -1 ? [colors[data.color]] : ['white']
+  let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
 	const t = data.movement != -1 ? 0 : 0
 

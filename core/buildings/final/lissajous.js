@@ -13,7 +13,7 @@ import { densities, density1, density2, rdensity } from "../utils/density.js"
 import { floor, length, mulN, vec2 } from '../../src/modules/vec2.js'
 import { fract, mod } from "../../src/modules/num.js"
 import { random } from "../../sugarrush/generative.js"
-import { colors, colors1, colors_wha } from "../utils/colors.js"
+import { colors } from "../utils/colors.js"
 import { sdCircle, sdSegment } from '../../src/modules/sdf.js'
 import { pattern1, pattern2, pattern3, pattern4, pattern5, patterns } from "../utils/pattern.js"
 import { circleSDF } from "../../sugarrush/sdf.js"
@@ -38,7 +38,7 @@ else {
 }
 
 export function main(coord, context, cursor, buffer, data) {
-	let sColors = data.color != -1 ? [colors[data.color]] : ['white']
+	let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
 	const t = data.movement != -1 ? context.time * 0.001 : 0
 

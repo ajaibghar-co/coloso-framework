@@ -24,6 +24,7 @@ export const pattern3 = (coord, context, time) => {
   return n % res 
 }
 
+// throbbing
 export const pattern4 = (coord, context, time) => {
   let st = {
 		x: coord.x/context.cols ,
@@ -40,15 +41,51 @@ export const pattern4 = (coord, context, time) => {
   return (offx + offy) % res
 }
 
+// static
 export const pattern5 = (coord, context, time) => {
   return 0
 }
 
+// staccato
 export const pattern6 = (coord, context, time) => {
   return Math.floor(time)
 }
 
+// left to right
+export const pattern7 = (coord, context, time) => {
+  return Math.floor(coord.x+time);
+}
 
+// top to bottom
+export const pattern8 = (coord, context, time) => {
+  return Math.floor(coord.y+time);
+}
+
+// side to side
+export const pattern9 = (coord, context, time) => {
+  return Math.floor(coord.y+coord.x+time);
+}
+
+// mod xor
+export const pattern10 = (coord, context, time) => {
+  const t1 = Math.floor(context.frame / 2)
+	const t2 = Math.floor(context.frame / 128)
+	const x = coord.x
+	const y = coord.y + t1
+	const m = t2 * 2 % 30 + 31
+	const i = (x + y^x - y) % m & 1
+	const c = (t2 + i) 
+	return c
+}
+
+
+export const pattern11 = (coord, context, time) => {
+  const x = coord.x
+	const y = coord.y
+	const o = Math.sin(y * Math.sin(time) * 2 + x * 0.04 + time) * 20
+	const i = Math.round(Math.abs(x  + o)) 
+  return i
+}
 // let points = []
 
 // let N = 4
@@ -85,4 +122,4 @@ export const pattern6 = (coord, context, time) => {
 	// }
 
 
-export const patterns = [pattern2, pattern3, pattern4]
+export const patterns = [pattern4, pattern6, pattern7, pattern8]

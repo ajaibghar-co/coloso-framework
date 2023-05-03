@@ -1,4 +1,8 @@
+import { opSmoothUnion } from "../../src/modules/sdf.js"
+import { fract } from "../../src/modules/num.js"
+import { stroke } from "../../sugarrush/draw.js"
 import { gnoise, random } from "../../sugarrush/generative.js"
+import { sdPointedArch } from "../../sugarrush/sdf.js"
 
 export function pattern1(y, res) { return Math.abs((y*res) % Math.abs(res/2) - Math.abs(res/4)) }
 
@@ -86,6 +90,61 @@ export const pattern11 = (coord, context, time) => {
 	const i = Math.round(Math.abs(x  + o)) 
   return i
 }
+
+export const pattern12 = (coord, context, time) => {
+	const m = Math.min(context.cols, context.rows)
+	const a = context.metrics.aspect
+
+	let st = {
+		x : 2.0 * (coord.x - context.cols / 2) / m * a,
+		y : 2.0 * (coord.y - context.rows / 2) / m
+	}
+
+	let pt = {
+		x : st.x,
+		y : fract(st.y * 1.0) - 0.5
+	}
+
+	const sdf1 = sdPointedArch(pt, 1.0, 1.0)
+  const sdf2 = sdPointedArch(pt, 1.0, -1.0)
+  const sdf3 = 1.0-opSmoothUnion(sdf1, sdf2, 0.0)
+
+
+	let n = 0
+  for(let i = 0; i < 5; i++) {
+    const sh3 = stroke(sdf3, i/5, 0.1 , 0.001)
+    n += sh3
+  }
+
+	
+	return Math.floor((n*(st.y+st.x))+time*2.0)
+}
+
+// TODO: pass seed
+const seed = Math.random()*10000.0
+export const pattern13 = (coord, context, time) => {
+	const m = Math.min(context.cols, context.rows)
+  const a = context.metrics.aspect
+
+	let st = {
+		x : 2.0 * (coord.x - context.cols / 2) / m * a,
+		y : 2.0 * (coord.y - context.rows / 2) / m
+	}
+
+	// st.y += sin(st.x*5.0)*0.2
+  st.y += gnoise(st.x*6.0 + random(seed)*20.)+0.2
+  // st.x += gnoise(st.y*10.0 + random(seed))
+  st.x += Math.sin(st.y*10.0)*0.2
+
+  let mod1 =
+		Math.floor(st.y*4.0) % 2 == 0 ?
+		Math.floor(Math.abs(st.y*20.0+time)) :
+		0 
+	return mod1
+
+
+}
+
 // let points = []
 
 // let N = 4

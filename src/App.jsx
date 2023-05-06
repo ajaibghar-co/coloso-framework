@@ -3,7 +3,7 @@ import { Grommet } from "grommet";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Error } from "./routes/Error";
 import Gallery from "./routes/Gallery";
-import GalleryItem from "./routes/GalleryItem";
+import GalleryItem, { loader as monumentLoader } from "./routes/GalleryItem";
 import Generator from "./routes/Generator";
 import GeneratorFlower from "./routes/GeneratorFlower";
 import Home from "./routes/Home";
@@ -35,6 +35,7 @@ const router = createBrowserRouter([
       {
         path: "gallery/:artworkId",
         element: <GalleryItem />,
+        loader: monumentLoader,
       },
     ],
   },

@@ -15,6 +15,7 @@ import GeneratorWordSelector from "../components/GeneratorWordSelector";
 import StaticSketch from "../components/StaticSketch";
 import "./Generator.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const structureMap = {
   Tiny: "Mandelbrot",
@@ -92,20 +93,35 @@ export default function Generator() {
 
   const programs = [mandelbrot, blockchain];
 
+  async function onClickSave() {
+    console.log({ structure, movement, color });
+    const monumentPayload = {
+      monumentName: "test-monument-6",
+      monumentLocation: "delhi",
+      creatorName: "denny",
+      creatorLocation: "kerala",
+      structure: 1,
+      color: 2,
+      movement: 0,
+      params: "{sketch-seed:0.2, sketch-random:0.6}",
+    };
+
+    const { data } = await axios.post(
+      "http://localhost:3000/monument",
+      monumentPayload
+    );
+    // console.log(response);
+    navigate(`/gallery/${data.id}`);
+  }
+
   function render() {
     if (generatorRef && structure != -1) {
       // console.log("here");
       run(
-        // programs[structure],
-        watermelon,
+        programs[structure],
+        // watermelon,
         // flower,
-        {
-          element: generatorRef.current,
-          // cols: 50,
-          // rows: 20,
-          // width: 50,
-          // height: 100,
-        },
+        { element: generatorRef.current },
         { structure, color, movement }
       )
         .then(function (e) {
@@ -271,7 +287,7 @@ export default function Generator() {
                 value={creatorName}
                 onChange={(e) => setCreatorName(e.target.value)}
               ></TextInput>
-              <Button plain onClick={() => navigate("/gallery")}>
+              <Button plain onClick={onClickSave}>
                 <Box
                   pad={"xsmall"}
                   background="#E1C79C"

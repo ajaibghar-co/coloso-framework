@@ -5,7 +5,7 @@ POST http://localhost:3000/monument
 content-type: application/json
 
 {
-    "monumentName": "test-monument-6",
+    "monumentName": "test-monument-14",
     "monumentLocation": "delhi",
     "creatorName" : "denny",
     "creatorLocation": "kerala",
@@ -17,7 +17,7 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3000/monument/1
+GET http://localhost:3000/monument/9
 
 ###
 

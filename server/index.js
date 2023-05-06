@@ -1,10 +1,12 @@
 import express from "express";
+import cors from "cors";
 import { config } from "./config.js";
 import { createDbConnection } from "./db.js";
 import { add, getById, getPaginated } from "./monument.js";
 const app = express();
 const port = 3000;
 
+app.use(cors());
 app.use(express.json());
 
 const { dbPath } = config;
@@ -34,7 +36,7 @@ app.get("/monument/:id", async (req, res) => {
 
 app.get("/monument/page/:pgNum", async (req, res) => {
   const { pgNum } = req.params;
-  const page = await getPaginated(db, pgNum, 10);
+  const page = await getPaginated(db, pgNum, 50);
   res.json(page);
 });
 

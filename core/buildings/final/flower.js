@@ -9,27 +9,20 @@ export const settings = {
 }
 
 
-import { sdCircle, sdSegment, opSmoothUnion, opSmoothIntersection, opSmoothSubtraction } from '../../src/modules/sdf'
+import { sdCircle, sdSegment, opSmoothUnion, opSmoothIntersection, opSmoothSubtraction } from '../../src/modules/sdf.js'
 import { clamp, map, fract } from '../../src/modules/num.js'
 import { vec2, length, add } from '../../src/modules/vec2.js'
-import { densities, density1, density2, density3, density4, rdensity } from '../utils/density.js';
+import { densities, rdensity } from '../utils/density.js';
 import { sort } from '../../src/modules/sort.js'
 import { mulN, sub, subN } from '../../src/modules/vec2.js';
 import { gnoise, random, vrandom } from '../../sugarrush/generative.js';
-import { colors, colors_wha, green, lavender, rcolor, stone } from '../utils/colors.js';
+import { colors } from '../utils/colors.js';
 import { circleSDF, polySDF, starSDF } from '../../sugarrush/sdf.js';
 import { fill, stroke } from '../../sugarrush/draw.js'
-import { pattern1, pattern2 } from '../utils/pattern.js';
-import { movement1, movement2 } from '../utils/movement';
+import { pattern1, pattern2, pattern4, patterns } from '../utils/pattern.js';
 
-
-let iColor = 0
 let iDensity = Math.floor(Math.random() * densities.length)
-
-let sColors = [...colors, '#222']
 let sDensity = densities[iDensity]
-
-console.log("colors: ", sColors)
 console.log("sDensity: ", sDensity)
 
 let d1 = rdensity
@@ -37,10 +30,13 @@ let d2 = rdensity
 let d3 = rdensity
 let d4 = rdensity
 
-export function main(coord, context, cursor, buffer) {
+export function main(coord, context, cursor, buffer, data) {
+	let sColors = data.color != -1 ? colors[data.color] : ['white']
+  let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
+	const t = data.movement != -1 ? context.time * 0.0001 : 0
+
 	const m = Math.max(context.cols, context.rows)
 	const a = context.metrics.aspect
-	const t = context.time*0.0001
 
 	let st = {
 		x : 2.0 * (coord.x - context.cols / 2) / m * a,
@@ -51,20 +47,15 @@ export function main(coord, context, cursor, buffer) {
 		y: coord.y/context.rows
 	}
 	
-	let s1 = fill(circleSDF(st, vec2(0.0, -0.15)), 0.1, 0.01)
-	let s2 = fill(polySDF(add(st, vec2(0.0, -0.1)), 5), 0.1, 0.01)
+	let s1 = fill(circleSDF(st, vec2(0.0, -0.10)), 0.08, 0.01)
+	let s2 = fill(polySDF(add(st, vec2(0.0, -0.1)), 5), 0.08, 0.01)
 	// let s3 = fill(polySDF(add(st, vec2(0.0, 0.0)), 6), 0.05, 0.01)
- 	let s3 = fill(starSDF(add(mod_st1, vec2(0.0, -0.15)), 3, (0.28)), 0.25, 0.01)
-	let s4 = fill(starSDF(add(mod_st1, vec2(0.0, -0.25)), 3, Math.sin(0.28)), 0.25, 0.01)
+ 	let s3 = fill(starSDF(add(mod_st1, vec2(0.0, -0.15)), 3, (0.28)), 0.18, 0.01)
+	let s4 = fill(starSDF(add(mod_st1, vec2(0.0, -0.25)), 3, Math.sin(0.28)), 0.18, 0.01)
 
 	let s = s1 + s2 + s3 + s4
 	// s = s2
 
-	// let st1 = {
-	// 	x: coord.x/context.cols ,
-	// 	y: coord.y/context.rows
-	// }
-	// st = st1
 	let y = fract(st.x*4.0) < 0.5 ? st.y+st.x : st.y-st.x
 	// let mod1 = Math.floor(pattern1(y, 20)) % density1.length
 	let mod1 = pattern2(coord, context) % d1.length
@@ -74,7 +65,7 @@ export function main(coord, context, cursor, buffer) {
 	// let mod2 = Math.abs((mod_st2.y*2.0 ))
 	// mod2 = Math.floor(mod2) % sColors.length
 
-	let move = movement1(coord, context, sColors)
+	let move = sPattern1(coord, context, t)
 
 	return {
 		char: s1 > 0.0 ? d1[mod1] 
@@ -83,7 +74,7 @@ export function main(coord, context, cursor, buffer) {
 					// : s4 > 0.0 ? d4[mod1]
 					 : '',	
 		char: s > 0.0 ? d1[mod1] : '',
-		color: s > 0.0 ? sColors[move] : 'white',
+		color: s > 0.0 ? sColors[move % sColors.length] : 'white',
 
 	}
 }

@@ -19,63 +19,36 @@ import { movement2 } from '../utils/movement.js';
 import { gnoise } from '../../sugarrush/generative.js';
 import { patterns } from '../utils/pattern.js';
 
-
-
-// let iColor = Math.floor(Math.random() * colors.length)
 let iDensity = Math.floor(Math.random() * densities.length)
-// let iPattern1 = Math.floor(Math.random() * patterns.length)
-// let iPattern2 = Math.floor(Math.random() * patterns.length)
-
-// let sColors = [colors[iColor]]
-// let sColors = colors_wha
 let sDensity = densities[iDensity]
-// let sPattern1 = pattern4
-// let sPattern2 = pattern4
-
-// console.log("colors: ", sColors)
 console.log("sDensity: ", sDensity)
 
-const seed = Math.random()*10000.0
-
-let points = []
-
-let N = 4
-let prev = 0
-for(let i = -1; i < 1; i+=1/(N-1)) {
-	let off, p
-	if(prev == 0) {
-		off = 0.5 + (Math.random()*2-1)*0.2
-		p = vec2(off, i)
-	}
-	else {
-		off = prev + (Math.random()*2-1)*0.3
-		p = vec2(off, i)
-	}
-	prev = off
-	points.push(p)
+// storage variables 
+let seed = localStorage.getItem('sketch-seed')
+let dim = localStorage.getItem('sketch-dim')
+if(seed == null || dim == null) {
+	seed = Math.random()*10000.0
+	dim = 4.0
+	localStorage.setItem('sketch-seed', seed)
+	localStorage.setItem('sketch-dim', dim)
+}
+else {
+	seed = parseFloat(seed)
+	dim = parseInt(dim)
 }
 
 export function main(coord, context, cursor, buffer, data) {
-  let sColors = data.color != -1 ? [colors[data.color]] : ['white']
+  let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
 	const t = data.movement != -1 ? context.time * 0.001 : 0
-
-
-    const m = Math.min(context.cols, context.rows)
-    const a = context.metrics.aspect
+	const m = Math.min(context.cols, context.rows)
+  const a = context.metrics.aspect
 
 	let st = {
 		x : 2.0 * (coord.x - context.cols / 2) / m * a,
 		y : 2.0 * (coord.y - context.rows / 2) / m
 	}
-	
-	
-	let pt = {
-		x : fract(st.x * 2.0) - 0.5,
-		y : fract(st.y * 4.0) - 0.5
-	}
 
-  let dim = 4.0
   let fy = Math.floor((st.y*dim))
   let rn = gnoise(fy+dim+1+seed+t*0.5)
   let y = clamp(st.y, -0.8, 0.8)
@@ -83,22 +56,6 @@ export function main(coord, context, cursor, buffer, data) {
   // let sdf1 = sdSegment(st, vec2(-rn, fract(st.y*4.0)*fy), vec2(rn, fract(st.y*4.0)*fy), 0.6)
   let sdf1 = sdSegment(st, vec3(-rn, y, 0.0), vec3(rn, y, 0.0), 0.01)
 
-  // circle pattern
-  let cf = 1
-	for(let i = 0; i < points.length; i++) {
-		let p = points[i]
-		let x = p.x + gnoise(st.x+t)*0.2
-		let y = p.y + gnoise(st.y+t)*0.2
-		let c1 = circleSDF(st, vec2(x, y))-0.7
-		// let c1 = circleSDF(st, vec2(x, y))-st.y make longer fluidity
-		let c2 = circleSDF(st, vec2(x, y))-0.7
-		let c3 = circleSDF(st, vec2(x, y))-0.9
-		
-		// let f1 = opSmoothSubtraction(c2, c1, 0.5)
-		// f1 = c1*c2
-
-		cf = opSmoothUnion(cf, (c1), 0.0)
-	}
 
   let sign = Math.floor(st.y * 20.0) % 2 == 0 ? 1 : -1
   let mod1 = Math.floor(Math.abs((coord.x/context.rows)*10.0 + Math.sin(st.y*2.0)*2.0*sign + t*2.0*sign)) % sDensity.length
@@ -108,10 +65,6 @@ export function main(coord, context, cursor, buffer, data) {
 
   return {
     char: sdf1  < 0.0 ? sDensity[move % sDensity.length] : '',
-    // char: sDensity[mod2],
-    
     color: sColors[move % sColors.length],
-   
-    // backgroundColor: sdf1  < 0.0 ? colors[mod2 % colors.length] : '#222',
   }
 }

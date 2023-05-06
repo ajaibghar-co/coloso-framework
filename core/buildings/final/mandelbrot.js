@@ -15,20 +15,29 @@ import { colors, colors_wha } from '../utils/colors.js';
 import { movement1 } from '../utils/movement.js';
 import { patterns } from '../utils/pattern.js';
 
-// let iColor = Math.floor(Math.random() * colors.length)
 let iDensity = Math.floor(Math.random() * densities.length)
-// let iPattern1 = Math.floor(Math.random() * patterns.length)
-// let iPattern2 = Math.floor(Math.random() * patterns.length)
-
-
-// let sColors = colors_wha
-// let sColors = [colors[iColor]]
 let sDensity = densities[iDensity]
-// let sPattern1 = patterns[iPattern1]
-// let sPattern2 = patterns[iPattern2]
-
-// console.log("colors: ", sColors)
 console.log("density: ", sDensity)
+
+// storage variables 
+let min1 = 2
+let max1 = 10
+let it1 = localStorage.getItem('sketch-it1')
+let it2 = localStorage.getItem('sketch-it2')
+let it3 = localStorage.getItem('sketch-it3')
+if(it1 == null || it2 == null || it3 == null) {
+	it1 = Math.floor(Math.random()*(max1 - min1) + min1)
+	it2 = Math.floor(Math.random()*(max1 - min1) + min1)
+	it3 = Math.floor(Math.random()*(max1 - min1) + min1)
+	localStorage.setItem('sketch-it1', it1)
+	localStorage.setItem('sketch-it2', it2)
+	localStorage.setItem('sketch-it3', it3)
+}
+else {
+	it1 = parseFloat(it1)
+	it2 = parseFloat(it2)
+	it3 = parseFloat(it3)
+}
 
 function squareImaginary(number){
 	return vec2(
@@ -49,14 +58,10 @@ function iterateMandelbrot(coord, maxIterations){
 	}
 	return maxIterations;
 }
-let min1 = 2
-let max1 = 10
-let it1 = Math.floor(Math.random()*(max1 - min1) + min1)
-let it2 = Math.floor(Math.random()*(max1 - min1) + min1)
-let it3 = Math.floor(Math.random()*(max1 - min1) + min1)
+
 
 export function main(coord, context, cursor, buffer, data) {
-  let sColors = data.color != -1 ? [colors[data.color]] : ['white']
+  let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
 	const t = data.movement != -1 ? context.time : 0
 

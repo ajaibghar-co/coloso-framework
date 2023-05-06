@@ -5,6 +5,8 @@ import * as flower from "../../core/buildings/final/flower";
 import * as lissajous from "../../core/buildings/final/lissajous";
 import * as mandelbrot from "../../core/buildings/final/mandelbrot";
 import * as blockchain from "../../core/buildings/final/block_chain";
+import * as spiral from "../../core/buildings/final/spiral";
+import * as watermelon from "../../core/buildings/final/watermelon";
 import * as demo from "../../core/buildings/demo";
 import { useRef, useEffect, useState } from "react";
 import { Box, Text, Button, Image, Heading, Layer, TextInput } from "grommet";
@@ -80,7 +82,7 @@ const DEBUG = false;
 export default function Generator() {
   const generatorRef = useRef(null);
   const [monumentName, setMonumentName] = useState("");
-  const [structure, setStructure] = useState(-1);
+  const [structure, setStructure] = useState(1);
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
   const location = useLocation();
@@ -94,8 +96,8 @@ export default function Generator() {
     if (generatorRef && structure != -1) {
       // console.log("here");
       run(
-        programs[structure],
-        // demo,
+        // programs[structure],
+        watermelon,
         // flower,
         {
           element: generatorRef.current,
@@ -198,13 +200,13 @@ export default function Generator() {
           height={"fit-content"}
         >
           <Box direction="row-responsive" justify="center">
-            <Box
+            {/* <Box
               width={"small"}
               height={"medium"}
               border={DEBUG ? { color: "aqua" } : false}
             >
               <Image fit="contain" src="/sample-sketch01.png" />
-            </Box>
+            </Box> */}
             <Box
               width={"large"}
               height={"large"}
@@ -219,21 +221,21 @@ export default function Generator() {
                 </Box>
               )}
             </Box>
-            <Box
+            {/* <Box
               width={"small"}
               height={"medium"}
               border={DEBUG ? { color: "aqua" } : false}
             >
               <Image fit="contain" src="/sample-sketch02.png" />
-            </Box>
+            </Box> */}
           </Box>
           <Box width={"xlarge"} alignSelf="center">
-            <Box
+            {/* <Box
               width={"xlarge"}
               height="0.4em"
               background={"#808080"}
               alignSelf="center"
-            ></Box>
+            ></Box> */}
             <Box align="center">
               <Heading level={4}>{monumentName}</Heading>
               <Button plain onClick={() => setShowSaveModel(true)}>

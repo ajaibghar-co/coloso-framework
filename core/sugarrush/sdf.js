@@ -50,3 +50,19 @@ export function starSDF(st, V, s) {
   let result = Math.abs(dot(vec2(cos(a), sin(a)), st));
   return result;
 }
+
+export function sdPointedArch(st, r1, r2) { 
+	let left = vec2(-r1, r2)
+	let right = vec2(r1, r2)
+	// let st1 = mulN(st, 0.3)
+	let st1 = mulN(st, 1.0)
+	
+	// let a = st.y < 1.0 ? length(sub(st1, left))-1.0  : -1.0
+	let a = length(sub(st1, left))-1.0
+	// let b = st.y < 1.0 ? length(sub(st1, right))-1.0  : -1.0
+	let b = length(sub(st1, right))-1.0
+
+	// return 
+	return Math.max(a, b) < 1.0 ? (Math.max(a, b)-0.0) : 1.0
+
+}

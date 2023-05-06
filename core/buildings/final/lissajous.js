@@ -10,29 +10,38 @@ export const settings = {
 
 
 import { densities, density1, density2, rdensity } from "../utils/density.js"
-import { floor, mulN, vec2 } from '../../src/modules/vec2.js'
-import { fract } from "../../src/modules/num.js"
+import { floor, length, mulN, vec2 } from '../../src/modules/vec2.js'
+import { fract, mod } from "../../src/modules/num.js"
 import { random } from "../../sugarrush/generative.js"
 import { colors } from "../utils/colors.js"
-import { sdSegment } from '../../src/modules/sdf.js'
-import { pattern2 } from "../utils/pattern.js"
+import { sdCircle, sdSegment } from '../../src/modules/sdf.js'
+import { pattern1, pattern2, pattern3, pattern4, pattern5, patterns } from "../utils/pattern.js"
+import { circleSDF } from "../../sugarrush/sdf.js"
+import { fill } from "../../sugarrush/draw.js"
 
-let iColor = 0
 let iDensity = Math.floor(Math.random() * densities.length)
-
-let sColors = [...colors, '#222']
 let sDensity = densities[iDensity]
-
-console.log("colors: ", sColors)
 console.log("sDensity: ", sDensity)
 
-const seed = Math.random()
-const seedx = Math.floor(Math.random()*1200)
-const seedy = Math.floor(Math.random()*1200)
+// storage variables 
+let x1 = localStorage.getItem('sketch-x1')
+let y1 = localStorage.getItem('sketch-y1')
+if(x1 == null || y1 == null) {
+	x1 = Math.random() * 10
+	y1 = Math.random() * 10
+	localStorage.setItem('sketch-x1', x1)
+	localStorage.setItem('sketch-y1', y1)
+}
+else {
+	x1 = parseFloat(x1)
+	y1 = parseFloat(y1)
+}
 
-export function main(coord, context, cursor, buffer) {
+export function main(coord, context, cursor, buffer, data) {
+	let sColors = data.color != -1 ? colors[data.color] : ['white']
+  let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
+	const t = data.movement != -1 ? context.time * 0.001 : 0
 
-	const t = context.time * 0.001
 	const m = Math.min(context.cols, context.rows)
 	const a = context.metrics.aspect
 
@@ -41,45 +50,26 @@ export function main(coord, context, cursor, buffer) {
 		y: 2.0 * (coord.y - context.rows / 2) / m
 	}
 
+  let angle = Math.atan2(st.x, st.y) 
 
-	let pt = {
-		x: fract(st.x * 2.0) - 0.5,
-		y: fract(st.y * 4.0) - 0.5
-	}
+  let x = Math.sin(angle*x1)
+  let y = Math.cos(angle*y1)
+  let l1 = sdSegment(st, vec2(x*0.2, y*0.2), vec2(x*0.5, y*0.5), 0.2)
+  // let l1 = sdSegment(st, vec2(-0.4, y*0.4), vec2(0.4, y*0.4), 0.2)
 
-	let { cols, rows, frame } = context
-	const { x, y } = coord
+  let c1 = fill(circleSDF(vec2(st.x, st.y+0.3), vec2(x*0.2, y*0.2)), 0.1, 0.2);
+  let c2 = fill(circleSDF(vec2(st.x, st.y-0.3), vec2(x*0.2, y*0.2)), 0.1, 0.2);
+  let c = c1+c2
 
-	// frame = frame / 10
+  let p1 = sPattern1(coord, context, t)
+	// let p2 = sPattern2(coord, context, t)
 
-
-	// -1 for even lines, 1 for odd lines
-	const sign = y % 2 * 2 - 1
-	let index = (cols + y + x * sign) % sDensity.length
-
-	let mody = 6 - floor((y / rows) * 6) + 1
-	let cx = Math.floor(Math.sin(x * seedx) * sDensity.length)
-	let cy = Math.floor(Math.sin(y * seedy) * sDensity.length)
-
-	index = Math.floor(Math.sin(x*y) * sDensity.length)
-	// index = (cx + cy) % sDensity.length
-
-	let st1 = floor(mulN(st, 6))
-	let rx = (random(st1.y+seed))
-	// rx = rx < 0.1 ? 0.1 : rx
-
-	let s1 = sdSegment(st, vec2(-rx, st.y), vec2(rx, st.y), 0.01)
-
-	let move = Math.sin(rx+t) 
-
-	index = Math.floor(index + move) % sDensity.length
-
-	let mod2 = pattern2(y, 20)
-
-	// return mody
 	return {
-		char: sDensity[index],
-		char: s1 < 0.0 ? sDensity[index] : '',
-		color: s1 < 0.0 ? sColors[mod2] : 'white',
+		// char: l1 < 0.0 ? sDensity[0] : '',
+    char: c > 0.0 ? sDensity[p1 % sDensity.length] : '',
+    // char: angle > -90 && angle < 90 ? '1' : '',
+    // char: length(st) < 0.5 ? '1' : '',
+
+		color: c > 0.0 ? sColors[p1 % sColors.length] : 'white',
 	}
 }

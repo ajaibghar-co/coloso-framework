@@ -34,18 +34,10 @@ import { CGA } from "../../src/modules/color.js";
 import { random, gnoise } from "../../sugarrush/generative.js";
 const { floor, sin, cos, tan, PI, abs } = Math;
 
-const seed = Math.random() * 10000.0;
-const colors = [
-  "mediumvioletred",
-  "gold",
-  "orange",
-  "chartreuse",
-  "blueviolet",
-  "deeppink",
-];
 
-export function block1(coord, context, top, bottom, cursor, buffer) {
-  const t = context.time * 0.001;
+
+export function block1(coord, context, data, top, bottom, seed) {
+  let t = data.movement != -1 ? context.time * 0.001 : 0;
   const m = Math.min(context.cols, context.rows);
   const a = context.metrics.aspect;
 

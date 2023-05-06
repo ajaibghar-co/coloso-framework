@@ -1,0 +1,28 @@
+
+// Create monument Request with all fields. \
+// Expected 200 response
+POST http://localhost:3000/monument
+content-type: application/json
+
+{
+    "monumentName": "test-monument-6",
+    "monumentLocation": "delhi",
+    "creatorName" : "denny",
+    "creatorLocation": "kerala",
+    "structure": 1,
+    "color" : 2,
+    "movement": 0,
+    "params": "{sketch-seed:0.2, sketch-random:0.6}"
+}
+
+###
+
+GET http://localhost:3000/monument/1
+
+###
+
+GET http://localhost:3000/monument/page/0
+
+
+
+

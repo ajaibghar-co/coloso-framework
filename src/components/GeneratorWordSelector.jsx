@@ -54,7 +54,7 @@ function GeneratorWordSelector({ choiceWords, onHarvestClicked, active, cta }) {
       }
     }
 
-    onHarvestClicked(maxLabel);
+    onHarvestClicked({ label: maxLabel, choices: choices });
   }
 
   return (

@@ -1,6 +1,5 @@
 import { run } from "../../core/src/run";
-// import * as program from "../../core/buildings/monument12.js";
-// import * as program from "../../core/buildings/demo.js";
+
 import * as blockchain from "../../core/buildings/final/block_chain";
 import * as lissajous from "../../core/buildings/final/lissajous";
 import * as mandelbrot from "../../core/buildings/final/mandelbrot";
@@ -160,9 +159,12 @@ export default function Generator() {
   const [structure, setStructure] = useState(1);
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
+  const [choiceString, setChoiceString] = useState([]);
   const location = useLocation();
   const [showSaveModel, setShowSaveModel] = useState(false);
   const [creatorName, setCreatorName] = useState("");
+  const [creatorLocation, setCreatorLocation] = useState("");
+  const [monumentLocation, setMonumentLocation] = useState("");
   const navigate = useNavigate();
 
   const programs = [
@@ -175,24 +177,32 @@ export default function Generator() {
   ];
 
   async function onClickSave() {
-    console.log({ structure, movement, color });
-    const monumentPayload = {
-      monumentName: "test-monument-6",
-      monumentLocation: "delhi",
-      creatorName: "denny",
-      creatorLocation: "kerala",
-      structure: 1,
-      color: 2,
-      movement: 0,
-      params: "{sketch-seed:0.2, sketch-random:0.6}",
-    };
+    console.log({
+      monumentName,
+      monumentLocation,
+      creatorName,
+      creatorLocation,
+      structure,
+      movement,
+      color,
+      choiceString,
+    });
+    // const monumentPayload = {
+    //   monumentName: "test-monument-6",
+    //   monumentLocation: "delhi",
+    //   creatorName: "denny",
+    //   creatorLocation: "kerala",
+    //   structure: 1,
+    //   color: 2,
+    //   movement: 0,
+    //   params: "{sketch-seed:0.2, sketch-random:0.6}",
+    // };
 
-    const { data } = await axios.post(
-      "http://localhost:3000/monument",
-      monumentPayload
-    );
-    // console.log(response);
-    navigate(`/gallery/${data.id}`);
+    // const { data } = await axios.post(
+    //   "http://localhost:3000/monument",
+    //   monumentPayload
+    // );
+    // navigate(`/gallery/${data.id}`);
   }
 
   function render() {
@@ -228,15 +238,21 @@ export default function Generator() {
   }, [structure, color, movement]);
 
   function onHarvestClickedForFirstBox(value) {
-    setStructure(structureIndices[value]);
+    const { label, choices } = value;
+    setStructure(structureIndices[label]);
+    setChoiceString([...choiceString, ...choices]);
   }
 
   function onHarvestClickedForSecondBox(value) {
-    setColor(colorIndices[value]);
+    const { label, choices } = value;
+    setColor(colorIndices[label]);
+    setChoiceString([...choiceString, ...choices]);
   }
 
   function onHarvestClickedForThirdBox(value) {
-    setMovement(movementIndices[value]);
+    const { label, choices } = value;
+    setMovement(movementIndices[label]);
+    setChoiceString([...choiceString, ...choices]);
   }
 
   return (
@@ -361,13 +377,26 @@ export default function Generator() {
               height={"fit-content"}
               background={"white"}
               pad={"medium"}
+              gap={"small"}
             >
               <Heading level="4">Store in warehouse</Heading>
-              <Text>Creator Name</Text>
+
               <TextInput
+                placeholder="Creator Name"
                 value={creatorName}
                 onChange={(e) => setCreatorName(e.target.value)}
               ></TextInput>
+              <TextInput
+                placeholder="Creator Location"
+                value={creatorLocation}
+                onChange={(e) => setCreatorLocation(e.target.value)}
+              ></TextInput>
+              <TextInput
+                placeholder="Monument Location"
+                value={monumentLocation}
+                onChange={(e) => setMonumentLocation(e.target.value)}
+              ></TextInput>
+
               <Button plain onClick={onClickSave}>
                 <Box
                   pad={"xsmall"}

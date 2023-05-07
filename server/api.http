@@ -5,10 +5,11 @@ POST http://localhost:3000/monument
 content-type: application/json
 
 {
-    "monumentName": "test-monument-14",
+    "monumentName": "test-monument-15",
+    "string_list": "abc,def,ghi",
     "monumentLocation": "delhi",
-    "creatorName" : "denny",
-    "creatorLocation": "kerala",
+    "creatorName" : "nitin",
+    "creatorLocation": "udaipur",
     "structure": 1,
     "color" : 2,
     "movement": 0,
@@ -17,7 +18,7 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3000/monument/9
+GET http://localhost:3000/monument/3
 
 ###
 

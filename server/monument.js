@@ -2,6 +2,7 @@ async function add(db, monument) {
   const {
     monumentName,
     monumentLocation,
+    string_list,
     creatorName,
     creatorLocation,
     structure,
@@ -12,8 +13,9 @@ async function add(db, monument) {
 
   return new Promise((resolve, reject) => {
     db.run(
-      `INSERT INTO monuments (monument_name, monument_location, creator_name, creator_location, params, structure, color, movement) VALUES (?,?,?,?,?,?,?,?)`,
+      `INSERT INTO monuments (string_list, monument_name, monument_location, creator_name, creator_location, params, structure, color, movement) VALUES (?,?,?,?,?,?,?,?,?)`,
       [
+        string_list,
         monumentName,
         monumentLocation,
         creatorName,

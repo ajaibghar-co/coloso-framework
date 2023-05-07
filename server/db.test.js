@@ -13,6 +13,7 @@ import {
 const monuments = Array.from({ length: 50 }, (v, i) => {
   return {
     monumentName: `monumentName${i}`,
+    string_list: `string list : ${i}`,
     monumentLocation: `monumentLocation${i}`,
     creatorName: `creatorName${i}`,
     creatorLocation: `creatorLocation${i}`,

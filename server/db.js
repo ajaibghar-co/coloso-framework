@@ -6,6 +6,7 @@ function createTable(db) {
       CREATE TABLE monuments
       (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        string_list VARCHAR(255) NOT NULL,
         monument_name   VARCHAR(50) NOT NULL,
         monument_location   VARCHAR(50),
         creator_name   VARCHAR(50) NOT NULL,

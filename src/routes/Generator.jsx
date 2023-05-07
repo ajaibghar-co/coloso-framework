@@ -1,13 +1,14 @@
 import { run } from "../../core/src/run";
 // import * as program from "../../core/buildings/monument12.js";
 // import * as program from "../../core/buildings/demo.js";
-import * as flower from "../../core/buildings/final/flower";
+import * as blockchain from "../../core/buildings/final/block_chain";
 import * as lissajous from "../../core/buildings/final/lissajous";
 import * as mandelbrot from "../../core/buildings/final/mandelbrot";
-import * as blockchain from "../../core/buildings/final/block_chain";
 import * as spiral from "../../core/buildings/final/spiral";
 import * as watermelon from "../../core/buildings/final/watermelon";
-import * as demo from "../../core/buildings/demo";
+import * as flower from "../../core/buildings/final/flower";
+
+// import * as demo from "../../core/buildings/demo";
 import { useRef, useEffect, useState } from "react";
 import { Box, Text, Button, Image, Heading, Layer, TextInput } from "grommet";
 import { ClearOption } from "grommet-icons";
@@ -18,23 +19,46 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const structureMap = {
-  Tiny: "Mandelbrot",
+  Tiny: "Flower",
   Mirror: "Mandelbrot",
-  Sweaty: "Mandelbrot",
+  Sweaty: "Spiral",
   Closed: "Blockchain",
-  Sticky: "Mandelbrot",
-  Open: "Blockchain",
-  Massive: "Blockchain",
-  Community: "Mandelbrot",
-  Shoddy: "Blockchain",
-  Sketchy: "Blockchain",
+  Sticky: "Spiral",
+  Open: "Watermelon",
+  Massive: "Spiral",
+  Community: "Flower",
+  Shoddy: "Lissajous",
+  Sketchy: "Watermelon",
   Hard: "Blockchain",
-  Fluffy: "Mandelbrot",
+  Fluffy: "Lissajous",
+  Fetish: "Lissajous",
+  Unknown: "Lissajous",
+  Underground: "Flower",
+  Gloryhole: "Mandelbrot",
+  Dates: "Spiral",
+  Weird: "Lissajous",
+  Homely: "Watermelon",
+  Kinship: "Flower",
+  Collaborative: "Watermelon",
+  Vestibule: "Watermelon",
+  Fantasy: "Mandelbrot",
+  Sanctuary: "Blockchain",
+  Shelter: "Blockchain",
+  Tenderness: "Flower",
+  Trauma: "Mandelbrot",
+  Intersectional: "Watermelon",
+  Fluid: "Spiral",
+  Heels: "Blockchain",
+  Jewels: "Mandelbrot",
 };
 const structureIndices = {
   None: -1,
   Mandelbrot: 0,
   Blockchain: 1,
+  Watermelon: 2,
+  Flower: 3,
+  Spiral: 4,
+  Lissajous: 5,
 };
 
 const colorMap = {
@@ -91,7 +115,14 @@ export default function Generator() {
   const [creatorName, setCreatorName] = useState("");
   const navigate = useNavigate();
 
-  const programs = [mandelbrot, blockchain];
+  const programs = [
+    mandelbrot,
+    blockchain,
+    watermelon,
+    flower,
+    spiral,
+    lissajous,
+  ];
 
   async function onClickSave() {
     console.log({ structure, movement, color });

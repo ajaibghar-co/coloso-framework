@@ -11,7 +11,7 @@ function createTable(db) {
         monument_location   VARCHAR(50),
         creator_name   VARCHAR(50) NOT NULL,
         creator_location   VARCHAR(50),
-        params VARCHAR(50) NOT NULL,
+        params VARCHAR(255) NOT NULL,
         structure INTEGER NOT NULL,
         color INTEGER NOT NULL,
         movement INTEGER NOT NULL

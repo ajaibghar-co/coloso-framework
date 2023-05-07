@@ -2,7 +2,7 @@ async function add(db, monument) {
   const {
     monumentName,
     monumentLocation,
-    string_list,
+    stringList,
     creatorName,
     creatorLocation,
     structure,
@@ -15,7 +15,7 @@ async function add(db, monument) {
     db.run(
       `INSERT INTO monuments (string_list, monument_name, monument_location, creator_name, creator_location, params, structure, color, movement) VALUES (?,?,?,?,?,?,?,?,?)`,
       [
-        string_list,
+        stringList,
         monumentName,
         monumentLocation,
         creatorName,

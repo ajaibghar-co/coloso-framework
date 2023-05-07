@@ -151,6 +151,15 @@ const movementIndices = {
   pattern10: 5,
 };
 
+const sketchParams = {
+  Mandelbrot: ["sketch-it1", "sketch-it2", "sketch-it3"],
+  Blockchain: ["sketch-seed", "sketch-dim"],
+  Watermelon: ["sketch-seed1", "sketch-seed2", "sketch-seed3", "sketch-seed4"],
+  Flower: [],
+  Spiral: ["sketch-swidth"],
+  Lissajous: ["sketch-x1", "sketch-y1"],
+};
+
 const DEBUG = false;
 
 export default function Generator() {
@@ -165,6 +174,7 @@ export default function Generator() {
   const [creatorName, setCreatorName] = useState("");
   const [creatorLocation, setCreatorLocation] = useState("");
   const [monumentLocation, setMonumentLocation] = useState("");
+  const [params, setParams] = useState("");
   const navigate = useNavigate();
 
   const programs = [
@@ -177,8 +187,9 @@ export default function Generator() {
   ];
 
   async function onClickSave() {
-    console.log({
+    const monumentPayload = {
       monumentName,
+      stringList: choiceString.join(","),
       monumentLocation,
       creatorName,
       creatorLocation,
@@ -186,23 +197,14 @@ export default function Generator() {
       movement,
       color,
       choiceString,
-    });
-    // const monumentPayload = {
-    //   monumentName: "test-monument-6",
-    //   monumentLocation: "delhi",
-    //   creatorName: "denny",
-    //   creatorLocation: "kerala",
-    //   structure: 1,
-    //   color: 2,
-    //   movement: 0,
-    //   params: "{sketch-seed:0.2, sketch-random:0.6}",
-    // };
+      params,
+    };
 
-    // const { data } = await axios.post(
-    //   "http://localhost:3000/monument",
-    //   monumentPayload
-    // );
-    // navigate(`/gallery/${data.id}`);
+    const { data } = await axios.post(
+      "http://localhost:3000/monument",
+      monumentPayload
+    );
+    navigate(`/gallery/${data.id}`);
   }
 
   function render() {
@@ -239,7 +241,17 @@ export default function Generator() {
 
   function onHarvestClickedForFirstBox(value) {
     const { label, choices } = value;
+    // console.log(label);
     setStructure(structureIndices[label]);
+    let params = {};
+    for (var key in localStorage) {
+      if (sketchParams[label].includes(key)) {
+        // console.log(key);
+        params[key] = localStorage.getItem(key);
+      }
+    }
+    // console.log(params);
+    setParams(JSON.stringify(params));
     setChoiceString([...choiceString, ...choices]);
   }
 

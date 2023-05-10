@@ -9,7 +9,7 @@ import {
   TextInput,
   Button,
 } from "grommet";
-import * as program from "../../core/src/programs/demo8.js";
+import * as program from "../../core/src/programs/demo9.js";
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Landing.css";

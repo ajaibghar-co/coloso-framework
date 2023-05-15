@@ -12,7 +12,7 @@ export const settings = {
 import { sdCircle, sdSegment, opSmoothUnion, opSmoothIntersection, opSmoothSubtraction } from '../../src/modules/sdf.js'
 import { clamp, map, fract } from '../../src/modules/num.js'
 import { vec2, length, add } from '../../src/modules/vec2.js'
-import { densities, rdensity } from '../utils/density.js';
+import { densities } from '../utils/density.js';
 import { sort } from '../../src/modules/sort.js'
 import { mulN, sub, subN } from '../../src/modules/vec2.js';
 import { gnoise, random, vrandom } from '../../sugarrush/generative.js';
@@ -21,14 +21,29 @@ import { circleSDF, polySDF, starSDF } from '../../sugarrush/sdf.js';
 import { fill, stroke } from '../../sugarrush/draw.js'
 import { pattern1, pattern2, pattern4, patterns } from '../utils/pattern.js';
 
-let iDensity = Math.floor(Math.random() * densities.length)
-let sDensity = densities[iDensity]
+
+// storage variables 
+let sDensity
+let iDensity = localStorage.getItem('sketch-idensity')
+let x1 = localStorage.getItem('sketch-x1')
+let y1 = localStorage.getItem('sketch-y1')
+if(x1 == null || y1 == null || iDensity == null) {
+	x1 = Math.random() * 10
+	y1 = Math.random() * 10
+	iDensity = Math.floor(Math.random() * densities.length)
+	localStorage.setItem('sketch-x1', x1)
+	localStorage.setItem('sketch-y1', y1)
+	localStorage.setItem('sketch-idensity', iDensity)
+}
+else {
+	x1 = parseFloat(x1)
+	y1 = parseFloat(y1)
+	iDensity = parseInt(iDensity)
+	sDensity = densities[iDensity]
+}
 console.log("sDensity: ", sDensity)
 
-let d1 = rdensity
-let d2 = rdensity
-let d3 = rdensity
-let d4 = rdensity
+
 
 export function main(coord, context, cursor, buffer, data) {
 	let sColors = data.color != -1 ? colors[data.color] : ['white']
@@ -58,7 +73,7 @@ export function main(coord, context, cursor, buffer, data) {
 
 	let y = fract(st.x*4.0) < 0.5 ? st.y+st.x : st.y-st.x
 	// let mod1 = Math.floor(pattern1(y, 20)) % density1.length
-	let mod1 = pattern2(coord, context) % d1.length
+	let mod1 = pattern2(coord, context) % sDensity.length
 
 	let mod_st2 = vec2(st.x, st.y)
 	mod_st2.y += Math.abs(Math.sin(st.x*10.0)) * 10.0
@@ -68,12 +83,12 @@ export function main(coord, context, cursor, buffer, data) {
 	let move = sPattern1(coord, context, t)
 
 	return {
-		char: s1 > 0.0 ? d1[mod1] 
-					: s2 > 0.0 ? d2[mod1] 
+		char: s1 > 0.0 ? sDensity[mod1] 
+					: s2 > 0.0 ? sDensity[mod1] 
 					// : s3 > 0.0 ? d3[mod1] 	
 					// : s4 > 0.0 ? d4[mod1]
 					 : '',	
-		char: s > 0.0 ? d1[mod1] : '',
+		char: s > 0.0 ? sDensity[mod1] : '',
 		color: s > 0.0 ? sColors[move % sColors.length] : 'white',
 
 	}

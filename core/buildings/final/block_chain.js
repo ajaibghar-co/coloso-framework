@@ -19,23 +19,27 @@ import { movement2 } from '../utils/movement.js';
 import { gnoise } from '../../sugarrush/generative.js';
 import { patterns } from '../utils/pattern.js';
 
-let iDensity = Math.floor(Math.random() * densities.length)
-let sDensity = densities[iDensity]
-console.log("sDensity: ", sDensity)
 
 // storage variables 
+let sDensity
+let iDensity = localStorage.getItem('sketch-idensity')
 let seed = localStorage.getItem('sketch-seed')
 let dim = localStorage.getItem('sketch-dim')
-if(seed == null || dim == null) {
-	seed = Math.random()*10000.0
+if(seed == null || dim == null || iDensity == null) {
+  seed = Math.random()*10000.0
 	dim = 4.0
+	iDensity = Math.floor(Math.random() * densities.length)
 	localStorage.setItem('sketch-seed', seed)
 	localStorage.setItem('sketch-dim', dim)
+	localStorage.setItem('sketch-idensity', iDensity)
 }
 else {
 	seed = parseFloat(seed)
 	dim = parseInt(dim)
+  iDensity = parseInt(iDensity)
+	sDensity = densities[iDensity]
 }
+console.log("sDensity: ", sDensity)
 
 export function main(coord, context, cursor, buffer, data) {
   let sColors = data.color != -1 ? colors[data.color] : ['white']

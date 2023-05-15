@@ -20,18 +20,22 @@ import { colors, colors_wha, rcolor } from "../utils/colors.js"
 import { sdSegment } from '../../src/modules/sdf.js'
 import { patterns } from "../utils/pattern.js"
 
-let iDensity = Math.floor(Math.random() * densities.length)
-let sDensity = densities[iDensity]
-
 // storage variables
+let sDensity
+let iDensity = localStorage.getItem('sketch-idensity')
 let swidth = localStorage.getItem('sketch-swidth')
-if(swidth == null) {
+if(swidth == null || iDensity == null) {
 	swidth = Math.random() * 10
+	iDensity = Math.floor(Math.random() * densities.length)
 	localStorage.setItem('sketch-swidth', swidth)
+	localStorage.setItem('sketch-idensity', iDensity)
 }
 else {
 	swidth = parseFloat(swidth)
+	iDensity = parseInt(iDensity)
+	sDensity = densities[iDensity]
 }
+console.log("sDensity: ", sDensity)
 
 export function main(coord, context, cursor, buffer, data) {
   let sColors = data.color != -1 ? colors[data.color] : ['white']

@@ -181,4 +181,4 @@ export const pattern13 = (coord, context, time) => {
 	// }
 
 
-export const patterns = [pattern4, pattern6, pattern7, pattern8]
+export const patterns = [pattern4, pattern6, pattern7, pattern8, pattern9, pattern10]

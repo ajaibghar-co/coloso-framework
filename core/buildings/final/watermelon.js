@@ -20,38 +20,34 @@ import { pattern6, patterns } from '../utils/pattern.js';
 
 const { sin, cos, floor, pow, max, atan2, PI } = Math
 
-let iDensity = Math.floor(Math.random() * densities.length)
-let sDensity = densities[iDensity]
-console.log("sDensity: ", sDensity)
-
 // storage variables
+let sDensity
+let iDensity = localStorage.getItem('sketch-idensity')
 let seed1 = localStorage.getItem('sketch-seed1')
 let seed2 = localStorage.getItem('sketch-seed2')
 let seed3 = localStorage.getItem('sketch-seed3')
 let seed4 = localStorage.getItem('sketch-seed4')
-if(seed1 == null || seed2 == null || seed3 == null || seed4 == null) {
+if(seed1 == null || seed2 == null || seed3 == null || seed4 == null || iDensity == null) {
 	seed1 = Math.random() * 10000.0;
 	seed2 = Math.random() * 10000.0;
 	seed3 = Math.random() * 10000.0;
 	seed4 = Math.random() * 10000.0;
+	iDensity = Math.floor(Math.random() * densities.length)
 	localStorage.setItem('sketch-seed1', seed1)
 	localStorage.setItem('sketch-seed2', seed2)
 	localStorage.setItem('sketch-seed3', seed3)
 	localStorage.setItem('sketch-seed4', seed4)
+	localStorage.setItem('sketch-idensity', iDensity)
 }
 else {
 	seed1 = parseFloat(seed1)
 	seed2 = parseFloat(seed2)
 	seed3 = parseFloat(seed3)
 	seed4 = parseFloat(seed4)
+	iDensity = parseInt(iDensity)
+	sDensity = densities[iDensity]
 }
-
-let d1 = rdensity
-let d2 = rdensity
-let d3 = rdensity
-let d4 = rdensity
-
-console.log(colors[0])
+console.log("sDensity: ", sDensity)
 
 export function main(coord, context, cursor, buffer, data) {
   let sColors = data.color != -1 ? colors[data.color] : ['white']
@@ -90,7 +86,7 @@ export function main(coord, context, cursor, buffer, data) {
 		// 			: s2 > 0.0 ? d2[mod1] 
 		// 			: s3 > 0.0 ? d3[mod1] 	
 		// 			: s4 > 0.0 ? d4[mod1] : '',	
-		char: b ? d1[mod1 % sDensity.length] : '',
+		char: b ? sDensity[mod1 % sDensity.length] : '',
 		// char: st.y,
     // char: clamp(coord.y, 20, context.rows/4),
 		color: b ? sColors[mod2 % sColors.length] : 'white',

@@ -81,7 +81,7 @@ export default function Generator() {
       "http://localhost:3000/monument",
       monumentPayload
     );
-    navigate(`/gallery/${data.id}`);
+    navigate(`/gallery/${data.slug}`);
   }
 
   function render() {

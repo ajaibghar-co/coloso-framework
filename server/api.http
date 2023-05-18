@@ -5,10 +5,10 @@ POST http://localhost:3000/monument
 content-type: application/json
 
 {
-    "monumentName": "test-monument-15",
-    "string_list": "abc,def,ghi",
+    "monumentName": "test-monument-25",
+    "stringList": "abc,def,ghi",
     "monumentLocation": "delhi",
-    "creatorName" : "nitin",
+    "creatorName" : "isha",
     "creatorLocation": "udaipur",
     "structure": 1,
     "color" : 2,

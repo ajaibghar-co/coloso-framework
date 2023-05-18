@@ -13,31 +13,17 @@ import Theme from "./components/Theme";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Landing />,
     errorElement: <Error />,
-    children: [
-      {
-        path: "landing",
-        element: <Landing />,
-      },
-      {
-        path: "generator/:monumentName",
-        element: <Generator />,
-      },
-      {
-        path: "generator-flower",
-        element: <GeneratorFlower />,
-      },
-      {
-        path: "gallery",
-        element: <Gallery />,
-      },
-      {
-        path: "gallery/:artworkId",
-        element: <GalleryItem />,
-        loader: monumentLoader,
-      },
-    ],
+  },
+  {
+    path: "/generator/:monumentName",
+    element: <Generator />,
+  },
+  {
+    path: "/gallery/:artworkId",
+    element: <GalleryItem />,
+    loader: monumentLoader,
   },
 ]);
 

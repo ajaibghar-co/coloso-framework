@@ -31,7 +31,11 @@ async function add(db, monument) {
           return reject("error inserting monument");
         } else {
           console.log(this);
-          return resolve({ id: this.lastID, ...monument });
+          return resolve({
+            id: this.lastID,
+            ...monument,
+            slug: `${monumentName}-${creatorName}-${this.lastID}`,
+          });
         }
       }
     );

@@ -120,7 +120,23 @@ export default function Landing() {
         }
         if (page === 3) {
           if (e.key != "Enter") {
-            setMonumentName(monumentName + e.key);
+            if (
+              ![
+                "Backspace",
+                "Enter",
+                "Shift",
+                "Alt",
+                "ArrowLeft",
+                "ArrowRight",
+                "ArrowUp",
+                "ArrowDown",
+                "Control",
+                "Tab",
+              ].includes(e.key)
+            ) {
+              // console.log("pressed :", e.key);
+              setMonumentName(monumentName + e.key);
+            }
           } else {
             navigate(`/generator/${monumentName}`);
           }

@@ -142,4 +142,37 @@ async function deleteAll(db) {
   });
 }
 
-export { add, count, getAll, getPaginated, getById, getBySlug, deleteAll };
+async function search(db, string) {
+  // console.log("searching ", string);
+  return new Promise((resolve, reject) => {
+    db.all(
+      `SELECT * FROM monuments WHERE monument_name LIKE '${string}%'`,
+      [],
+      (err, rows) => {
+        if (err) {
+          return reject("error searching ");
+        } else {
+          return resolve(
+            rows.map((row) => {
+              return {
+                ...row,
+                slug: `${row.monument_name}-${row.creator_name}-${row.id}`,
+              };
+            })
+          );
+        }
+      }
+    );
+  });
+}
+
+export {
+  add,
+  count,
+  getAll,
+  getPaginated,
+  getById,
+  getBySlug,
+  deleteAll,
+  search,
+};

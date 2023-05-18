@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { config } from "./config.js";
 import { createDbConnection } from "./db.js";
-import { add, getById, getBySlug, getPaginated } from "./monument.js";
+import { add, getById, getBySlug, getPaginated, search } from "./monument.js";
 const app = express();
 const port = 3000;
 
@@ -38,6 +38,13 @@ app.get("/monument/slug/:slug", async (req, res) => {
   const { slug } = req.params;
   console.log(slug);
   const monument = await getBySlug(db, slug);
+  res.json(monument);
+});
+
+app.get("/monument/search/:term", async (req, res) => {
+  const { term } = req.params;
+  console.log(term);
+  const monument = await search(db, term);
   res.json(monument);
 });
 

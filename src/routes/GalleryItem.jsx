@@ -1,5 +1,5 @@
 import axios, { all } from "axios";
-import { Box, Heading, Text } from "grommet";
+import { Box, Heading, Text, TextInput } from "grommet";
 import { useEffect, useRef, useState } from "react";
 import { run } from "../../core/src/run";
 import * as blockchain from "../../core/buildings/final/block_chain";
@@ -10,6 +10,7 @@ import * as watermelon from "../../core/buildings/final/watermelon";
 import * as flower from "../../core/buildings/final/flower";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { Search } from "grommet-icons";
 
 const programs = [
   mandelbrot,
@@ -29,6 +30,7 @@ export default function GalleryItem() {
   const [allMonumentsList, setAllMonumentsList] = useState([]);
   const [uptoPageNum, setUptoPageNum] = useState(0);
   const location = useLocation();
+  const [searchTerm, setSearchTerm] = useState("");
 
   function render() {
     if (generatorRef && structure != -1) {
@@ -82,6 +84,24 @@ export default function GalleryItem() {
     render();
   }, [structure, color, movement]);
 
+  useEffect(() => {
+    (async function search() {
+      if (searchTerm !== "") {
+        const { data: monumentPage } = await axios.get(
+          `http://localhost:3000/monument/search/${searchTerm}`
+        );
+        setAllMonumentsList(monumentPage);
+      } else {
+        const { data: monumentPage } = await axios.get(
+          `http://localhost:3000/monument/page/${uptoPageNum}`
+        );
+        setAllMonumentsList(monumentPage);
+      }
+    })();
+
+    return () => {};
+  }, [searchTerm]);
+
   return (
     <Box direction={"row-responsive"} background={"#222"} fill flex="grow">
       <Box
@@ -92,12 +112,23 @@ export default function GalleryItem() {
         height={"100vh"}
         overflow={"scroll"}
       >
+        <Box direction="row-responsive" gap="small" align="center">
+          <TextInput
+            placeholder="monument name"
+            value={searchTerm}
+            onChange={async (e) => {
+              setSearchTerm(e.target.value);
+              // await clickSearch();
+            }}
+          ></TextInput>
+          {/* <Search size={"medium"} /> */}
+        </Box>
         {allMonumentsList &&
           allMonumentsList.map((monument, ix) => {
             return (
               <Box key={ix}>
                 <Link to={`/gallery/${monument.slug}`}>
-                  {monument.monument_name}
+                  <Text color={"white"}>{monument.monument_name}</Text>
                 </Link>
               </Box>
             );

@@ -1,30 +1,19 @@
 import { Box, Text, Button, Stack } from "grommet";
-import { ClearOption } from "grommet-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import RefreshIcon from "./RefreshIcon";
+import { getRandom, sample2Choices } from "../selection";
 
-// source : https://stackoverflow.com/a/19270021/2767642
-function getRandom(arr, n) {
-  var result = new Array(n),
-    len = arr.length,
-    taken = new Array(len);
-  if (n > len)
-    throw new RangeError("getRandom: more elements taken than available");
-  while (n--) {
-    var x = Math.floor(Math.random() * len);
-    result[n] = arr[x in taken ? taken[x] : x];
-    taken[x] = --len in taken ? taken[len] : len;
-  }
-  return result;
-}
+function GeneratorWordSelector({ map, set, onHarvestClicked, active, cta }) {
+  const choiceSubSet = sample2Choices(set, map);
 
-function GeneratorWordSelector({ choiceWords, onHarvestClicked, active, cta }) {
   const [sampledChoices, setSampledChoices] = useState(
-    getRandom(Object.keys(choiceWords), 5)
+    getRandom(choiceSubSet, 5)
   );
+  console.log({ choiceSubSet, sampledChoices });
   const [choices, setChoices] = useState([]);
 
   function resampleChoices() {
-    setSampledChoices(getRandom(Object.keys(choiceWords), 5));
+    setSampledChoices(getRandom(Object.keys(map), 5));
     setChoices([]);
     onHarvestClicked("None");
   }
@@ -32,16 +21,16 @@ function GeneratorWordSelector({ choiceWords, onHarvestClicked, active, cta }) {
   function computeOutput() {
     // map the selection to keyword
     let value = 0;
-    // console.log({ choiceWords });
+    // console.log({ choiceWordsMap });
     // console.log({ sampledChoices });
     // console.log({ choices });
     let count = {};
     for (const choice of choices) {
       // console.log(choice);
-      if (!count[choiceWords[choice]]) {
-        count[choiceWords[choice]] = 0;
+      if (!count[map[choice]]) {
+        count[map[choice]] = 0;
       }
-      count[choiceWords[choice]]++;
+      count[map[choice]]++;
     }
     let maxCount = 0;
     let maxLabel = "";
@@ -58,22 +47,20 @@ function GeneratorWordSelector({ choiceWords, onHarvestClicked, active, cta }) {
   }
 
   return (
-    <Box background={"white"} pad={"xsmall"}>
+    <Box background={"#e0c7a3bb"} pad={"small"} round={"xsmall"}>
       <Stack anchor={"center"} fill={true}>
         <Box gap={"medium"}>
           <Box direction={"row-responsive"}>
             <Box>
-              <Text color={"black"}>Pick 3 out of 5</Text>
+              <Text color={"black"} weight={700}>
+                Pick 3 out of 5
+              </Text>
             </Box>
             <Box flex={"grow"}></Box>
-            <Button
-              icon={<ClearOption color={"black"} size="medium" />}
-              plain
-              onClick={resampleChoices}
-            />
+            <Button icon={<RefreshIcon />} plain onClick={resampleChoices} />
           </Box>
           <Box>
-            <Box align="center">
+            <Box align="center" gap={"xxsmall"}>
               {sampledChoices.slice(0, 5).map((choice, ix) => (
                 <Button
                   plain
@@ -85,11 +72,10 @@ function GeneratorWordSelector({ choiceWords, onHarvestClicked, active, cta }) {
                   }}
                 >
                   <Box
-                    background={choices.includes(choice) ? "#E6D7B3" : "white"}
+                    background={choices.includes(choice) ? "white" : "e0c7a3"}
+                    pad={"xxsmall"}
                   >
-                    <Text color={choices.includes(choice) ? "black" : "gray"}>
-                      {choice}
-                    </Text>
+                    <Text>{choice}</Text>
                   </Box>
                 </Button>
               ))}
@@ -103,10 +89,10 @@ function GeneratorWordSelector({ choiceWords, onHarvestClicked, active, cta }) {
               onClick={computeOutput}
             >
               <Box
-                background={active && choices.length === 3 ? "#E6D7B3" : "grey"}
+                background={active && choices.length === 3 ? "#CDD8E3" : "grey"}
                 alignSelf="center"
                 width={"fit-content"}
-                pad={"xxsmall"}
+                pad={"xsmall"}
                 round={"xxsmall"}
               >
                 <Text size={"small"}>{cta}</Text>

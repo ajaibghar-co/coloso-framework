@@ -16,140 +16,17 @@ import StaticSketch from "../components/StaticSketch";
 import "./Generator.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
-const structureMap = {
-  Tiny: "Flower",
-  Mirror: "Mandelbrot",
-  Sweaty: "Spiral",
-  Closed: "Blockchain",
-  Sticky: "Spiral",
-  Open: "Watermelon",
-  Massive: "Spiral",
-  Community: "Flower",
-  Shoddy: "Lissajous",
-  Sketchy: "Watermelon",
-  Hard: "Blockchain",
-  Fluffy: "Lissajous",
-  Fetish: "Lissajous",
-  Unknown: "Lissajous",
-  Underground: "Flower",
-  Gloryhole: "Mandelbrot",
-  Dates: "Spiral",
-  Weird: "Lissajous",
-  Homely: "Watermelon",
-  Kinship: "Flower",
-  Collaborative: "Watermelon",
-  Vestibule: "Watermelon",
-  Fantasy: "Mandelbrot",
-  Sanctuary: "Blockchain",
-  Shelter: "Blockchain",
-  Tenderness: "Flower",
-  Trauma: "Mandelbrot",
-  Intersectional: "Watermelon",
-  Fluid: "Spiral",
-  Heels: "Blockchain",
-  Jewels: "Mandelbrot",
-};
-const structureIndices = {
-  None: -1,
-  Mandelbrot: 0,
-  Blockchain: 1,
-  Watermelon: 2,
-  Flower: 3,
-  Spiral: 4,
-  Lissajous: 5,
-};
-
-const colorMap = {
-  Light: "set5",
-  Dark: "set4",
-  Cocktails: "set1",
-  Glitter: "set0",
-  Hip: "set1",
-  Sinister: "set4",
-  Pink: "set6",
-  Love: "set0",
-  Nature: "set4",
-  Colorful: "set1",
-  Neon: "set2",
-  Glitzy: "set1",
-  Joy: "set3",
-  Romantic: "set3",
-  Cosy: "set5",
-  Urban: "set2",
-  Privacy: "set5",
-  Metal: "set5",
-  True: "set4",
-  Celebration: "set3",
-  Euphoria: "set1",
-  Emotions: "set0",
-  Intimacy: "set6",
-  Vulnerable: "set5",
-  Sober: "set6",
-  Smelly: "set4",
-  Confetti: "set0",
-  Cake: "set0",
-  Garden: "set2",
-  Summer: "set2",
-  Lipstick: "set3",
-  Lace: "set3",
-  Flow: "set6",
-  Perfume: "set6",
-};
-
-const colorIndices = {
-  None: -1,
-  set0: 0,
-  set1: 1,
-  set2: 2,
-  set3: 3,
-  set4: 4,
-  set5: 5,
-  set6: 6,
-};
-
-const movementMap = {
-  Discoball: "pattern7",
-  Naughty: "pattern9",
-  Dance: "pattern4",
-  Heartbeat: "pattern4",
-  Performance: "pattern10",
-  Vogueing: "pattern6",
-  Bubbles: "pattern4",
-  Druggy: "pattern10",
-  Notorious: "pattern6",
-  Intense: "pattern6",
-  Drag: "pattern8",
-  Sexy: "pattern9",
-  Fight: "pattern6",
-  Transition: "pattern9",
-  Conquer: "pattern8",
-  Desire: "pattern7",
-  Furry: "pattern7",
-  Hedonistic: "pattern10",
-  Therapeutic: "pattern8",
-  Addiction: "pattern9",
-  Transgressive: "pattern10",
-  Bassline: "pattern4",
-  Exciting: "pattern4",
-  Tango: "pattern6",
-  Shuffle: "pattern7",
-  Spin: "pattern7",
-  Flow: "pattern8",
-  Grinding: "pattern8",
-  Waacking: "pattern9",
-  Flair: "pattern10",
-};
-
-const movementIndices = {
-  None: -1,
-  pattern4: 0,
-  pattern6: 1,
-  pattern7: 2,
-  pattern8: 3,
-  pattern9: 4,
-  pattern10: 5,
-};
+import {
+  structureMap,
+  structureIndices,
+  colorMap,
+  colorIndices,
+  movementMap,
+  movementIndices,
+  structureSet,
+  colorSet,
+  movementSet,
+} from "../selection";
 
 const sketchParams = {
   Mandelbrot: ["sketch-it1", "sketch-it2", "sketch-it3"],
@@ -295,7 +172,8 @@ export default function Generator() {
         <Box width={{ min: "28vw", max: "40em" }}>
           <Box gap={"medium"} pad={"small"}>
             <GeneratorWordSelector
-              choiceWords={structureMap}
+              set={structureSet}
+              map={structureMap}
               onHarvestClicked={onHarvestClickedForFirstBox}
               active={true}
               cta={"Harvest"}
@@ -303,7 +181,8 @@ export default function Generator() {
           </Box>
           <Box gap={"medium"} pad={"small"}>
             <GeneratorWordSelector
-              choiceWords={colorMap}
+              set={colorSet}
+              map={colorMap}
               onHarvestClicked={onHarvestClickedForSecondBox}
               active={structure != -1}
               cta={"Crystallize"}
@@ -311,7 +190,8 @@ export default function Generator() {
           </Box>
           <Box gap={"medium"} pad={"small"}>
             <GeneratorWordSelector
-              choiceWords={movementMap}
+              set={movementSet}
+              map={movementMap}
               onHarvestClicked={onHarvestClickedForThirdBox}
               active={structure != -1}
               cta={"Distil"}
@@ -362,7 +242,7 @@ export default function Generator() {
               alignSelf="center"
             ></Box> */}
             <Box align="center">
-              <Heading level={4}>{monumentName}</Heading>
+              <h1 className="monument-name">{monumentName}</h1>
               <Button plain onClick={() => setShowSaveModel(true)}>
                 <Box
                   pad={"xsmall"}

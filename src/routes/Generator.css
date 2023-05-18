@@ -1,3 +1,15 @@
-html, body {
-    background: #222;
+html,
+body {
+  background: #222;
+}
+
+.monument-name {
+  font-family: WetHard;
+  font-weight: 900;
+  font-size: 2.2em;
+  color: #e0c7a3;
+}
+
+.generator-selector {
+  background-color: #e0c7a3;
 }

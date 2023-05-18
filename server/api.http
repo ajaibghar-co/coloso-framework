@@ -18,12 +18,15 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3000/monument/3
+GET http://localhost:3000/monument/2
 
 ###
 
 GET http://localhost:3000/monument/page/0
 
 
+###
+
+GET http://localhost:3000/monument/slug/asdfasdfa-adhiraj-2
 
 

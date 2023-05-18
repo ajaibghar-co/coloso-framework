@@ -58,7 +58,27 @@ async function getById(db, id) {
         console.log(error);
         return reject("error getting monument");
       } else {
-        return resolve(row);
+        return resolve({
+          ...row,
+          slug: `${row.monument_name}-${row.creator_name}-${row.id}`,
+        });
+      }
+    });
+  });
+}
+
+async function getBySlug(db, slug) {
+  const id = slug.split("-")[2];
+  return new Promise((resolve, reject) => {
+    db.get(`SELECT * FROM monuments WHERE ID=${id}`, (error, row) => {
+      if (error) {
+        console.log(error);
+        return reject("error getting monument");
+      } else {
+        return resolve({
+          ...row,
+          slug: `${row.monument_name}-${row.creator_name}-${row.id}`,
+        });
       }
     });
   });
@@ -71,7 +91,14 @@ async function getAll(db) {
         console.log("error getting monument");
         return reject("error getting monument");
       } else {
-        return resolve(rows);
+        return resolve(
+          rows.map((row) => {
+            return {
+              ...row,
+              slug: `${row.monument_name}-${row.creator_name}-${row.id}`,
+            };
+          })
+        );
       }
     });
   });
@@ -85,7 +112,14 @@ async function getPaginated(db, pageNum, pageSize) {
         if (error) {
           return reject("could not get page");
         } else {
-          return resolve(rows);
+          return resolve(
+            rows.map((row) => {
+              return {
+                ...row,
+                slug: `${row.monument_name}-${row.creator_name}-${row.id}`,
+              };
+            })
+          );
         }
       }
     );
@@ -104,4 +138,4 @@ async function deleteAll(db) {
   });
 }
 
-export { add, count, getAll, getPaginated, getById, deleteAll };
+export { add, count, getAll, getPaginated, getById, getBySlug, deleteAll };

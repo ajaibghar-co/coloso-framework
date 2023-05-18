@@ -50,10 +50,11 @@ export default function GalleryItem() {
 
   useEffect(() => {
     const monumentId = location.pathname.split("/")[2];
+    console.log({ monumentId });
 
     (async function getMonument() {
       const { data: monument } = await axios.get(
-        `http://localhost:3000/monument/${monumentId}`
+        `http://localhost:3000/monument/slug/${monumentId}`
       );
       console.log({ monument });
       setStructure(monument.structure);
@@ -95,7 +96,7 @@ export default function GalleryItem() {
           allMonumentsList.map((monument, ix) => {
             return (
               <Box key={ix}>
-                <Link to={`/gallery/${monument.id}`}>
+                <Link to={`/gallery/${monument.slug}`}>
                   {monument.monument_name}
                 </Link>
               </Box>

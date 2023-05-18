@@ -83,9 +83,9 @@ export default function GalleryItem() {
   }, [structure, color, movement]);
 
   return (
-    <Box direction={"row-responsive"}>
+    <Box direction={"row-responsive"} background={"#222"} fill flex="grow">
       <Box
-        background={"black"}
+        background={"#222"}
         width={"medium"}
         pad={"small"}
         gap={"small"}

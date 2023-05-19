@@ -1,88 +1,87 @@
-body {
-    background: rgb(76, 76, 76);
-    background: radial-gradient(circle, #E0C7A3 0%, rgb(15, 15, 15) 100%);
+#camera-bg {
+  background: rgb(76, 76, 76);
+  background: radial-gradient(circle, #e0c7a3 0%, rgb(15, 15, 15) 100%);
 }
 
 #langingpre {
-    /* position: absolute; */
-    margin:0;
-    padding:0;
-    left:0;
-    top:0;
-    width:100vw;
-    height:100vh;
-    font-family: inherit;
-    font-family: 'Simple Console', monospace;
-  }
-  
+  /* position: absolute; */
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: inherit;
+  font-family: "Simple Console", monospace;
+}
 
 #title {
-    /* float: right; */
-    display: flex;
-    /* flex-direction: column; */
-    width: 40em;
-    padding: 2em;
-    align-items: center ;
-    justify-content: center;
-    margin-top: 18em;
+  /* float: right; */
+  display: flex;
+  /* flex-direction: column; */
+  width: 40em;
+  padding: 2em;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18em;
 }
 
 #welcome {
-    /* padding:1em;   */
-    margin: auto;
-    width: 50%;
-    padding: 10px;
-    font-family: "wethard", serif;
-    font-size: 20em;
-    color: #E0C7A3;
-    font-variation-settings: "wght" 90;
-    /* align-items: center; */
-    mix-blend-mode: difference;
-    text-align: center;
-    /* transition: font-variation-settings 0.3s ease; */
+  /* padding:1em;   */
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  font-family: "wethard", serif;
+  font-size: 20em;
+  color: #e0c7a3;
+  font-variation-settings: "wght" 90;
+  /* align-items: center; */
+  mix-blend-mode: difference;
+  text-align: center;
+  /* transition: font-variation-settings 0.3s ease; */
 }
 
 #inst {
-    /* padding:1em; */
-    margin-top: 2em;
-    margin-left: 1.2em;
-      /* font-family:  Courier, monospace; */
-      font-family: 'Poppins', sans-serif;
-      font-size: large;
-      background-color: rgba(255, 255, 255, 0.6);
-      /* backdrop-filter: blur(10px); */
+  /* padding:1em; */
+  margin-top: 2em;
+  margin-left: 1.2em;
+  /* font-family:  Courier, monospace; */
+  font-family: "Poppins", sans-serif;
+  font-size: large;
+  background-color: rgba(255, 255, 255, 0.6);
+  /* backdrop-filter: blur(10px); */
 }
-#inst div{
+#inst div {
 }
 
-#inst p{
-    padding:1em;
-    color: #b94982;
+#inst p {
+  padding: 1em;
+  color: #b94982;
 }
 
 @keyframes wacky {
-0% {
+  0% {
     font-variation-settings: "wght" 60;
-}
-25% {
+  }
+  25% {
     font-variation-settings: "wght" 100;
-}
-50% {
+  }
+  50% {
     font-variation-settings: "wght" 150;
-}
-75% {
+  }
+  75% {
     font-variation-settings: "wght" 180;
-}
-100% {
+  }
+  100% {
     font-variation-settings: "wght" 60;
+  }
 }
-} 
 
 h1 {
-animation: wacky infinite;
-animation-duration: 5s;
-animation-timing-function: ease;
-margin: 0 auto;
-line-height: 1;
-font-weight: normal;
+  animation: wacky infinite;
+  animation-duration: 5s;
+  animation-timing-function: ease;
+  margin: 0 auto;
+  line-height: 1;
+  font-weight: normal;
 }

@@ -10,6 +10,9 @@ import {
   Button,
 } from "grommet";
 import * as program from "../../core/src/programs/demo9.js";
+import * as emptyProgram from "../../core/src/programs/empty.js";
+import Camera from "../../core/src/modules/camera.js";
+
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Landing.css";
@@ -111,6 +114,16 @@ export default function Landing() {
     render();
   }, [generatorRef]);
 
+  function disableCamera() {
+    const video = Camera.init();
+    video.pause();
+    video.removeAttribute("src"); // video.src = '' works so this line can be deleted
+    video.load();
+    video.src = "";
+    video.srcObject = null;
+    video.remove();
+  }
+
   return (
     <Keyboard
       target="document"
@@ -138,6 +151,7 @@ export default function Landing() {
               setMonumentName(monumentName + e.key);
             }
           } else {
+            disableCamera();
             navigate(`/generator/${monumentName}`);
           }
         }
@@ -147,7 +161,7 @@ export default function Landing() {
       }}
     >
       <div style={{ height: "100vh" }}>
-        <Box full>
+        <Box full class="camera-bg">
           <pre id="langingpre" ref={generatorRef}></pre>
         </Box>
         <Layer

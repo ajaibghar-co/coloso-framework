@@ -47,7 +47,7 @@ function GeneratorWordSelector({ map, set, onHarvestClicked, active, cta }) {
   }
 
   return (
-    <Box background={"#e0c7a3bb"} pad={"small"} round={"xsmall"}>
+    <Box background={"#e0c7a3bb"} pad={"small"} round={"xsmall"} flex="grow">
       <Stack anchor={"center"} fill={true}>
         <Box gap={"medium"}>
           <Box direction={"row-responsive"}>

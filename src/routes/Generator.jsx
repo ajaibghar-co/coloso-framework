@@ -27,6 +27,7 @@ import {
   colorSet,
   movementSet,
 } from "../selection";
+import { domToPng } from "modern-screenshot";
 
 const sketchParams = {
   Mandelbrot: ["sketch-it1", "sketch-it2", "sketch-it3"],
@@ -168,9 +169,10 @@ export default function Generator() {
           </Box>
         </Button>
       </Box>
+
       <Box direction={"row-responsive"}>
-        <Box width={{ min: "28vw", max: "40em" }}>
-          <Box gap={"medium"} pad={"small"}>
+        <Box width={{ min: "24vw", max: "28em" }} gap="large">
+          <Box pad={"small"}>
             <GeneratorWordSelector
               set={structureSet}
               map={structureMap}
@@ -179,7 +181,7 @@ export default function Generator() {
               cta={"Harvest"}
             />
           </Box>
-          <Box gap={"medium"} pad={"small"}>
+          <Box pad={"small"}>
             <GeneratorWordSelector
               set={colorSet}
               map={colorMap}
@@ -188,7 +190,7 @@ export default function Generator() {
               cta={"Crystallize"}
             />
           </Box>
-          <Box gap={"medium"} pad={"small"}>
+          <Box pad={"small"}>
             <GeneratorWordSelector
               set={movementSet}
               map={movementMap}
@@ -203,57 +205,65 @@ export default function Generator() {
           background={"#222"}
           border={DEBUG ? { color: "red" } : false}
           height={"fit-content"}
+          gap="large"
         >
-          <Box direction="row-responsive" justify="center">
-            {/* <Box
-              width={"small"}
-              height={"medium"}
-              border={DEBUG ? { color: "aqua" } : false}
-            >
-              <Image fit="contain" src="/sample-sketch01.png" />
-            </Box> */}
-            <Box
-              width={"large"}
-              height={"large"}
-              border={DEBUG ? { color: "green" } : false}
-            >
-              {structure != -1 ? (
-                <pre ref={generatorRef}></pre>
-              ) : (
-                <Box alignSelf="center">
-                  <Box fill={true} />
-                  <Text>Waiting for selection...</Text>
-                </Box>
-              )}
+          <Box id="sketch" background={"#222"}>
+            <Box direction="row-responsive" justify="center">
+              <Box
+                width={"large"}
+                height={"large"}
+                border={DEBUG ? { color: "green" } : false}
+              >
+                {structure != -1 ? (
+                  <pre ref={generatorRef}></pre>
+                ) : (
+                  <Box alignSelf="center">
+                    <Box fill={true} />
+                    <Text>Waiting for selection...</Text>
+                  </Box>
+                )}
+              </Box>
             </Box>
-            {/* <Box
-              width={"small"}
-              height={"medium"}
-              border={DEBUG ? { color: "aqua" } : false}
-            >
-              <Image fit="contain" src="/sample-sketch02.png" />
-            </Box> */}
+            <h1 className="monument-name">{monumentName}</h1>
           </Box>
+
           <Box width={"xlarge"} alignSelf="center">
-            {/* <Box
-              width={"xlarge"}
-              height="0.4em"
-              background={"#808080"}
-              alignSelf="center"
-            ></Box> */}
-            <Box align="center">
-              <h1 className="monument-name">{monumentName}</h1>
-              <Button plain onClick={() => setShowSaveModel(true)}>
-                <Box
-                  pad={"xsmall"}
-                  round="xsmall"
-                  background={"white"}
-                  width={"xsmall"}
-                  align="center"
+            <Box align="center" gap="large">
+              <Box direction="row-responsive" gap={"medium"}>
+                <Button plain onClick={() => setShowSaveModel(true)}>
+                  <Box
+                    pad={"xsmall"}
+                    round="xsmall"
+                    background={"white"}
+                    width={"xsmall"}
+                    align="center"
+                  >
+                    <Text>PUBLISH</Text>{" "}
+                  </Box>
+                </Button>
+                <Button
+                  plain
+                  onClick={() => {
+                    domToPng(document.querySelector("#sketch"), {
+                      style: {
+                        fontFamily: "WetHard",
+                      },
+                    }).then((base64) => {
+                      open().document.write(`<img src="${base64}" />`);
+                    });
+                  }}
                 >
-                  <Text>SAVE</Text>{" "}
-                </Box>
-              </Button>
+                  <Box
+                    pad={"xsmall"}
+                    round="xsmall"
+                    background={"white"}
+                    width={"xsmall"}
+                    align="center"
+                  >
+                    <Text>SAVE</Text>
+                  </Box>
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Box>

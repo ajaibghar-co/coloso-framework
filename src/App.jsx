@@ -9,13 +9,16 @@ import GeneratorFlower from "./routes/GeneratorFlower";
 import Home from "./routes/Home";
 import Landing from "./routes/Landing";
 import Theme from "./components/Theme";
+import Onboarding from "./routes/Onboarding";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
     errorElement: <Error />,
+    children: [{ path: "/onboarding", element: <Onboarding /> }],
   },
+
   {
     path: "/generator/:monumentName",
     element: <Generator />,

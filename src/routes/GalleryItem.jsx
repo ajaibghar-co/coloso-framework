@@ -135,8 +135,17 @@ export default function GalleryItem() {
           })}
       </Box>
       <Box width={"large"} height={"large"}>
+        <Box flex="grow" pad={"small"}>
+          <Text>
+            You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
+            through the monuments created by all of Coloso’s visitors from all
+            around the world. You’ll also be able to distribute any of the
+            monuments as you wish, by downloading, screen-shooting, emailing,
+            sharing, and printing.
+          </Text>
+        </Box>
         {structure != -1 ? (
-          <pre ref={generatorRef}></pre>
+          <pre id="langingpre" ref={generatorRef}></pre>
         ) : (
           <Box alignSelf="center">
             <Box fill={true} />

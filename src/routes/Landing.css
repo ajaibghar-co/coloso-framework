@@ -1,10 +1,8 @@
-#camera-bg {
-  background: rgb(76, 76, 76);
-  background: radial-gradient(circle, #e0c7a3 0%, rgb(15, 15, 15) 100%);
+h1 {
+  line-height: 1.2;
 }
 
 #langingpre {
-  /* position: absolute; */
   margin: 0;
   padding: 0;
   left: 0;
@@ -13,75 +11,38 @@
   height: 100vh;
   font-family: inherit;
   font-family: "Simple Console", monospace;
+  line-height: 1;
 }
 
-#title {
-  /* float: right; */
+#welcome-parent {
+  height: 100vh;
+  position: absolute;
+  justify-self: center;
+  align-self: center;
   display: flex;
-  /* flex-direction: column; */
-  width: 40em;
-  padding: 2em;
-  align-items: center;
   justify-content: center;
-  margin-top: 18em;
+  align-items: center;
 }
 
 #welcome {
-  /* padding:1em;   */
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-  font-family: "wethard", serif;
-  font-size: 20em;
-  color: #e0c7a3;
-  font-variation-settings: "wght" 90;
-  /* align-items: center; */
+  height: fit-content;
+  font-family: "wethard";
+  font-size: 20rem;
+  color: white;
   mix-blend-mode: difference;
-  text-align: center;
-  /* transition: font-variation-settings 0.3s ease; */
+  line-height: 0.6em;
+  margin-bottom: 0;
 }
 
-#inst {
-  /* padding:1em; */
-  margin-top: 2em;
-  margin-left: 1.2em;
-  /* font-family:  Courier, monospace; */
-  font-family: "Poppins", sans-serif;
-  font-size: large;
-  background-color: rgba(255, 255, 255, 0.6);
-  /* backdrop-filter: blur(10px); */
-}
-#inst div {
+#press-y {
+  background-color: #e0c7a3;
+  align-content: end;
+  width: fit-content;
 }
 
-#inst p {
-  padding: 1em;
-  color: #b94982;
-}
-
-@keyframes wacky {
-  0% {
-    font-variation-settings: "wght" 60;
-  }
-  25% {
-    font-variation-settings: "wght" 100;
-  }
-  50% {
-    font-variation-settings: "wght" 150;
-  }
-  75% {
-    font-variation-settings: "wght" 180;
-  }
-  100% {
-    font-variation-settings: "wght" 60;
-  }
-}
-
-h1 {
-  animation: wacky infinite;
-  animation-duration: 5s;
-  animation-timing-function: ease;
-  margin: 0 auto;
-  line-height: 1;
-  font-weight: normal;
+#press-y > p {
+  color: #222;
+  width: fit-content;
+  padding: 0.4em 1em 0.4em 1em;
+  font-size: 1.2em;
 }

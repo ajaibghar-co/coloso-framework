@@ -3,7 +3,14 @@ import { useState } from "react";
 import RefreshIcon from "./RefreshIcon";
 import { getRandom, sample2Choices } from "../selection";
 
-function GeneratorWordSelector({ map, set, onHarvestClicked, active, cta }) {
+function GeneratorWordSelector({
+  map,
+  set,
+  onHarvestClicked,
+  active,
+  instruction,
+  cta,
+}) {
   const choiceSubSet = sample2Choices(set, map);
 
   const [sampledChoices, setSampledChoices] = useState(
@@ -50,14 +57,19 @@ function GeneratorWordSelector({ map, set, onHarvestClicked, active, cta }) {
     <Box background={"#e0c7a3bb"} pad={"small"} round={"xsmall"} flex="grow">
       <Stack anchor={"center"} fill={true}>
         <Box gap={"medium"}>
-          <Box direction={"row-responsive"}>
-            <Box>
-              <Text color={"black"} weight={700}>
-                Pick 3 out of 5
-              </Text>
+          <Box>
+            <Text color={"black"} weight={700}>
+              {instruction}
+            </Text>
+            <Box direction={"row-responsive"}>
+              <Box>
+                <Text style={{ fontStyle: "italic" }} size="small">
+                  Pick 3 out of 5
+                </Text>
+              </Box>
+              <Box flex={"grow"}></Box>
+              <Button icon={<RefreshIcon />} plain onClick={resampleChoices} />
             </Box>
-            <Box flex={"grow"}></Box>
-            <Button icon={<RefreshIcon />} plain onClick={resampleChoices} />
           </Box>
           <Box>
             <Box align="center" gap={"xxsmall"}>

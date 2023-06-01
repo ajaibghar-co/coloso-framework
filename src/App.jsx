@@ -10,6 +10,7 @@ import Home from "./routes/Home";
 import Landing from "./routes/Landing";
 import Theme from "./components/Theme";
 import Onboarding from "./routes/Onboarding";
+import About from "./routes/About";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     path: "/gallery/:artworkId",
     element: <GalleryItem />,
     loader: monumentLoader,
+  },
+  {
+    path: "/about",
+    element: <About />,
   },
 ]);
 

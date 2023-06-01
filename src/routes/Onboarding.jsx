@@ -17,10 +17,9 @@ import { useNavigate } from "react-router-dom";
 import "./Landing.css";
 
 const PageOne = () => (
-  <Box id={"title"}>
-    <h1 id="welcome">COLOSO</h1>
-    <Box background={"#E0C7A3"} pad={"small"}>
-      <Text>Press Y to continue </Text>
+  <Box>
+    <Box background={"#E0C7A3"} pad={"small"} width="small" alignSelf="center">
+      <Text>Press N to continue </Text>
     </Box>
   </Box>
 );
@@ -28,18 +27,15 @@ const PageOne = () => (
 const PageTwo = () => (
   <Box fill>
     <Box direction="row-responsive" pad={"small"}>
-      <Text size={"xlarge"} color="#E1C79C">
-        COLOSO
-      </Text>
       <Box flex="grow"></Box>
       <Button plain>
-        <Box background={"white"} pad="small">
+        <Box background={"#E0C7A3"} pad="small">
           <Text> Go to Factory</Text>
         </Box>
       </Button>
       <Box width={"0.4em"}></Box>
       <Button plain>
-        <Box background={"white"} pad="small">
+        <Box background={"#E0C7A3"} pad="small">
           <Text> Go to Warehouse</Text>
         </Box>
       </Button>
@@ -49,43 +45,105 @@ const PageTwo = () => (
       <Box
         background={"#E0C7A3CC"}
         pad={"large"}
-        width={"medium"}
+        width={"large"}
         height={"fit-content"}
         alignSelf="center"
         gap={"medium"}
       >
-        <Box background={"#D2E354"} align="center">
-          <Text weight={900}>Coloso Intro Text</Text>
-          <Text>(about this experience and what to expect)</Text>
+        <Box align="center">
+          <Heading size="medium" responsive={true} margin={{ top: "none" }}>
+            Welcome to Coloso
+          </Heading>
+          <Text>
+            In this factory, you’ll be able to create a one-of-a-kind “monument”
+            in memory of an LGBTQ space that was important to you and/or a loved
+            one.
+          </Text>
+          <Box height="1.2em"></Box>
+          <Text>
+            Once your monument is ready, it’ll be placed in our Warehouse where
+            you’ll be able to keep it or send it to someone special.
+          </Text>
         </Box>
-        <Text>Press Y to continue </Text>
+        <Box
+          background={"#D2E354"}
+          pad="xsmall"
+          width={"fit-content"}
+          alignSelf="center"
+        >
+          <Text weight={900} size="large" style={{ textAlign: "center" }}>
+            Press Y to continue{" "}
+          </Text>
+        </Box>
       </Box>
     </Box>
   </Box>
 );
 
 const PageThree = ({ monumentName }) => (
-  <Box
-    background={"#E0C7A3EE"}
-    pad={"large"}
-    width={"medium"}
-    height={"fit-content"}
-    alignSelf="center"
-    justify="center"
-    gap={"medium"}
-  >
-    <Box>
-      <Text weight={900} color={"black"}>
-        PLANT
-      </Text>
-      <Box height="1.2em"></Box>
-      <Text color={"black"}>Think about the space you want to build ....</Text>
-      <Text color={"black"}>... . . .. ... . .. ... .... .. . ... ....</Text>
-      <Text color={"black"}>... and name your monument</Text>
+  <Box fill>
+    <Box direction="row-responsive" pad={"small"}>
+      <Box flex="grow"></Box>
+      <Button plain>
+        <Box background={"#E0C7A3"} pad="small">
+          <Text> Go to Factory</Text>
+        </Box>
+      </Button>
+      <Box width={"0.4em"}></Box>
+      <Button plain>
+        <Box background={"#E0C7A3"} pad="small">
+          <Text> Go to Warehouse</Text>
+        </Box>
+      </Button>
     </Box>
-    <Box height="2em"></Box>
-    <Text color={"black"}>Enter the monument name and press Enter </Text>
-    <TextInput placeholder="monument name" value={monumentName} />
+    <Box fill justify="center">
+      <Box
+        background={"#E0C7A3CC"}
+        pad={"large"}
+        width={"large"}
+        height={"fit-content"}
+        alignSelf="center"
+        gap={"medium"}
+      >
+        <Box>
+          <Heading
+            size="medium"
+            responsive={true}
+            margin={{ top: "none", bottom: "none" }}
+            style={{ textAlign: "center" }}
+          >
+            Plant
+          </Heading>
+
+          <Box height="1.2em"></Box>
+          <Text style={{ textAlign: "center" }}>
+            Monuments aren’t just for the wealthy and famous! Please type the
+            name of the space you’re memorializing.{" "}
+          </Text>
+        </Box>
+
+        <Box
+          background={"#D2E354"}
+          pad="xsmall"
+          width={"fit-content"}
+          alignSelf="center"
+        >
+          <Text weight={900} size="large" style={{ textAlign: "center" }}>
+            Enter the monument name and press Enter{" "}
+          </Text>
+        </Box>
+        <Box>
+          <TextInput
+            placeholder="monument name"
+            value={monumentName}
+            color="white"
+          />
+          <Text size="xsmall" color="red">{`${
+            30 - monumentName.length
+          }/30 characters remaining`}</Text>
+        </Box>
+      </Box>
+    </Box>
   </Box>
 );
 
@@ -147,7 +205,9 @@ export default function Onboarding() {
               ].includes(e.key)
             ) {
               // console.log("pressed :", e.key);
-              setMonumentName(monumentName + e.key);
+              if (monumentName.length < 30) {
+                setMonumentName(monumentName + e.key);
+              }
             }
           } else {
             disableCamera();
@@ -156,12 +216,31 @@ export default function Onboarding() {
         }
       }}
       onBackspace={() => {
-        setPage(page - 1);
+        if (page != 3) {
+          setPage(page - 1);
+        } else {
+          setMonumentName(monumentName.slice(0, monumentName.length - 1));
+        }
       }}
     >
       <div style={{ height: "100vh" }}>
-        <Box full class="camera-bg">
+        <Box full>
           <pre id="langingpre" ref={generatorRef}></pre>
+          {page === 1 ? (
+            <div id="welcome-parent">
+              <div>
+                <h1 id="welcome">COLOSO</h1>
+                <div id="press-y">
+                  <p>Press Y to continue</p>
+                </div>
+              </div>
+            </div>
+          ) : null}
+          {page === 2 || page === 3 ? (
+            <Text size={"xlarge"} color="white" id="coloso-logo">
+              COLOSO
+            </Text>
+          ) : null}
         </Box>
         <Layer
           animation={false}
@@ -172,7 +251,6 @@ export default function Onboarding() {
           position="center"
           style={{ justifyContent: "center" }}
         >
-          {page === 1 ? <PageOne /> : null}
           {page === 2 ? <PageTwo /> : null}
           {page === 3 ? <PageThree monumentName={monumentName} /> : null}
         </Layer>

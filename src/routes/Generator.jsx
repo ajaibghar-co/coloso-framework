@@ -9,7 +9,16 @@ import * as flower from "../../core/buildings/final/flower";
 
 // import * as demo from "../../core/buildings/demo";
 import { useRef, useEffect, useState } from "react";
-import { Box, Text, Button, Image, Heading, Layer, TextInput } from "grommet";
+import {
+  Box,
+  Text,
+  Button,
+  Image,
+  Heading,
+  Layer,
+  TextInput,
+  Paragraph,
+} from "grommet";
 import { ClearOption } from "grommet-icons";
 import GeneratorWordSelector from "../components/GeneratorWordSelector";
 import StaticSketch from "../components/StaticSketch";
@@ -54,6 +63,7 @@ export default function Generator() {
   const [monumentLocation, setMonumentLocation] = useState("");
   const [params, setParams] = useState("");
   const navigate = useNavigate();
+  const [firstTime, setFirstTime] = useState(true);
 
   const programs = [
     mandelbrot,
@@ -149,7 +159,7 @@ export default function Generator() {
     <Box fill background="#222">
       <Box direction="row-responsive" pad={"small"}>
         <Box align="end">
-          <Text size={"xlarge"} color="#E1C79C" margin={"none"}>
+          <Text size={"xlarge"} color="white" id="coloso-logo">
             COLOSO
           </Text>
           <Text size={"small"} weight={100} color="#E1C79C" margin={"none"}>
@@ -171,13 +181,14 @@ export default function Generator() {
       </Box>
 
       <Box direction={"row-responsive"}>
-        <Box width={{ min: "24vw", max: "28em" }} gap="large">
+        <Box width={{ min: "28vw", max: "32rem" }} gap="xlarge">
           <Box pad={"small"}>
             <GeneratorWordSelector
               set={structureSet}
               map={structureMap}
               onHarvestClicked={onHarvestClickedForFirstBox}
               active={true}
+              instruction={"Time to harvest!"}
               cta={"Harvest"}
             />
           </Box>
@@ -187,6 +198,7 @@ export default function Generator() {
               map={colorMap}
               onHarvestClicked={onHarvestClickedForSecondBox}
               active={structure != -1}
+              instruction={"Crystalize that baby!"}
               cta={"Crystallize"}
             />
           </Box>
@@ -196,77 +208,93 @@ export default function Generator() {
               map={movementMap}
               onHarvestClicked={onHarvestClickedForThirdBox}
               active={structure != -1}
+              instruction={"Finally, go ahead and distil!"}
               cta={"Distil"}
             />
           </Box>
         </Box>
-        <Box
-          flex={"grow"}
-          background={"#222"}
-          border={DEBUG ? { color: "red" } : false}
-          height={"fit-content"}
-          gap="large"
-        >
-          <Box id="sketch" background={"#222"}>
-            <Box direction="row-responsive" justify="center">
-              <Box
-                width={"large"}
-                height={"large"}
-                border={DEBUG ? { color: "green" } : false}
-              >
-                {structure != -1 ? (
-                  <pre ref={generatorRef}></pre>
-                ) : (
-                  <Box alignSelf="center">
-                    <Box fill={true} />
-                    <Text>Waiting for selection...</Text>
-                  </Box>
-                )}
-              </Box>
-            </Box>
-            <h1 className="monument-name">{monumentName}</h1>
-          </Box>
-
-          <Box width={"xlarge"} alignSelf="center">
-            <Box align="center" gap="large">
-              <Box direction="row-responsive" gap={"medium"}>
-                <Button plain onClick={() => setShowSaveModel(true)}>
+        {firstTime ? (
+          <Box fill justify="center">
+            <Box
+              background={"#E0C7A3"}
+              pad={"medium"}
+              width={"large"}
+              alignSelf="center"
+            >
+              <Paragraph fill textAlign="center">
+                First, you’ll be able to harvest.
+              </Paragraph>
+              <Paragraph fill textAlign="center">
+                Choose three words that help you describe your queer space from
+                the list.{" "}
+              </Paragraph>
+              <Paragraph fill textAlign="center">
+                Second, you’ll distill [not sure what this does]. Third, You can
+                refresh the list to find more words.
+              </Paragraph>
+              <Box align="center">
+                <Button plain onClick={() => setFirstTime(false)}>
                   <Box
-                    pad={"xsmall"}
-                    round="xsmall"
                     background={"white"}
-                    width={"xsmall"}
-                    align="center"
+                    pad={"small"}
+                    alignSelf="center"
+                    width="fit-content"
                   >
-                    <Text>PUBLISH</Text>{" "}
+                    <Text alignSelf="center">OK</Text>
                   </Box>
                 </Button>
-                <Button
-                  plain
-                  onClick={() => {
-                    domToPng(document.querySelector("#sketch"), {
-                      style: {
-                        fontFamily: "WetHard",
-                      },
-                    }).then((base64) => {
-                      open().document.write(`<img src="${base64}" />`);
-                    });
-                  }}
+              </Box>
+            </Box>
+          </Box>
+        ) : (
+          <Box
+            flex={"grow"}
+            background={"#222"}
+            border={DEBUG ? { color: "red" } : false}
+            height={"fit-content"}
+            gap="large"
+          >
+            <Box id="sketch" background={"#222"}>
+              <Box direction="row-responsive" justify="center">
+                <Box
+                  width={"large"}
+                  height={"large"}
+                  border={DEBUG ? { color: "green" } : false}
                 >
-                  <Box
-                    pad={"xsmall"}
-                    round="xsmall"
-                    background={"white"}
-                    width={"xsmall"}
-                    align="center"
-                  >
-                    <Text>SAVE</Text>
-                  </Box>
-                </Button>
+                  {structure != -1 ? (
+                    <pre id="langingpre" ref={generatorRef}></pre>
+                  ) : (
+                    <Box alignSelf="center">
+                      <Box fill={true} />
+                      <Text>Waiting for selection...</Text>
+                    </Box>
+                  )}
+                </Box>
+              </Box>
+              <Box align="center">
+                <h1 className="monument-name">{monumentName}</h1>
+              </Box>
+            </Box>
+
+            <Box width={"xlarge"} alignSelf="center">
+              <Box align="center" gap="large">
+                <Box direction="row-responsive" gap={"medium"}>
+                  <Button plain onClick={() => setShowSaveModel(true)}>
+                    <Box
+                      pad={"xsmall"}
+                      round="xsmall"
+                      background={"white"}
+                      width={"xsmall"}
+                      align="center"
+                    >
+                      <Text>SAVE</Text>{" "}
+                    </Box>
+                  </Button>
+                </Box>
               </Box>
             </Box>
           </Box>
-        </Box>
+        )}
         {showSaveModel ? (
           <Layer
             modal={false}

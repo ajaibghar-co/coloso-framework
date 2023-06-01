@@ -61,9 +61,32 @@ export default function Landing() {
           style={{ justifyContent: "center" }}
         >
           <Box id={"title"}>
-            <Box background={"#E0C7A3"} pad={"small"}>
-              <h1>This Experience requires access to your webcam</h1>
-              <Text>Press Y to continue </Text>
+            <Box
+              background={"#E0C7A3"}
+              pad={"medium"}
+              width={"large"}
+              alignSelf="center"
+            >
+              <h1 style={{ textAlign: "center" }}>
+                This Experience requires access to your webcam.
+              </h1>
+              <Text
+                size="large"
+                style={{ textAlign: "center" }}
+                margin={{ bottom: "medium" }}
+              >
+                This is best viewed on a laptop or desktop.
+              </Text>
+              <Box
+                background={"#D2E354"}
+                pad="xsmall"
+                width={"fit-content"}
+                alignSelf="center"
+              >
+                <Text weight={900} size="large" style={{ textAlign: "center" }}>
+                  Press Y to continue{" "}
+                </Text>
+              </Box>
             </Box>
           </Box>
         </Layer>

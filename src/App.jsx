@@ -28,6 +28,11 @@ const router = createBrowserRouter([
     element: <Generator />,
   },
   {
+    path: "/gallery/",
+    element: <GalleryItem />,
+    loader: monumentLoader,
+  },
+  {
     path: "/gallery/:artworkId",
     element: <GalleryItem />,
     loader: monumentLoader,

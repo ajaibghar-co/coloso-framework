@@ -54,29 +54,31 @@ export default function GalleryItem() {
     const monumentId = location.pathname.split("/")[2];
     console.log({ monumentId });
 
-    (async function getMonument() {
-      const { data: monument } = await axios.get(
-        `http://localhost:3000/monument/slug/${monumentId}`
-      );
-      console.log({ monument });
-      setStructure(monument.structure);
-      setColor(monument.color);
-      setMovement(monument.movement);
-      setMonumentMetadata({ ...monument });
+    if (monumentId) {
+      (async function getMonument() {
+        const { data: monument } = await axios.get(
+          `http://localhost:3000/monument/slug/${monumentId}`
+        );
+        console.log({ monument });
+        setStructure(monument.structure);
+        setColor(monument.color);
+        setMovement(monument.movement);
+        setMonumentMetadata({ ...monument });
 
-      const params = JSON.parse(monument.params);
+        const params = JSON.parse(monument.params);
 
-      for (let key in params) {
-        localStorage.setItem(key, params[key]);
-      }
+        for (let key in params) {
+          localStorage.setItem(key, params[key]);
+        }
 
-      const { data: monumentPage } = await axios.get(
-        `http://localhost:3000/monument/page/${uptoPageNum}`
-      );
-      // console.log(monumentPage);
-      setAllMonumentsList(monumentPage);
-      render();
-    })();
+        const { data: monumentPage } = await axios.get(
+          `http://localhost:3000/monument/page/${uptoPageNum}`
+        );
+        // console.log(monumentPage);
+        setAllMonumentsList(monumentPage);
+        render();
+      })();
+    }
     return () => {};
   }, [location]);
 

@@ -19,11 +19,11 @@ import {
   TextInput,
   Paragraph,
 } from "grommet";
-import { ClearOption } from "grommet-icons";
+import { CircleInformation, ClearOption } from "grommet-icons";
 import GeneratorWordSelector from "../components/GeneratorWordSelector";
 import StaticSketch from "../components/StaticSketch";
 import "./Generator.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   structureMap,
@@ -159,7 +159,7 @@ export default function Generator() {
     <Box fill background="#222">
       <Box direction="row-responsive" pad={"small"}>
         <Box align="end">
-          <Text size={"xlarge"} color="white" id="coloso-logo">
+          <Text size={"xlarge"} color="white" style={{ fontFamily: "wethard" }}>
             COLOSO
           </Text>
           <Text size={"small"} weight={100} color="#E1C79C" margin={"none"}>
@@ -167,17 +167,24 @@ export default function Generator() {
           </Text>
         </Box>
         <Box flex="grow"></Box>
-        <Button plain>
-          <Box background={"white"} pad="xsmall" round={"xxsmall"}>
-            <Text> Go to Factory</Text>
-          </Box>
-        </Button>
+
         <Box width={"0.4em"}></Box>
-        <Button plain>
-          <Box background={"white"} pad="xsmall" round={"xxsmall"}>
-            <Text> Go to Warehouse</Text>
-          </Box>
-        </Button>
+        <Box align="center" direction="row-responsive">
+          <Button plain>
+            <Box background={"white"} pad="xsmall" round={"xxsmall"}>
+              <Text> Go to Warehouse</Text>
+            </Box>
+          </Button>
+          <Button
+            icon={
+              <Box>
+                <Link to={"/about"}>
+                  <CircleInformation size={"medium"} />
+                </Link>
+              </Box>
+            }
+          ></Button>
+        </Box>
       </Box>
 
       <Box direction={"row-responsive"}>
@@ -262,7 +269,7 @@ export default function Generator() {
                   border={DEBUG ? { color: "green" } : false}
                 >
                   {structure != -1 ? (
-                    <pre id="langingpre" ref={generatorRef}></pre>
+                    <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
                   ) : (
                     <Box alignSelf="center">
                       <Box fill={true} />

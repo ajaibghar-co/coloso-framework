@@ -13,8 +13,9 @@ import * as program from "../../core/src/programs/demo9.js";
 import Camera from "../../core/src/modules/camera.js";
 
 import { useRef, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Landing.css";
+import { CircleInformation } from "grommet-icons";
 
 const PageOne = () => (
   <Box>
@@ -28,17 +29,24 @@ const PageTwo = () => (
   <Box fill>
     <Box direction="row-responsive" pad={"small"}>
       <Box flex="grow"></Box>
-      <Button plain>
-        <Box background={"#E0C7A3"} pad="small">
-          <Text> Go to Factory</Text>
-        </Box>
-      </Button>
+
       <Box width={"0.4em"}></Box>
       <Button plain>
         <Box background={"#E0C7A3"} pad="small">
-          <Text> Go to Warehouse</Text>
+          <Link to="/gallery">
+            <Text> Go to Warehouse</Text>
+          </Link>
         </Box>
       </Button>
+      <Button
+        icon={
+          <Box>
+            <Link to={"/about"}>
+              <CircleInformation size={"medium"} />
+            </Link>
+          </Box>
+        }
+      ></Button>
     </Box>
 
     <Box fill justify="center">

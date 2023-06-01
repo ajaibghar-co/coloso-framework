@@ -16,15 +16,6 @@ import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Landing.css";
 
-const PageZero = () => (
-  <Box id={"title"}>
-    <Box background={"#E0C7A3"} pad={"small"}>
-      <h1>This Experience requires access to your webcam</h1>
-      <Text>Press Y to continue </Text>
-    </Box>
-  </Box>
-);
-
 const PageOne = () => (
   <Box id={"title"}>
     <h1 id="welcome">COLOSO</h1>
@@ -101,7 +92,7 @@ const PageThree = ({ monumentName }) => (
 export default function Onboarding() {
   const generatorRef = useRef(null);
   const navigate = useNavigate();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [monumentName, setMonumentName] = useState("");
 
   function render() {
@@ -121,12 +112,6 @@ export default function Onboarding() {
   useEffect(() => {
     render();
   }, [generatorRef]);
-
-  useEffect(() => {
-    if (page === 1) {
-      setProgram(program);
-    }
-  }, [page]);
 
   function disableCamera() {
     const video = Camera.init();
@@ -187,7 +172,6 @@ export default function Onboarding() {
           position="center"
           style={{ justifyContent: "center" }}
         >
-          {page === 0 ? <PageZero /> : null}
           {page === 1 ? <PageOne /> : null}
           {page === 2 ? <PageTwo /> : null}
           {page === 3 ? <PageThree monumentName={monumentName} /> : null}

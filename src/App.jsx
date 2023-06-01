@@ -16,9 +16,12 @@ const router = createBrowserRouter([
     path: "/",
     element: <Landing />,
     errorElement: <Error />,
-    children: [{ path: "/onboarding", element: <Onboarding /> }],
   },
-
+  {
+    path: "/onboarding",
+    element: <Onboarding />,
+    errorElement: <Error />,
+  },
   {
     path: "/generator/:monumentName",
     element: <Generator />,

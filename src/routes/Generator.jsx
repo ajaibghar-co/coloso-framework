@@ -36,7 +36,6 @@ import {
   colorSet,
   movementSet,
 } from "../selection";
-import { domToPng } from "modern-screenshot";
 import { PlainLink } from "../components/PlainLink";
 
 const sketchParams = {

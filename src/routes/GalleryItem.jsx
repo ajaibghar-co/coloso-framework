@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { CircleInformation, Search } from "grommet-icons";
 import { PlainLink } from "../components/PlainLink";
+import html2canvas from "html2canvas";
 
 const programs = [
   mandelbrot,
@@ -182,12 +183,15 @@ export default function GalleryItem() {
               );
             })}
         </Box>
-        <Box width={"large"} height={"large"} direction="row-responsive">
-          {structure != -1 ? (
-            <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
-          ) : null}
-          {monumentMetadata && (
-            <Box flex="grow" justify="center">
+        <Box direction="row-responsive">
+          <Box
+            width={"large"}
+            height={"large"}
+            id="sketch"
+            align="center"
+            background={"#222"}
+          >
+            {monumentMetadata ? (
               <Heading
                 level={3}
                 margin="none"
@@ -196,6 +200,13 @@ export default function GalleryItem() {
               >
                 {`${monumentMetadata.monument_name}`}
               </Heading>
+            ) : null}
+            {structure != -1 ? (
+              <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
+            ) : null}
+          </Box>
+          {monumentMetadata && (
+            <Box flex="grow" justify="center">
               <Heading level={4} color={"white"}>
                 {monumentMetadata.string_list}
               </Heading>
@@ -207,6 +218,56 @@ export default function GalleryItem() {
                 size={"medium"}
                 color={"white"}
               >{`Located at: ${monumentMetadata.monument_location}`}</Text>
+
+              <Box direction="row-responsive" gap={"small"} align="center">
+                <Button
+                  plain
+                  onClick={() => {
+                    html2canvas(document.querySelector("#sketch")).then(
+                      (canvas) => {
+                        document.body.appendChild(canvas);
+                        console.log(canvas);
+                        var image = canvas
+                          .toDataURL("image/png")
+                          .replace("image/png", "image/octet-stream"); // here is the most important part because if you dont replace you will get a DOM 18 exception.
+
+                        window.location.href = image;
+                      }
+                    );
+                  }}
+                >
+                  <Box
+                    pad={"xsmall"}
+                    round="xsmall"
+                    background={"white"}
+                    width={"xsmall"}
+                    align="center"
+                    margin={{ top: "small" }}
+                  >
+                    <Text>SAVE</Text>
+                  </Box>
+                </Button>
+                <Button
+                  onClick={() => {
+                    console.log(location);
+                    navigator.clipboard.writeText(
+                      `https://url-of-project${location.pathname}`
+                    );
+                    alert("Monument URL has been copied to your clipboard");
+                  }}
+                >
+                  <Box
+                    pad={"xsmall"}
+                    round="xsmall"
+                    background={"#CDD8E3"}
+                    width={"xsmall"}
+                    align="center"
+                    margin={{ top: "small" }}
+                  >
+                    <Text>SHARE</Text>
+                  </Box>
+                </Button>
+              </Box>
             </Box>
           )}
         </Box>

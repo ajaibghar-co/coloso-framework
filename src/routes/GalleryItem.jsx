@@ -1,5 +1,5 @@
 import axios, { all } from "axios";
-import { Box, Heading, Text, TextInput } from "grommet";
+import { Box, Heading, Text, TextInput, Button, Paragraph } from "grommet";
 import { useEffect, useRef, useState } from "react";
 import { run } from "../../core/src/run";
 import * as blockchain from "../../core/buildings/final/block_chain";
@@ -10,7 +10,8 @@ import * as watermelon from "../../core/buildings/final/watermelon";
 import * as flower from "../../core/buildings/final/flower";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { Search } from "grommet-icons";
+import { CircleInformation, Search } from "grommet-icons";
+import { PlainLink } from "../components/PlainLink";
 
 const programs = [
   mandelbrot,
@@ -105,73 +106,109 @@ export default function GalleryItem() {
   }, [searchTerm]);
 
   return (
-    <Box direction={"row-responsive"} background={"#222"} fill flex="grow">
-      <Box
-        background={"#222"}
-        width={"medium"}
-        pad={"small"}
-        gap={"small"}
-        height={"100vh"}
-        overflow={"scroll"}
-      >
-        <Box direction="row-responsive" gap="small" align="center">
-          <TextInput
-            placeholder="monument name"
-            value={searchTerm}
-            onChange={async (e) => {
-              setSearchTerm(e.target.value);
-              // await clickSearch();
-            }}
-          ></TextInput>
-          {/* <Search size={"medium"} /> */}
-        </Box>
-        {allMonumentsList &&
-          allMonumentsList.map((monument, ix) => {
-            return (
-              <Box key={ix}>
-                <Link to={`/gallery/${monument.slug}`}>
-                  <Text color={"white"}>{monument.monument_name}</Text>
-                </Link>
-              </Box>
-            );
-          })}
-      </Box>
-      <Box width={"large"} height={"large"}>
-        <Box flex="grow" pad={"small"}>
-          <Text>
-            You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
-            through the monuments created by all of Coloso’s visitors from all
-            around the world. You’ll also be able to distribute any of the
-            monuments as you wish, by downloading, screen-shooting, emailing,
-            sharing, and printing.
+    <Box background={"#222"} fill>
+      <Box direction="row-responsive" pad={"small"}>
+        <Box align="end">
+          <Text size={"xlarge"} color="white" style={{ fontFamily: "wethard" }}>
+            COLOSO
+          </Text>
+          <Text size={"small"} weight={100} color="#E1C79C" margin={"none"}>
+            warehouse{" "}
           </Text>
         </Box>
-        {structure != -1 ? (
-          <pre id="langingpre" ref={generatorRef}></pre>
-        ) : (
-          <Box alignSelf="center">
-            <Box fill={true} />
-            <Text>Waiting for result...</Text>
+        <Box flex="grow"></Box>
+
+        <Box width={"0.4em"}></Box>
+        <Box align="center" direction="row-responsive">
+          <Button plain>
+            <Box background={"white"} pad="xsmall" round={"xxsmall"}>
+              <PlainLink to="/generator">
+                <Text> Go to Factory</Text>
+              </PlainLink>
+            </Box>
+          </Button>
+          <Button
+            icon={
+              <Box>
+                <PlainLink to={"/about"}>
+                  <CircleInformation size={"medium"} />
+                </PlainLink>
+              </Box>
+            }
+          ></Button>
+        </Box>
+      </Box>
+      <Box flex="grow" pad={"small"}>
+        <Paragraph fill={true}>
+          You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
+          through the monuments created by all of Coloso’s visitors from all
+          around the world. You’ll also be able to distribute any of the
+          monuments as you wish, by downloading, screen-shooting, emailing,
+          sharing, and printing.
+        </Paragraph>
+      </Box>
+      <Box direction={"row-responsive"} pad="small">
+        <Box
+          background={"#222"}
+          width={"medium"}
+          pad={"small"}
+          gap={"small"}
+          height={"100vh"}
+          overflow={"scroll"}
+          border={{ color: "#E0C7A3" }}
+          round="small"
+          height="fit-content"
+        >
+          <Box direction="row-responsive" gap="small" align="center">
+            <TextInput
+              placeholder="Search by Monument Name"
+              value={searchTerm}
+              onChange={async (e) => {
+                setSearchTerm(e.target.value);
+                // await clickSearch();
+              }}
+            ></TextInput>
+            {/* <Search size={"medium"} /> */}
           </Box>
-        )}
-        {monumentMetadata && (
-          <Box>
-            <Heading level={3} color={"white"} margin="none">
-              {`${monumentMetadata.monument_name}`}
-            </Heading>
-            <Heading level={4} color={"white"}>
-              {monumentMetadata.string_list}
-            </Heading>
-            <Text
-              size={"medium"}
-              color={"white"}
-            >{`Built By: ${monumentMetadata.creator_name}, ${monumentMetadata.creator_location}`}</Text>
-            <Text
-              size={"medium"}
-              color={"white"}
-            >{`Located at: ${monumentMetadata.monument_location}`}</Text>
-          </Box>
-        )}
+          {allMonumentsList &&
+            allMonumentsList.map((monument, ix) => {
+              return (
+                <Box key={ix}>
+                  <Link to={`/gallery/${monument.slug}`}>
+                    <Text color={"white"}>{monument.monument_name}</Text>
+                  </Link>
+                </Box>
+              );
+            })}
+        </Box>
+        <Box width={"large"} height={"large"}>
+          {structure != -1 ? (
+            <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
+          ) : (
+            <Box alignSelf="center">
+              <Box fill={true} />
+              <Text>Waiting for result...</Text>
+            </Box>
+          )}
+          {monumentMetadata && (
+            <Box>
+              <Heading level={3} margin="none" className="monument-name">
+                {`${monumentMetadata.monument_name}`}
+              </Heading>
+              <Heading level={4} color={"white"}>
+                {monumentMetadata.string_list}
+              </Heading>
+              <Text
+                size={"medium"}
+                color={"white"}
+              >{`Built By: ${monumentMetadata.creator_name}, ${monumentMetadata.creator_location}`}</Text>
+              <Text
+                size={"medium"}
+                color={"white"}
+              >{`Located at: ${monumentMetadata.monument_location}`}</Text>
+            </Box>
+          )}
+        </Box>
       </Box>
     </Box>
   );

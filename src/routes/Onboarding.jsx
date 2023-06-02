@@ -16,6 +16,7 @@ import { useRef, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Landing.css";
 import { CircleInformation } from "grommet-icons";
+import { PlainLink } from "../components/PlainLink";
 
 const PageOne = () => (
   <Box>
@@ -33,17 +34,17 @@ const PageTwo = () => (
       <Box width={"0.4em"}></Box>
       <Button plain>
         <Box background={"#E0C7A3"} pad="small">
-          <Link to="/gallery">
+          <PlainLink to="/gallery">
             <Text> Go to Warehouse</Text>
-          </Link>
+          </PlainLink>
         </Box>
       </Button>
       <Button
         icon={
           <Box>
-            <Link to={"/about"}>
+            <PlainLink to={"/about"}>
               <CircleInformation size={"medium"} />
-            </Link>
+            </PlainLink>
           </Box>
         }
       ></Button>
@@ -94,15 +95,21 @@ const PageThree = ({ monumentName }) => (
       <Box flex="grow"></Box>
       <Button plain>
         <Box background={"#E0C7A3"} pad="small">
-          <Text> Go to Factory</Text>
+          <PlainLink to="/gallery">
+            <Text> Go to Warehouse</Text>
+          </PlainLink>
         </Box>
       </Button>
       <Box width={"0.4em"}></Box>
-      <Button plain>
-        <Box background={"#E0C7A3"} pad="small">
-          <Text> Go to Warehouse</Text>
-        </Box>
-      </Button>
+      <Button
+        icon={
+          <Box>
+            <PlainLink to={"/about"}>
+              <CircleInformation size={"medium"} />
+            </PlainLink>
+          </Box>
+        }
+      ></Button>
     </Box>
     <Box fill justify="center">
       <Box

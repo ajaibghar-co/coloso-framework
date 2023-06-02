@@ -75,7 +75,7 @@ export default function Generator() {
   ];
 
   async function onClickSave() {
-    console.log("hi");
+    console.log("ok");
     const monumentPayload = {
       monumentName,
       stringList: choiceString.join(","),
@@ -93,6 +93,14 @@ export default function Generator() {
       "http://localhost:3000/monument",
       monumentPayload
     );
+
+    // clearing localstorage
+    for (var key in localStorage) {
+      if (key.startsWith("sketch-")) {
+        localStorage.removeItem(key);
+      }
+    }
+
     navigate(`/warehouse/${data.slug}`);
   }
 

@@ -341,17 +341,34 @@ export default function Generator() {
                 onChange={(e) => setMonumentLocation(e.target.value)}
               ></TextInput>
 
-              <Button plain onClick={onClickSave}>
-                <Box
-                  pad={"xsmall"}
-                  background="#E1C79C"
-                  width={"fit-content"}
-                  alignSelf="center"
-                  margin={{ top: "small" }}
+              <Box direction="row-responsive" gap="small">
+                <Button plain onClick={onClickSave}>
+                  <Box
+                    pad={"xsmall"}
+                    background="#E1C79C"
+                    width={"fit-content"}
+                    alignSelf="center"
+                    margin={{ top: "small" }}
+                  >
+                    <Text>OK</Text>
+                  </Box>
+                </Button>
+                <Button
+                  plain
+                  onClick={() => {
+                    setShowSaveModel(false);
+                  }}
                 >
-                  <Text>Save</Text>
-                </Box>
-              </Button>
+                  <Box
+                    pad={"xsmall"}
+                    width={"fit-content"}
+                    alignSelf="center"
+                    margin={{ top: "small" }}
+                  >
+                    <Text>Cancel</Text>
+                  </Box>
+                </Button>
+              </Box>
             </Box>
           </Layer>
         ) : null}

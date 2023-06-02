@@ -24,7 +24,7 @@ const programs = [
 
 export default function GalleryItem() {
   const generatorRef = useRef(null);
-  const [structure, setStructure] = useState(1);
+  const [structure, setStructure] = useState(-1);
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
   const [monumentMetadata, setMonumentMetadata] = useState(undefined);
@@ -84,7 +84,9 @@ export default function GalleryItem() {
   }, [location]);
 
   useEffect(() => {
-    render();
+    if (structure != -1) {
+      render();
+    }
   }, [structure, color, movement]);
 
   useEffect(() => {
@@ -122,7 +124,7 @@ export default function GalleryItem() {
         <Box align="center" direction="row-responsive">
           <Button plain>
             <Box background={"white"} pad="xsmall" round={"xxsmall"}>
-              <PlainLink to="/generator">
+              <PlainLink to="/factory">
                 <Text> Go to Factory</Text>
               </PlainLink>
             </Box>
@@ -183,12 +185,7 @@ export default function GalleryItem() {
         <Box width={"large"} height={"large"} direction="row-responsive">
           {structure != -1 ? (
             <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
-          ) : (
-            <Box alignSelf="center">
-              <Box fill={true} />
-              <Text>Waiting for result...</Text>
-            </Box>
-          )}
+          ) : null}
           {monumentMetadata && (
             <Box flex="grow" justify="center">
               <Heading

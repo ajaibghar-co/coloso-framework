@@ -37,6 +37,7 @@ import {
   movementSet,
 } from "../selection";
 import { domToPng } from "modern-screenshot";
+import { PlainLink } from "../components/PlainLink";
 
 const sketchParams = {
   Mandelbrot: ["sketch-it1", "sketch-it2", "sketch-it3"],
@@ -93,7 +94,7 @@ export default function Generator() {
       "http://localhost:3000/monument",
       monumentPayload
     );
-    navigate(`/gallery/${data.slug}`);
+    navigate(`/warehouse/${data.slug}`);
   }
 
   function render() {
@@ -163,9 +164,11 @@ export default function Generator() {
         <Box width={"0.4em"}></Box>
         <Box align="center" direction="row-responsive">
           <Button plain>
-            <Box background={"white"} pad="xsmall" round={"xxsmall"}>
-              <Text> Go to Warehouse</Text>
-            </Box>
+            <PlainLink to="/warehouse">
+              <Box background={"white"} pad="xsmall" round={"xxsmall"}>
+                <Text> Go to Warehouse</Text>
+              </Box>
+            </PlainLink>
           </Button>
           <Button
             icon={

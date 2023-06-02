@@ -15924,7 +15924,7 @@ export default function Gallery() {
     <div>
       <Row>
         <Box>
-          <Link to={"/gallery/1"}>
+          <Link to={"/warehouase/1"}>
             {item1.map((item, ix) => (
               <span>
                 {ix % COL_COUNT === 0 ? <br /> : null}
@@ -15943,7 +15943,7 @@ export default function Gallery() {
         </Box>
 
         <Box>
-          <Link to={"/gallery/2"}>
+          <Link to={"/warehouse/2"}>
             {item2.map((item, ix) => (
               <span>
                 {ix % COL_COUNT === 0 ? <br /> : null}

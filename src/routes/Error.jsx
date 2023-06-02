@@ -8,10 +8,10 @@ export function Error() {
           <a href="/">home</a>
         </li>
         <li>
-          <a href="/generator">generator</a>
+          <a href="/factory">generator</a>
         </li>
         <li>
-          <a href="/gallery">gallery</a>
+          <a href="/warehouse">gallery</a>
         </li>
       </ul>
     </div>

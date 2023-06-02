@@ -34,7 +34,7 @@ const PageTwo = () => (
       <Box width={"0.4em"}></Box>
       <Button plain>
         <Box background={"#E0C7A3"} pad="small">
-          <PlainLink to="/gallery">
+          <PlainLink to="/warehouse">
             <Text> Go to Warehouse</Text>
           </PlainLink>
         </Box>
@@ -95,7 +95,7 @@ const PageThree = ({ monumentName }) => (
       <Box flex="grow"></Box>
       <Button plain>
         <Box background={"#E0C7A3"} pad="small">
-          <PlainLink to="/gallery">
+          <PlainLink to="/warehouse">
             <Text> Go to Warehouse</Text>
           </PlainLink>
         </Box>
@@ -201,7 +201,9 @@ export default function Onboarding() {
       target="document"
       onKeyDown={(e) => {
         if (e.key === "y" || e.key === "Y") {
-          setPage(page + 1);
+          if (page !== 3) {
+            setPage(page + 1);
+          }
         }
         if (page === 3) {
           if (e.key != "Enter") {
@@ -226,7 +228,7 @@ export default function Onboarding() {
             }
           } else {
             disableCamera();
-            navigate(`/generator/${monumentName}`);
+            navigate(`/factory/${monumentName}`);
           }
         }
       }}

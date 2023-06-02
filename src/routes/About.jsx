@@ -25,7 +25,7 @@ export default function About() {
             <Box background={"white"} pad="xsmall" round={"xxsmall"}>
               <Text>
                 {" "}
-                <PlainLink to="/generator">Go to Factory</PlainLink>
+                <PlainLink to="/factory">Go to Factory</PlainLink>
               </Text>
             </Box>
           </Button>

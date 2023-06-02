@@ -24,20 +24,20 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/generator/",
+    path: "/factory/",
     element: <Generator />,
   },
   {
-    path: "/generator/:monumentName",
+    path: "/factory/:monumentName",
     element: <Generator />,
   },
   {
-    path: "/gallery/",
+    path: "/warehouse/",
     element: <GalleryItem />,
     loader: monumentLoader,
   },
   {
-    path: "/gallery/:artworkId",
+    path: "/warehouse/:artworkId",
     element: <GalleryItem />,
     loader: monumentLoader,
   },

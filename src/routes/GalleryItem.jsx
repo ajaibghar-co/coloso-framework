@@ -173,7 +173,7 @@ export default function GalleryItem() {
             allMonumentsList.map((monument, ix) => {
               return (
                 <Box key={ix}>
-                  <Link to={`/gallery/${monument.slug}`}>
+                  <Link to={`/warehouse/${monument.slug}`}>
                     <Text color={"white"}>{monument.monument_name}</Text>
                   </Link>
                 </Box>

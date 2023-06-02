@@ -153,7 +153,6 @@ export default function GalleryItem() {
           width={"medium"}
           pad={"small"}
           gap={"small"}
-          height={"100vh"}
           overflow={"scroll"}
           border={{ color: "#E0C7A3" }}
           round="small"
@@ -181,7 +180,7 @@ export default function GalleryItem() {
               );
             })}
         </Box>
-        <Box width={"large"} height={"large"}>
+        <Box width={"large"} height={"large"} direction="row-responsive">
           {structure != -1 ? (
             <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
           ) : (
@@ -191,8 +190,13 @@ export default function GalleryItem() {
             </Box>
           )}
           {monumentMetadata && (
-            <Box>
-              <Heading level={3} margin="none" className="monument-name">
+            <Box flex="grow" justify="center">
+              <Heading
+                level={3}
+                margin="none"
+                className="monument-name"
+                style={{ textAlign: "center" }}
+              >
                 {`${monumentMetadata.monument_name}`}
               </Heading>
               <Heading level={4} color={"white"}>

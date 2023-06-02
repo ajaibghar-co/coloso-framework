@@ -24,6 +24,10 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
+    path: "/generator/",
+    element: <Generator />,
+  },
+  {
     path: "/generator/:monumentName",
     element: <Generator />,
   },

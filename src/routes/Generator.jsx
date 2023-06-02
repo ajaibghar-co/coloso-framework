@@ -52,7 +52,7 @@ const DEBUG = false;
 export default function Generator() {
   const generatorRef = useRef(null);
   const [monumentName, setMonumentName] = useState("");
-  const [structure, setStructure] = useState(1);
+  const [structure, setStructure] = useState(-1);
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
   const [choiceString, setChoiceString] = useState([]);
@@ -75,6 +75,7 @@ export default function Generator() {
   ];
 
   async function onClickSave() {
+    console.log("hi");
     const monumentPayload = {
       monumentName,
       stringList: choiceString.join(","),
@@ -97,22 +98,13 @@ export default function Generator() {
 
   function render() {
     if (generatorRef && structure != -1) {
-      // console.log("here");
       run(
         programs[structure],
-        // watermelon,
-        // flower,
         { element: generatorRef.current },
         { structure, color, movement }
       )
-        .then(function (e) {
-          // console.log(e);
-        })
-        .catch(function (e) {
-          // console.log(e);
-          // console.warn(e.message);
-          // console.log(e.error);
-        });
+        .then(function (e) {})
+        .catch(function (e) {});
     }
   }
 
@@ -283,23 +275,30 @@ export default function Generator() {
               </Box>
             </Box>
 
-            <Box width={"xlarge"} alignSelf="center">
-              <Box align="center" gap="large">
-                <Box direction="row-responsive" gap={"medium"}>
-                  <Button plain onClick={() => setShowSaveModel(true)}>
-                    <Box
-                      pad={"xsmall"}
-                      round="xsmall"
-                      background={"white"}
-                      width={"xsmall"}
-                      align="center"
+            {(structure && color && movement) != -1 ? (
+              <Box width={"xlarge"} alignSelf="center">
+                <Box align="center">
+                  <Box direction="row-responsive">
+                    <Button
+                      plain
+                      onClick={() => {
+                        setShowSaveModel(true);
+                      }}
                     >
-                      <Text>SAVE</Text>{" "}
-                    </Box>
-                  </Button>
+                      <Box
+                        pad={"xsmall"}
+                        round="xsmall"
+                        background={"white"}
+                        width={"xsmall"}
+                        align="center"
+                      >
+                        <Text>PUBLISH</Text>{" "}
+                      </Box>
+                    </Button>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            ) : null}
           </Box>
         )}
         {showSaveModel ? (
@@ -317,6 +316,12 @@ export default function Generator() {
               gap={"small"}
             >
               <Heading level="4">Store in warehouse</Heading>
+
+              <TextInput
+                placeholder="Monument Name"
+                value={monumentName}
+                onChange={(e) => setMonumentName(e.target.value)}
+              ></TextInput>
 
               <TextInput
                 placeholder="Creator Name"

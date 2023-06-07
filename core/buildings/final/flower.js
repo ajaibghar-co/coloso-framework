@@ -19,7 +19,7 @@ import { gnoise, random, vrandom } from '../../sugarrush/generative.js';
 import { colors } from '../utils/colors.js';
 import { circleSDF, polySDF, starSDF } from '../../sugarrush/sdf.js';
 import { fill, stroke } from '../../sugarrush/draw.js'
-import { pattern1, pattern2, pattern4, patterns } from '../utils/pattern.js';
+import { pattern1, pattern2, pattern4, pattern6, pattern7, pattern8, pattern9, patterns } from '../utils/pattern.js';
 
 
 // storage variables 
@@ -48,7 +48,10 @@ console.log("sDensity: ", sDensity)
 export function main(coord, context, cursor, buffer, data) {
 	let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
-	const t = data.movement != -1 ? context.time * 0.0001 : 0
+	const t = data.movement != -1 ? 
+	data.movement == 0 ? 
+	context.time * 0.01 : 
+	context.time * 0.001 : 0
 
 	const m = Math.max(context.cols, context.rows)
 	const a = context.metrics.aspect
@@ -73,23 +76,24 @@ export function main(coord, context, cursor, buffer, data) {
 
 	let y = fract(st.x*4.0) < 0.5 ? st.y+st.x : st.y-st.x
 	// let mod1 = Math.floor(pattern1(y, 20)) % density1.length
-	let mod1 = pattern2(coord, context) % sDensity.length
-
+	
 	let mod_st2 = vec2(st.x, st.y)
 	mod_st2.y += Math.abs(Math.sin(st.x*10.0)) * 10.0
 	// let mod2 = Math.abs((mod_st2.y*2.0 ))
 	// mod2 = Math.floor(mod2) % sColors.length
 
 	let move = sPattern1(coord, context, t)
+	let mod1 = (0 + move) % sDensity.length
+	let mod2 = pattern7(coord, context, t);
 
 	return {
-		char: s1 > 0.0 ? sDensity[mod1] 
-					: s2 > 0.0 ? sDensity[mod1] 
+		// char: s1 > 0.0 ? sDensity[mod1 + move] 
+		// 			: s2 > 0.0 ? sDensity[mod1 + move] 
 					// : s3 > 0.0 ? d3[mod1] 	
 					// : s4 > 0.0 ? d4[mod1]
-					 : '',	
-		char: s > 0.0 ? sDensity[mod1] : '',
-		color: s > 0.0 ? sColors[move % sColors.length] : 'white',
+					//  : '',	
+		char: s > 0.0 ? sDensity[(move == 0 ? mod2 : mod1) % sDensity.length] : '',
+		color: s > 0.0 ? sColors[(mod1 + move) % sColors.length] : 'white',
 
 	}
 }

@@ -9,16 +9,12 @@ export const settings = {
 }
 
 
-import { sdCircle, sdSegment, opSmoothUnion, opSmoothIntersection, opSmoothSubtraction } from '../../src/modules/sdf.js'
-import { clamp, map, fract } from '../../src/modules/num.js'
-import { vec2, length, add } from '../../src/modules/vec2.js'
+import { fract } from '../../src/modules/num.js'
+import { vec2, add } from '../../src/modules/vec2.js'
 import { densities } from '../utils/density.js';
-import { sort } from '../../src/modules/sort.js'
-import { mulN, sub, subN } from '../../src/modules/vec2.js';
-import { gnoise, random, vrandom } from '../../sugarrush/generative.js';
 import { colors } from '../utils/colors.js';
 import { circleSDF, polySDF, starSDF } from '../../sugarrush/sdf.js';
-import { fill, stroke } from '../../sugarrush/draw.js'
+import { fill } from '../../sugarrush/draw.js'
 import { pattern1, pattern2, pattern4, pattern6, pattern7, pattern8, pattern9, patterns } from '../utils/pattern.js';
 
 
@@ -48,10 +44,11 @@ console.log("sDensity: ", sDensity)
 export function main(coord, context, cursor, buffer, data) {
 	let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
-	const t = data.movement != -1 ? 
-	data.movement == 0 ? 
-	context.time * 0.01 : 
-	context.time * 0.001 : 0
+	const t = data.movement != -1 ? context.time * 0.004 : 0
+	if(data.movement == 0) {
+		t = context.time * 0.01
+	}
+	
 
 	const m = Math.max(context.cols, context.rows)
 	const a = context.metrics.aspect
@@ -92,7 +89,7 @@ export function main(coord, context, cursor, buffer, data) {
 					// : s3 > 0.0 ? d3[mod1] 	
 					// : s4 > 0.0 ? d4[mod1]
 					//  : '',	
-		char: s > 0.0 ? sDensity[(move == 0 ? mod2 : mod1) % sDensity.length] : '',
+		char: s > 0.0 ? sDensity[(data.movement == -1 ? mod2 : mod1) % sDensity.length] : '',
 		color: s > 0.0 ? sColors[(mod1 + move) % sColors.length] : 'white',
 
 	}

@@ -47,7 +47,7 @@ const sketchParams = {
   Lissajous: ["sketch-x1", "sketch-y1"],
 };
 
-const DEBUG = true;
+const DEBUG = false;
 
 export default function Generator() {
   const generatorRef = useRef(null);
@@ -264,6 +264,7 @@ export default function Generator() {
             border={DEBUG ? { color: "red" } : false}
             height={"fit-content"}
             gap="medium"
+            pad={"medium"}
           >
             <Box id="sketch" background={"#222"}>
               <Box direction="row-responsive" justify="center">

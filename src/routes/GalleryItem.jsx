@@ -236,8 +236,8 @@ export default function GalleryItem() {
                   onClick={() => {
                     html2canvas(document.querySelector("#sketch")).then(
                       (canvas) => {
-                        document.body.appendChild(canvas);
-                        console.log(canvas);
+                        // document.body.appendChild(canvas);
+                        // console.log(canvas);
                         var image = canvas
                           .toDataURL("image/png")
                           .replace("image/png", "image/octet-stream"); // here is the most important part because if you dont replace you will get a DOM 18 exception.

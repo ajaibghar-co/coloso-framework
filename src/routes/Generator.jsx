@@ -47,7 +47,7 @@ const sketchParams = {
   Lissajous: ["sketch-x1", "sketch-y1"],
 };
 
-const DEBUG = false;
+const DEBUG = true;
 
 export default function Generator() {
   const generatorRef = useRef(null);
@@ -55,6 +55,9 @@ export default function Generator() {
   const [structure, setStructure] = useState(-1);
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
+  const [harvestWords, setHarvestWords] = useState([]);
+  const [crystallizeWords, setCrystallizeWords] = useState([]);
+  const [distilWords, setDistilWords] = useState([]);
   const [choiceString, setChoiceString] = useState([]);
   const location = useLocation();
   const [showSaveModel, setShowSaveModel] = useState(false);
@@ -75,10 +78,13 @@ export default function Generator() {
   ];
 
   async function onClickSave() {
-    console.log("ok");
+    // console.log("ok");
+    // console.log([...harvestWords, ...crystallizeWords, ...distilWords]);
     const monumentPayload = {
       monumentName,
-      stringList: choiceString.join(","),
+      stringList: [...harvestWords, ...crystallizeWords, ...distilWords].join(
+        ", "
+      ),
       monumentLocation,
       creatorName,
       creatorLocation,
@@ -140,19 +146,19 @@ export default function Generator() {
     }
     // console.log(params);
     setParams(JSON.stringify(params));
-    setChoiceString([...choiceString, ...choices]);
+    setHarvestWords(choices);
   }
 
   function onHarvestClickedForSecondBox(value) {
     const { label, choices } = value;
     setColor(colorIndices[label]);
-    setChoiceString([...choiceString, ...choices]);
+    setCrystallizeWords(choices);
   }
 
   function onHarvestClickedForThirdBox(value) {
     const { label, choices } = value;
     setMovement(movementIndices[label]);
-    setChoiceString([...choiceString, ...choices]);
+    setDistilWords(choices);
   }
 
   return (
@@ -189,41 +195,37 @@ export default function Generator() {
         </Box>
       </Box>
 
-      <Box direction={"row-responsive"}>
-        <Box width={{ min: "28vw", max: "32rem" }} gap="xlarge">
-          <Box pad={"small"}>
-            <GeneratorWordSelector
-              set={structureSet}
-              map={structureMap}
-              onHarvestClicked={onHarvestClickedForFirstBox}
-              active={true}
-              instruction={"Time to harvest!"}
-              cta={"Harvest"}
-            />
-          </Box>
-          <Box pad={"small"}>
-            <GeneratorWordSelector
-              set={colorSet}
-              map={colorMap}
-              onHarvestClicked={onHarvestClickedForSecondBox}
-              active={structure != -1}
-              instruction={"Crystalize that baby!"}
-              cta={"Crystallize"}
-            />
-          </Box>
-          <Box pad={"small"}>
-            <GeneratorWordSelector
-              set={movementSet}
-              map={movementMap}
-              onHarvestClicked={onHarvestClickedForThirdBox}
-              active={structure != -1}
-              instruction={"Finally, go ahead and distil!"}
-              cta={"Distil"}
-            />
-          </Box>
+      <Box direction={"row-responsive"} wrap={false} responsive={true}>
+        <Box width={{ min: "28vw", max: "32rem" }} gap="medium" pad={"medium"}>
+          <GeneratorWordSelector
+            set={structureSet}
+            map={structureMap}
+            onHarvestClicked={onHarvestClickedForFirstBox}
+            active={!firstTime}
+            instruction={"Time to harvest!"}
+            cta={"Harvest"}
+          />
+
+          <GeneratorWordSelector
+            set={colorSet}
+            map={colorMap}
+            onHarvestClicked={onHarvestClickedForSecondBox}
+            active={structure != -1}
+            instruction={"Crystalize that baby!"}
+            cta={"Crystallize"}
+          />
+
+          <GeneratorWordSelector
+            set={movementSet}
+            map={movementMap}
+            onHarvestClicked={onHarvestClickedForThirdBox}
+            active={structure != -1}
+            instruction={"Finally, go ahead and distil!"}
+            cta={"Distil"}
+          />
         </Box>
         {firstTime ? (
-          <Box fill justify="center">
+          <Box flex={"grow"} justify="center">
             <Box
               background={"#E0C7A3"}
               pad={"medium"}
@@ -261,7 +263,7 @@ export default function Generator() {
             background={"#222"}
             border={DEBUG ? { color: "red" } : false}
             height={"fit-content"}
-            gap="large"
+            gap="medium"
           >
             <Box id="sketch" background={"#222"}>
               <Box direction="row-responsive" justify="center">

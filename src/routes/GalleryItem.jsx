@@ -143,49 +143,58 @@ export default function GalleryItem() {
           ></Button>
         </Box>
       </Box>
-      <Box flex="grow" pad={"small"}>
-        <Paragraph fill={true}>
-          You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
-          through the monuments created by all of Coloso’s visitors from all
-          around the world. You’ll also be able to distribute any of the
-          monuments as you wish, by downloading, screen-shooting, emailing,
-          sharing, and printing.
-        </Paragraph>
-      </Box>
+
       <Box direction={"row-responsive"} pad="small">
-        <Box
-          background={"#222"}
-          width={"medium"}
-          pad={"small"}
-          gap={"small"}
-          overflow={"scroll"}
-          border={{ color: "#E0C7A3" }}
-          round="small"
-          height="fit-content"
-        >
-          <Box direction="row-responsive" gap="small" align="center">
-            <TextInput
-              placeholder="Search by Monument Name"
-              value={searchTerm}
-              onChange={async (e) => {
-                setSearchTerm(e.target.value);
-                // await clickSearch();
-              }}
-            ></TextInput>
-            {/* <Search size={"medium"} /> */}
+        <Box gap={"small"}>
+          <Box
+            background={"#222"}
+            width={"medium"}
+            pad={"small"}
+            gap={"small"}
+            flex={"grow"}
+          >
+            <Paragraph fill={true}>
+              You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
+              through the monuments created by all of Coloso’s visitors from all
+              around the world. You’ll also be able to distribute any of the
+              monuments as you wish, by downloading, screen-shooting, emailing,
+              sharing, and printing.
+            </Paragraph>
           </Box>
-          {allMonumentsList &&
-            allMonumentsList.map((monument, ix) => {
-              return (
-                <Box key={ix}>
-                  <Link to={`/warehouse/${monument.slug}`}>
-                    <Text color={"white"}>{monument.monument_name}</Text>
-                  </Link>
-                </Box>
-              );
-            })}
+          <Box
+            background={"#222"}
+            width={"medium"}
+            pad={"small"}
+            gap={"small"}
+            overflow={"scroll"}
+            border={{ color: "#E0C7A3" }}
+            round="small"
+            fill={"vertical"}
+          >
+            <Box direction="row-responsive" gap="small" align="center">
+              <TextInput
+                placeholder="Search by Monument Name"
+                value={searchTerm}
+                onChange={async (e) => {
+                  setSearchTerm(e.target.value);
+                  // await clickSearch();
+                }}
+              ></TextInput>
+              {/* <Search size={"medium"} /> */}
+            </Box>
+            {allMonumentsList &&
+              allMonumentsList.map((monument, ix) => {
+                return (
+                  <Box key={ix}>
+                    <Link to={`/warehouse/${monument.slug}`}>
+                      <Text color={"white"}>{monument.monument_name}</Text>
+                    </Link>
+                  </Box>
+                );
+              })}
+          </Box>
         </Box>
-        <Box direction="row-responsive">
+        <Box direction="row-responsive" wrap={true}>
           <Box
             width={"large"}
             height={"large"}
@@ -251,10 +260,8 @@ export default function GalleryItem() {
                 </Button>
                 <Button
                   onClick={() => {
-                    console.log(location);
-                    navigator.clipboard.writeText(
-                      `https://url-of-project${location.pathname}`
-                    );
+                    // console.log(location);
+                    navigator.clipboard.writeText(window.location.href);
                     alert("Monument URL has been copied to your clipboard");
                   }}
                 >

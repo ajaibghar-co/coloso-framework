@@ -20,7 +20,8 @@ function GeneratorWordSelector({
   const [choices, setChoices] = useState([]);
 
   function resampleChoices() {
-    setSampledChoices(getRandom(Object.keys(map), 5));
+    let choiceSubSet = sample2Choices(set, map);
+    setSampledChoices(getRandom(choiceSubSet, 5));
     setChoices([]);
     onHarvestClicked("None");
   }
@@ -54,69 +55,76 @@ function GeneratorWordSelector({
   }
 
   return (
-    <Box background={"#e0c7a3bb"} pad={"small"} round={"xsmall"} flex="grow">
-      <Stack anchor={"center"} fill={true}>
-        <Box gap={"medium"}>
-          <Box>
-            <Text color={"black"} weight={700}>
-              {instruction}
-            </Text>
-            <Box direction={"row-responsive"}>
-              <Box>
-                <Text style={{ fontStyle: "italic" }} size="small">
-                  Pick 3 out of 5
-                </Text>
-              </Box>
-              <Box flex={"grow"}></Box>
-              <Button icon={<RefreshIcon />} plain onClick={resampleChoices} />
+    <Stack>
+      <Box
+        background={"#e0c7a3bb"}
+        pad={"small"}
+        round={"xsmall"}
+        flex="grow"
+        gap={"medium"}
+        height={"fit-content"}
+      >
+        {/* <Stack anchor={"center"} fill={true}> */}
+
+        <Box>
+          <Text color={"black"} weight={700}>
+            {instruction}
+          </Text>
+          <Box direction={"row-responsive"}>
+            <Box>
+              <Text style={{ fontStyle: "italic" }} size="small">
+                Pick 3 out of 5
+              </Text>
             </Box>
+            <Box flex={"grow"}></Box>
+            <Button icon={<RefreshIcon />} plain onClick={resampleChoices} />
           </Box>
-          <Box>
-            <Box align="center" gap={"xxsmall"}>
-              {sampledChoices.slice(0, 5).map((choice, ix) => (
-                <Button
-                  plain
-                  key={ix}
-                  onClick={() => {
+        </Box>
+        <Box>
+          <Box align="center" gap={"xxsmall"}>
+            {sampledChoices.slice(0, 5).map((choice, ix) => (
+              <Button
+                plain
+                key={ix}
+                onClick={() => {
+                  if (!choices.includes(choice)) {
                     if (choices.length < 3) {
                       setChoices([...choices, choice]);
                     }
-                  }}
-                >
-                  <Box
-                    background={choices.includes(choice) ? "white" : "e0c7a3"}
-                    pad={"xxsmall"}
-                  >
-                    <Text>{choice}</Text>
-                  </Box>
-                </Button>
-              ))}
-            </Box>
-          </Box>
-
-          <Box align="center">
-            <Button
-              plain
-              active={active && choices.length === 3}
-              onClick={computeOutput}
-            >
-              <Box
-                background={active && choices.length === 3 ? "#CDD8E3" : "grey"}
-                alignSelf="center"
-                width={"fit-content"}
-                pad={"xsmall"}
-                round={"xxsmall"}
+                  }
+                }}
               >
-                <Text size={"small"}>{cta}</Text>
-              </Box>
-            </Button>
+                <Box
+                  background={choices.includes(choice) ? "white" : "e0c7a3"}
+                  pad={"xxsmall"}
+                >
+                  <Text>{choice}</Text>
+                </Box>
+              </Button>
+            ))}
           </Box>
         </Box>
-        {/* <Box background={"red"} fill flex={"grow"}>
-          hi
-        </Box> */}
-      </Stack>
-    </Box>
+
+        <Box align="center">
+          <Button
+            plain
+            active={active && choices.length === 3}
+            onClick={computeOutput}
+          >
+            <Box
+              background={active && choices.length === 3 ? "#CDD8E3" : "grey"}
+              alignSelf="center"
+              width={"fit-content"}
+              pad={"xsmall"}
+              round={"xxsmall"}
+            >
+              <Text size={"small"}>{cta}</Text>
+            </Box>
+          </Button>
+        </Box>
+      </Box>
+      {!active ? <Box fill background={"#e0c7a3bb"}></Box> : null}
+    </Stack>
   );
 }
 

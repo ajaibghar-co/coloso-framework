@@ -16,7 +16,6 @@ import { movement1 } from "../utils/movement.js";
 import { patterns } from "../utils/pattern.js";
 
 // storage variables
-let denny;
 let sDensity;
 let iDensity = localStorage.getItem("sketch-idensity");
 let min1 = 2;
@@ -62,14 +61,14 @@ function iterateMandelbrot(coord, maxIterations) {
 }
 
 export function main(coord, context, cursor, buffer, data) {
-  console.log(data.param);
-  //   if (!Object.is(data.param, undefined)) {
-  //     iDensity = data.param["sketch-idensity"];
-  //     it1 = data.param["sketch-it1"];
-  //     it2 = data.param["sketch-it2"];
-  //     it3 = data.param["sketch-it3"];
-  //     sDensity = densities[iDensity];
-  //   }
+  // console.log(data.param);
+    if (data.param != undefined) {
+      iDensity = data.param["sketch-idensity"];
+      it1 = data.param["sketch-it1"];
+      it2 = data.param["sketch-it2"];
+      it3 = data.param["sketch-it3"];
+      sDensity = densities[iDensity];
+    }
 
   let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]

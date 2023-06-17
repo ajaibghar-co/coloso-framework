@@ -61,7 +61,7 @@ if (
 console.log("sDensity: ", sDensity);
 
 export function main(coord, context, cursor, buffer, data) {
-  if (data.param != null) {
+  if (data.param != undefined) {
     iDensity = data.param["sketch-idensity"];
     seed1 = data.param["sketch-seed1"];
     seed2 = data.param["sketch-seed2"];

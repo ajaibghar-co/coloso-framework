@@ -36,7 +36,7 @@ if (swidth == null || iDensity == null) {
 console.log("sDensity: ", sDensity);
 
 export function main(coord, context, cursor, buffer, data) {
-  if(data.param != null) {
+  if(data.param != undefined) {
     iDensity = data.param['sketch-idensity']
     swidth = data.param['sketch-swidth']
     sDensity = densities[iDensity]

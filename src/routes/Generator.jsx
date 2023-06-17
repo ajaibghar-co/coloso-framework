@@ -119,7 +119,7 @@ export default function Generator() {
   function render() {
     if (generatorRef && structure != -1) {
       run(
-        programs[0],
+        programs[structure],
         { element: generatorRef.current },
         { structure, color, movement }
       )

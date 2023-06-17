@@ -10,6 +10,7 @@ function GeneratorWordSelector({
   active,
   instruction,
   cta,
+  onReset,
 }) {
   const choiceSubSet = sample2Choices(set, map);
 
@@ -23,7 +24,7 @@ function GeneratorWordSelector({
     let choiceSubSet = sample2Choices(set, map);
     setSampledChoices(getRandom(choiceSubSet, 5));
     setChoices([]);
-    onHarvestClicked("None");
+    onReset();
   }
 
   function computeOutput() {

@@ -217,6 +217,7 @@ export default function Generator() {
             active={!firstTime}
             instruction={"Time to harvest!"}
             cta={"Harvest"}
+            onReset={() => setStructure(-1)}
           />
 
           <GeneratorWordSelector
@@ -226,6 +227,7 @@ export default function Generator() {
             active={structure != -1}
             instruction={"Crystalize that baby!"}
             cta={"Crystallize"}
+            onReset={() => setColor(-1)}
           />
 
           <GeneratorWordSelector
@@ -235,6 +237,7 @@ export default function Generator() {
             active={structure != -1}
             instruction={"Finally, go ahead and distil!"}
             cta={"Distil"}
+            onReset={() => setMovement(-1)}
           />
         </Box>
         {firstTime ? (

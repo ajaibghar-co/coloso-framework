@@ -238,11 +238,7 @@ export default function GalleryItem() {
               </Heading>
             ) : null}
             {structure != -1 ? (
-              <pre
-                id="langingpre"
-                style={{ lineHeight: 1 }}
-                ref={generatorRef}
-              ></pre>
+              <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
             ) : null}
           </Box>
           {monumentMetadata && (

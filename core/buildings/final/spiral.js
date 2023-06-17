@@ -36,10 +36,10 @@ if (swidth == null || iDensity == null) {
 console.log("sDensity: ", sDensity);
 
 export function main(coord, context, cursor, buffer, data) {
-  if(data.param != undefined) {
-    iDensity = data.param['sketch-idensity']
-    swidth = data.param['sketch-swidth']
-    sDensity = densities[iDensity]
+  if (data.param != undefined) {
+    iDensity = data.param["sketch-idensity"];
+    swidth = data.param["sketch-swidth"];
+    sDensity = densities[iDensity];
   }
 
   let sColors = data.color != -1 ? colors[data.color] : ["white"];

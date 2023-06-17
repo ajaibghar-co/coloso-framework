@@ -168,6 +168,11 @@ export default function Onboarding() {
   const [page, setPage] = useState(1);
   const [monumentName, setMonumentName] = useState("");
 
+  useEffect(() => {
+    console.log("onboarding mounted");
+    program.init();
+  }, []);
+
   function render() {
     if (generatorRef) {
       run(program, { element: generatorRef.current })
@@ -206,20 +211,11 @@ export default function Onboarding() {
           }
         }
         if (page === 3) {
+          console.log(e);
           if (e.key != "Enter") {
             if (
-              ![
-                "Backspace",
-                "Enter",
-                "Shift",
-                "Alt",
-                "ArrowLeft",
-                "ArrowRight",
-                "ArrowUp",
-                "ArrowDown",
-                "Control",
-                "Tab",
-              ].includes(e.key)
+              (e.keyCode >= 65 && e.keyCode <= 90) ||
+              (e.keyCode >= 48 && e.keyCode <= 57)
             ) {
               // console.log("pressed :", e.key);
               if (monumentName.length < 30) {
@@ -245,12 +241,12 @@ export default function Onboarding() {
           <pre id="langingpre" ref={generatorRef}></pre>
           {page === 1 ? (
             <div id="welcome-parent">
+              {/* <h1 id="welcome">COLOSO</h1> */}
               <div>
-                <h1 id="welcome">COLOSO</h1>
-                <div id="press-y">
-                  <p>Press Y to continue</p>
-                </div>
+                <h1 id={"welcome"}>COLOSO</h1>
               </div>
+              <br />
+              <p id="press-y">Press Y to continue</p>
             </div>
           ) : null}
           {page === 2 || page === 3 ? (

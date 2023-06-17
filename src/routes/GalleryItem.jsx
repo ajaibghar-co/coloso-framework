@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import { CircleInformation, Search } from "grommet-icons";
 import { PlainLink } from "../components/PlainLink";
 import html2canvas from "html2canvas";
+import { config } from "../../server/config";
 
 const programs = [
   mandelbrot,
@@ -22,6 +23,19 @@ const programs = [
   spiral,
   lissajous,
 ];
+
+/**
+ * https://stackoverflow.com/a/74966296
+ */
+function downloadData(linkData, filename) {
+  let link = document.createElement("a");
+  link.href = linkData;
+  link.download = filename;
+  let target = document.body;
+  target.appendChild(link); // Firefox requires the link to be in the body
+  link.click(); // simulate click
+  target.removeChild(link); // remove the link when done
+}
 
 export default function GalleryItem() {
   const generatorRef = useRef(null);
@@ -59,8 +73,9 @@ export default function GalleryItem() {
     if (monumentId) {
       (async function getMonument() {
         const { data: monument } = await axios.get(
-          `http://localhost:3000/monument/slug/${monumentId}`
+          `${config.serverUrl}/monument/slug/${monumentId}`
         );
+
         console.log({ monument });
         setStructure(monument.structure);
         setColor(monument.color);
@@ -74,7 +89,7 @@ export default function GalleryItem() {
         }
 
         const { data: monumentPage } = await axios.get(
-          `http://localhost:3000/monument/page/${uptoPageNum}`
+          `${config.serverUrl}/monument/page/${uptoPageNum}`
         );
         // console.log(monumentPage);
         setAllMonumentsList(monumentPage);
@@ -94,12 +109,12 @@ export default function GalleryItem() {
     (async function search() {
       if (searchTerm !== "") {
         const { data: monumentPage } = await axios.get(
-          `http://localhost:3000/monument/search/${searchTerm}`
+          `${config.serverUrl}/monument/search/${searchTerm}`
         );
         setAllMonumentsList(monumentPage);
       } else {
         const { data: monumentPage } = await axios.get(
-          `http://localhost:3000/monument/page/${uptoPageNum}`
+          `${config.serverUrl}/monument/page/${uptoPageNum}`
         );
         setAllMonumentsList(monumentPage);
       }
@@ -141,49 +156,58 @@ export default function GalleryItem() {
           ></Button>
         </Box>
       </Box>
-      <Box flex="grow" pad={"small"}>
-        <Paragraph fill={true}>
-          You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
-          through the monuments created by all of Coloso’s visitors from all
-          around the world. You’ll also be able to distribute any of the
-          monuments as you wish, by downloading, screen-shooting, emailing,
-          sharing, and printing.
-        </Paragraph>
-      </Box>
+
       <Box direction={"row-responsive"} pad="small">
-        <Box
-          background={"#222"}
-          width={"medium"}
-          pad={"small"}
-          gap={"small"}
-          overflow={"scroll"}
-          border={{ color: "#E0C7A3" }}
-          round="small"
-          height="fit-content"
-        >
-          <Box direction="row-responsive" gap="small" align="center">
-            <TextInput
-              placeholder="Search by Monument Name"
-              value={searchTerm}
-              onChange={async (e) => {
-                setSearchTerm(e.target.value);
-                // await clickSearch();
-              }}
-            ></TextInput>
-            {/* <Search size={"medium"} /> */}
+        <Box gap={"small"}>
+          <Box
+            background={"#222"}
+            width={"medium"}
+            pad={"small"}
+            gap={"small"}
+            flex={"grow"}
+          >
+            <Paragraph fill={true}>
+              You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
+              through the monuments created by all of Coloso’s visitors from all
+              around the world. You’ll also be able to distribute any of the
+              monuments as you wish, by downloading, screen-shooting, emailing,
+              sharing, and printing.
+            </Paragraph>
           </Box>
-          {allMonumentsList &&
-            allMonumentsList.map((monument, ix) => {
-              return (
-                <Box key={ix}>
-                  <Link to={`/warehouse/${monument.slug}`}>
-                    <Text color={"white"}>{monument.monument_name}</Text>
-                  </Link>
-                </Box>
-              );
-            })}
+          <Box
+            background={"#222"}
+            width={"medium"}
+            pad={"small"}
+            gap={"small"}
+            overflow={"scroll"}
+            border={{ color: "#E0C7A3" }}
+            round="small"
+            fill={"vertical"}
+          >
+            <Box direction="row-responsive" gap="small" align="center">
+              <TextInput
+                placeholder="Search by Monument Name"
+                value={searchTerm}
+                onChange={async (e) => {
+                  setSearchTerm(e.target.value);
+                  // await clickSearch();
+                }}
+              ></TextInput>
+              {/* <Search size={"medium"} /> */}
+            </Box>
+            {allMonumentsList &&
+              allMonumentsList.map((monument, ix) => {
+                return (
+                  <Box key={ix}>
+                    <Link to={`/warehouse/${monument.slug}`}>
+                      <Text color={"white"}>{monument.monument_name}</Text>
+                    </Link>
+                  </Box>
+                );
+              })}
+          </Box>
         </Box>
-        <Box direction="row-responsive">
+        <Box direction="row-responsive" wrap={true}>
           <Box
             width={"large"}
             height={"large"}
@@ -225,13 +249,17 @@ export default function GalleryItem() {
                   onClick={() => {
                     html2canvas(document.querySelector("#sketch")).then(
                       (canvas) => {
-                        document.body.appendChild(canvas);
-                        console.log(canvas);
+                        // document.body.appendChild(canvas);
+                        // console.log(canvas);
                         var image = canvas
                           .toDataURL("image/png")
                           .replace("image/png", "image/octet-stream"); // here is the most important part because if you dont replace you will get a DOM 18 exception.
 
-                        window.location.href = image;
+                        // window.location.href = image;
+                        downloadData(
+                          image,
+                          `${monumentMetadata.monument_name}.png`
+                        );
                       }
                     );
                   }}
@@ -249,10 +277,8 @@ export default function GalleryItem() {
                 </Button>
                 <Button
                   onClick={() => {
-                    console.log(location);
-                    navigator.clipboard.writeText(
-                      `https://url-of-project${location.pathname}`
-                    );
+                    // console.log(location);
+                    navigator.clipboard.writeText(window.location.href);
                     alert("Monument URL has been copied to your clipboard");
                   }}
                 >

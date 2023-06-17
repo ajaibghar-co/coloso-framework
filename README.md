@@ -18,7 +18,7 @@ of easy deployment, we combine it into just one. In production we run an express
 
 ## Steps
 
-- `npm run build` : creates a `build` directory with the static assets for your webpage
+- `npm run build` : creates a `dist` directory with the static assets for your webpage
 - `npm run server` : starts the server which serves the assets too
 - visit `localhost:3000/` to access the app
 

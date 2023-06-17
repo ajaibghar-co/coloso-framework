@@ -36,9 +36,11 @@ if (swidth == null || iDensity == null) {
 console.log("sDensity: ", sDensity);
 
 export function main(coord, context, cursor, buffer, data) {
-  // iDensity = data.param.val;
-  // sDensity = densities[iDensity];
-  // console.log(data.param);
+  if(data.param != null) {
+    iDensity = data.param['sketch-idensity']
+    swidth = data.param['sketch-swidth']
+    sDensity = densities[iDensity]
+  }
 
   let sColors = data.color != -1 ? colors[data.color] : ["white"];
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0];

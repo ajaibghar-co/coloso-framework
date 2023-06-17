@@ -65,6 +65,14 @@ function iterateMandelbrot(coord, maxIterations){
 
 
 export function main(coord, context, cursor, buffer, data) {
+	if(data.param != null) {
+    iDensity = data.param['sketch-idensity']
+    it1 = data.param['sketch-it1']
+    it2 = data.param['sketch-it2']
+    it3 = data.param['sketch-it3']
+    sDensity = densities[iDensity]
+  }
+
   let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
 	const t = data.movement != -1 ? context.time : 0

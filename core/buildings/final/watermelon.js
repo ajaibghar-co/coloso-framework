@@ -50,6 +50,15 @@ else {
 console.log("sDensity: ", sDensity)
 
 export function main(coord, context, cursor, buffer, data) {
+	if(data.param != null) {
+    iDensity = data.param['sketch-idensity']
+    seed1 = data.param['sketch-seed1']
+    seed2 = data.param['sketch-seed2']
+    seed3 = data.param['sketch-seed3']
+    seed4 = data.param['sketch-seed4']
+    sDensity = densities[iDensity]
+  }
+
   let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
 	const t = data.movement != -1 ? 0 : 0

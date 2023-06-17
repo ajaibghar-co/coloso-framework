@@ -24,6 +24,19 @@ const programs = [
   lissajous,
 ];
 
+/**
+ * https://stackoverflow.com/a/74966296
+ */
+function downloadData(linkData, filename) {
+  let link = document.createElement("a");
+  link.href = linkData;
+  link.download = filename;
+  let target = document.body;
+  target.appendChild(link); // Firefox requires the link to be in the body
+  link.click(); // simulate click
+  target.removeChild(link); // remove the link when done
+}
+
 export default function GalleryItem() {
   const generatorRef = useRef(null);
   const [structure, setStructure] = useState(-1);
@@ -242,7 +255,11 @@ export default function GalleryItem() {
                           .toDataURL("image/png")
                           .replace("image/png", "image/octet-stream"); // here is the most important part because if you dont replace you will get a DOM 18 exception.
 
-                        window.location.href = image;
+                        // window.location.href = image;
+                        downloadData(
+                          image,
+                          `${monumentMetadata.monument_name}.png`
+                        );
                       }
                     );
                   }}

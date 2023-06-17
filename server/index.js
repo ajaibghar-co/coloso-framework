@@ -3,17 +3,22 @@ import cors from "cors";
 import { config } from "./config.js";
 import { createDbConnection } from "./db.js";
 import { add, getById, getBySlug, getPaginated, search } from "./monument.js";
+import path from "path";
+const __dirname = path.resolve();
+
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("dist"));
 
 const { dbPath } = config;
 const db = createDbConnection(dbPath);
 
 app.get("/", (req, res) => {
   res.send("Coloso API");
+  // res.sendFile(path.join(__dirname, "dist/index.html"));
 });
 
 app.post("/monument", async (req, res) => {
@@ -56,4 +61,10 @@ app.get("/monument/page/:pgNum", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+});
+
+const INDEX = path.resolve("dist", "index.html");
+
+app.get("*", (req, res) => {
+  res.sendFile(INDEX);
 });

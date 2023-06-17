@@ -1,0 +1,5 @@
+node_modules
+server/monument.db
+npm-debug.log
+Dockerfile
+.dockerignore

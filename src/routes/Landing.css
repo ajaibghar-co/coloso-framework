@@ -20,6 +20,7 @@ h1 {
   justify-self: center;
   align-self: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -31,18 +32,46 @@ h1 {
   color: white;
   mix-blend-mode: difference;
   line-height: 0.6em;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 #press-y {
   background-color: #e0c7a3;
+  color: #222;
   align-content: end;
+  padding: 0.4em 1em 0.4em 1em;
+  font-size: 1.2em;
   width: fit-content;
 }
 
-#press-y > p {
-  color: #222;
-  width: fit-content;
-  padding: 0.4em 1em 0.4em 1em;
-  font-size: 1.2em;
+#press-y-parent {
+  background-color: red;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  #welcome {
+    font-size: 4rem;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  #welcome {
+    font-size: 12rem;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  #welcome {
+    font-size: 16rem;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  #welcome {
+    font-size: 20rem;
+  }
 }

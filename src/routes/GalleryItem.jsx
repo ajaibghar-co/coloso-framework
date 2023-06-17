@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import { CircleInformation, Search } from "grommet-icons";
 import { PlainLink } from "../components/PlainLink";
 import html2canvas from "html2canvas";
+import { config } from "../../server/config";
 
 const programs = [
   mandelbrot,
@@ -59,8 +60,9 @@ export default function GalleryItem() {
     if (monumentId) {
       (async function getMonument() {
         const { data: monument } = await axios.get(
-          `http://localhost:3000/monument/slug/${monumentId}`
+          `${config.serverUrl}/monument/slug/${monumentId}`
         );
+
         console.log({ monument });
         setStructure(monument.structure);
         setColor(monument.color);
@@ -74,7 +76,7 @@ export default function GalleryItem() {
         }
 
         const { data: monumentPage } = await axios.get(
-          `http://localhost:3000/monument/page/${uptoPageNum}`
+          `${config.serverUrl}/monument/page/${uptoPageNum}`
         );
         // console.log(monumentPage);
         setAllMonumentsList(monumentPage);
@@ -94,12 +96,12 @@ export default function GalleryItem() {
     (async function search() {
       if (searchTerm !== "") {
         const { data: monumentPage } = await axios.get(
-          `http://localhost:3000/monument/search/${searchTerm}`
+          `${config.serverUrl}/monument/search/${searchTerm}`
         );
         setAllMonumentsList(monumentPage);
       } else {
         const { data: monumentPage } = await axios.get(
-          `http://localhost:3000/monument/page/${uptoPageNum}`
+          `${config.serverUrl}/monument/page/${uptoPageNum}`
         );
         setAllMonumentsList(monumentPage);
       }

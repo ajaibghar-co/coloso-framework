@@ -16,10 +16,17 @@ import {
 } from "./../../buildings/utils/density.js";
 // import { colors1 } from '/buildings/colors.js'
 
-const cam = Camera.init();
-const can = new Canvas();
+console.log("===here===");
+
+let cam;
+let can;
 // For a debug view uncomment the following line:
 // can.display(document.body, 10, 10)
+
+export function init() {
+  cam = Camera.init();
+  can = new Canvas();
+}
 
 let density = sort(lpdensity, "Simple Console", true);
 //array of the colors shared by WHA

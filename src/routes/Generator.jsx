@@ -21,7 +21,6 @@ import {
 } from "grommet";
 import { CircleInformation, ClearOption } from "grommet-icons";
 import GeneratorWordSelector from "../components/GeneratorWordSelector";
-import StaticSketch from "../components/StaticSketch";
 import "./Generator.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -37,6 +36,7 @@ import {
   movementSet,
 } from "../selection";
 import { PlainLink } from "../components/PlainLink";
+import { config } from "../../server/config";
 
 const sketchParams = {
   Mandelbrot: ["sketch-it1", "sketch-it2", "sketch-it3"],
@@ -90,7 +90,7 @@ export default function Generator() {
     };
 
     const { data } = await axios.post(
-      "http://localhost:3000/monument",
+      `${config.serverUrl}/monument`,
       monumentPayload
     );
 

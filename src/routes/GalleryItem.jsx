@@ -48,12 +48,12 @@ export default function GalleryItem() {
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
 
-  function render() {
+  function render(param) {
     if (generatorRef && structure != -1) {
       run(
         programs[structure],
         { element: generatorRef.current },
-        { structure, color, movement }
+        { structure, color, movement, param }
       )
         .then(function (e) {
           // console.log(e);
@@ -93,7 +93,7 @@ export default function GalleryItem() {
         );
         // console.log(monumentPage);
         setAllMonumentsList(monumentPage);
-        render();
+        render(params);
       })();
     }
     return () => {};
@@ -137,7 +137,14 @@ export default function GalleryItem() {
         <Box flex="grow"></Box>
 
         <Box width={"0.4em"}></Box>
-        <Box align="center" direction="row-responsive">
+        <Box align="center" direction="row-responsive" gap={"small"}>
+          <Button plain>
+            <Box background={"white"} pad="xsmall" round={"xxsmall"}>
+              <PlainLink to="/factory">
+                <Text> Go to Home</Text>
+              </PlainLink>
+            </Box>
+          </Button>
           <Button plain>
             <Box background={"white"} pad="xsmall" round={"xxsmall"}>
               <PlainLink to="/factory">
@@ -184,7 +191,12 @@ export default function GalleryItem() {
             round="small"
             fill={"vertical"}
           >
-            <Box direction="row-responsive" gap="small" align="center">
+            <Box
+              direction="row-responsive"
+              gap="small"
+              align="center"
+              flex={"grow"}
+            >
               <TextInput
                 placeholder="Search by Monument Name"
                 value={searchTerm}
@@ -198,7 +210,7 @@ export default function GalleryItem() {
             {allMonumentsList &&
               allMonumentsList.map((monument, ix) => {
                 return (
-                  <Box key={ix}>
+                  <Box key={ix} flex={"grow"}>
                     <Link to={`/warehouse/${monument.slug}`}>
                       <Text color={"white"}>{monument.monument_name}</Text>
                     </Link>
@@ -226,11 +238,15 @@ export default function GalleryItem() {
               </Heading>
             ) : null}
             {structure != -1 ? (
-              <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
+              <pre
+                id="langingpre"
+                style={{ lineHeight: 1 }}
+                ref={generatorRef}
+              ></pre>
             ) : null}
           </Box>
           {monumentMetadata && (
-            <Box flex="grow" justify="center">
+            <Box flex="grow" justify="center" pad={"small"}>
               <Heading level={4} color={"white"}>
                 {monumentMetadata.string_list}
               </Heading>

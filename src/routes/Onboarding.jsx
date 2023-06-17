@@ -28,17 +28,25 @@ const PageOne = () => (
 
 const PageTwo = () => (
   <Box fill>
-    <Box direction="row-responsive" pad={"small"}>
+    <Box direction="row-responsive" pad={"small"} gap={"small"}>
       <Box flex="grow"></Box>
 
       <Box width={"0.4em"}></Box>
       <Button plain>
-        <Box background={"#E0C7A3"} pad="small">
+        <Box background={"white"} pad="xsmall" round={"xxsmall"}>
+          <PlainLink to="/factory">
+            <Text> Go to Factory</Text>
+          </PlainLink>
+        </Box>
+      </Button>
+      <Button plain>
+        <Box background={"white"} pad="xsmall" round={"xxsmall"}>
           <PlainLink to="/warehouse">
             <Text> Go to Warehouse</Text>
           </PlainLink>
         </Box>
       </Button>
+
       <Button
         icon={
           <Box>

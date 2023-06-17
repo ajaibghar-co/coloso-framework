@@ -175,7 +175,14 @@ export default function Generator() {
         <Box flex="grow"></Box>
 
         <Box width={"0.4em"}></Box>
-        <Box align="center" direction="row-responsive">
+        <Box align="center" direction="row-responsive" gap={"small"}>
+          <Button plain>
+            <Box background={"white"} pad="xsmall" round={"xxsmall"}>
+              <PlainLink to="/">
+                <Text> Go to Home</Text>
+              </PlainLink>
+            </Box>
+          </Button>
           <Button plain>
             <PlainLink to="/warehouse">
               <Box background={"white"} pad="xsmall" round={"xxsmall"}>

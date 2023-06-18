@@ -39,18 +39,18 @@ import { PlainLink } from "../components/PlainLink";
 import { config } from "../../server/config";
 
 const sketchParams = {
-  Mandelbrot: ["sketch-it1", "sketch-it2", "sketch-it3", "sketch-idensity"],
-  Blockchain: ["sketch-seed", "sketch-dim", "sketch-idensity"],
+  Mandelbrot: ["sketch-it1", "sketch-it2", "sketch-it3", "sketch-idmandelbrot"],
+  Blockchain: ["sketch-seed", "sketch-dim", "sketch-idblockhain"],
   Watermelon: [
     "sketch-seed1",
     "sketch-seed2",
     "sketch-seed3",
     "sketch-seed4",
-    "sketch-idensity",
+    "sketch-idwatermelon",
   ],
-  Flower: ["sketch-idensity", "sketch-x1", "sketch-y1"],
-  Spiral: ["sketch-swidth", "sketch-idensity"],
-  Lissajous: ["sketch-x1", "sketch-y1", "sketch-idensity"],
+  Flower: ["sketch-idflower", "sketch-x1", "sketch-y1"],
+  Spiral: ["sketch-swidth", "sketch-idspiral"],
+  Lissajous: ["sketch-x1", "sketch-y1", "sketch-idlissajous"],
 };
 
 const DEBUG = false;

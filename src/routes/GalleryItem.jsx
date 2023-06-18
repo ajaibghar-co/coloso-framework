@@ -362,14 +362,3 @@ export default function GalleryItem() {
     </Box>
   );
 }
-
-export async function loader() {
-  // const { data: monument } = await axios.get(
-  //   "http://localhost:3000/monument/1"
-  // );
-  // const { data: monumentPage } = await axios.get(
-  //   `http://localhost:3000/monument/page/0`
-  // );
-  // return { monument, monumentPage };
-  return {};
-}

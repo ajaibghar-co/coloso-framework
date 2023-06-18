@@ -61,6 +61,7 @@ export function GalleryMonument({
 
   return (
     <Box
+      background={"#222"}
       width={"fit-content"}
       height={"fit-content"}
       id="sketch"
@@ -74,7 +75,7 @@ export function GalleryMonument({
             className="monument-name"
             style={{ textAlign: "center" }}
           >
-            {`${monumentMetadata.monument_name}`}
+            {`${monumentMetadata.monument_name} - ${size}`}
           </Heading>
         ) : null}
       </Box>

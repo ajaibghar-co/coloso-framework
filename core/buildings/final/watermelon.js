@@ -37,22 +37,16 @@ localStorage.setItem("sketch-seed2", seed2);
 localStorage.setItem("sketch-seed3", seed3);
 localStorage.setItem("sketch-seed4", seed4);
 localStorage.setItem("sketch-idensity", iDensity);
-// seed1 = parseFloat(seed1);
-// seed2 = parseFloat(seed2);
-// seed3 = parseFloat(seed3);
-// seed4 = parseFloat(seed4);
-// iDensity = parseInt(iDensity);
-// sDensity = densities[iDensity];
 console.log("sDensity: ", sDensity);
 
 export function main(coord, context, cursor, buffer, data) {
   if (data.param != undefined) {
-    iDensity = data.param["sketch-idensity"];
-    seed1 = data.param["sketch-seed1"];
-    seed2 = data.param["sketch-seed2"];
-    seed3 = data.param["sketch-seed3"];
-    seed4 = data.param["sketch-seed4"];
-    sDensity = densities[iDensity];
+    iDensity = parseInt(data.param["sketch-idensity"])
+    seed1 = parseFloat(data.param["sketch-seed1"])
+    seed2 = parseFloat(data.param["sketch-seed2"])
+    seed3 = parseFloat(data.param["sketch-seed3"])
+    seed4 = parseFloat(data.param["sketch-seed4"])
+    sDensity = densities[iDensity]
   }
 
   let sColors = data.color != -1 ? colors[data.color] : ['white']

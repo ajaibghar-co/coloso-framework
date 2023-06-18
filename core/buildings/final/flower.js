@@ -27,19 +27,15 @@ let sDensity = densities[iDensity]
 localStorage.setItem('sketch-x1', x1)
 localStorage.setItem('sketch-y1', y1)
 localStorage.setItem('sketch-idensity', iDensity)
-	// x1 = parseFloat(x1)
-	// y1 = parseFloat(y1)
-	// iDensity = parseInt(iDensity)
-	// sDensity = densities[iDensity]
 console.log("sDensity: ", sDensity)
 
 
 
 export function main(coord, context, cursor, buffer, data) {
 	if(data.param != undefined) {
-    iDensity = data.param['sketch-idensity']
-    x1 = data.param['sketch-x1']
-    y1 = data.param['sketch-y1']
+    iDensity = parseInt(data.param['sketch-idensity'])
+    x1 = parseFloat(data.param['sketch-x1'])
+    y1 = parseFloat(data.param['sketch-y1'])
     sDensity = densities[iDensity]
   }
 

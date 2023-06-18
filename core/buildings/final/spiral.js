@@ -25,15 +25,12 @@ let iDensity = Math.floor(Math.random() * densities.length);
 let sDensity = densities[iDensity]
 localStorage.setItem("sketch-swidth", swidth);
 localStorage.setItem("sketch-idensity", iDensity);
-  // swidth = parseFloat(swidth);
-  // iDensity = parseInt(iDensity);
-  // sDensity = densities[iDensity];
 console.log("sDensity: ", sDensity);
 
 export function main(coord, context, cursor, buffer, data) {
   if (data.param != undefined) {
-    iDensity = data.param["sketch-idensity"];
-    swidth = data.param["sketch-swidth"];
+    iDensity = parseInt(data.param["sketch-idensity"]);
+    swidth = parseFloat(data.param["sketch-swidth"]);
     sDensity = densities[iDensity];
   }
 

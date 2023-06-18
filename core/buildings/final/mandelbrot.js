@@ -27,11 +27,6 @@ localStorage.setItem("sketch-it1", it1);
 localStorage.setItem("sketch-it2", it2);
 localStorage.setItem("sketch-it3", it3);
 localStorage.setItem("sketch-idensity", iDensity);
-// it1 = parseFloat(it1);
-// it2 = parseFloat(it2);
-// it3 = parseFloat(it3);
-// iDensity = parseInt(iDensity);
-// sDensity = densities[iDensity];
 console.log("density: ", sDensity);
 
 function squareImaginary(number) {
@@ -56,11 +51,11 @@ function iterateMandelbrot(coord, maxIterations) {
 export function main(coord, context, cursor, buffer, data) {
   // console.log(data.param);
     if (data.param != undefined) {
-      iDensity = data.param["sketch-idensity"];
-      it1 = data.param["sketch-it1"];
-      it2 = data.param["sketch-it2"];
-      it3 = data.param["sketch-it3"];
-      sDensity = densities[iDensity];
+      iDensity = parseInt(data.param["sketch-idensity"])
+      it1 = parseFloat(data.param["sketch-it1"])
+      it2 = parseFloat(data.param["sketch-it2"])
+      it3 = parseFloat(data.param["sketch-it3"])
+      sDensity = densities[iDensity]
     }
 
   let sColors = data.color != -1 ? colors[data.color] : ['white']

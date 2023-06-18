@@ -272,11 +272,17 @@ export default function Generator() {
               </Paragraph>
               <Paragraph fill textAlign="center">
                 Choose three words that help you describe your queer space from
-                the list.{" "}
+                the list. This will give your monument structure.
               </Paragraph>
               <Paragraph fill textAlign="center">
-                Second, you’ll distill [not sure what this does]. Third, You can
-                refresh the list to find more words.
+                Second, you’ll Crystalize to add color to your monument.
+              </Paragraph>
+              <Paragraph fill textAlign="center">
+                Third, when you Distil, your monument will come alive with
+                movement.
+              </Paragraph>
+              <Paragraph fill textAlign="center">
+                You can refresh the list to find more words.
               </Paragraph>
               <Box align="center">
                 <Button plain onClick={() => setFirstTime(false)}>

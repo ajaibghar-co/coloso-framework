@@ -1,4 +1,4 @@
-import { Box, Heading, Paragraph, Text, Button } from "grommet";
+import { Box, Heading, Paragraph, Text, Button, Anchor } from "grommet";
 import { CircleInformation } from "grommet-icons";
 import { PlainLink } from "../components/PlainLink";
 
@@ -20,7 +20,15 @@ export default function About() {
         <Box flex="grow"></Box>
 
         <Box width={"0.4em"}></Box>
-        <Box align="center" direction="row-responsive">
+        <Box align="center" direction="row-responsive" gap={"small"}>
+          <Button plain>
+            <Box background={"white"} pad="xsmall" round={"xxsmall"}>
+              <Text>
+                {" "}
+                <PlainLink to="/warehouse">Go to Warehouse</PlainLink>
+              </Text>
+            </Box>
+          </Button>
           <Button plain>
             <Box background={"white"} pad="xsmall" round={"xxsmall"}>
               <Text>
@@ -49,16 +57,19 @@ export default function About() {
             and buildings around the world. Instead of immobile statues and
             architectural elements, “Coloso” reimagines monuments as
             distributable digital icons and data which you can download,
-            screenshoot, email, share, and print. Through this digital project
-            on queering architectural research methods, the act of creating
+            screenshot, email, share, and print. Through this digital project on
+            queering architectural research methods, the act of creating
             monuments both appropriates and rejects colonial ideals of
             memorialization; contests who and what is commemorated; democratizes
             who gets to commission; and reimagines the very materiality of
             monuments.
           </Paragraph>
           <Paragraph fill size="large" color="white">
-            Directed by Regner Ramos and Kleanthis Kyriakou, Wet-Hard Agency is
-            a collaborative practice operating at the intersection between
+            Directed by Regner Ramos and Kleanthis Kyriakou,{" "}
+            <Anchor href={"http://www.wet-hard.agency/"} target={"_blank"}>
+              Wet-Hard Agency
+            </Anchor>{" "}
+            is a collaborative practice operating at the intersection between
             queerness, digital practices, and architecture. It stems from the
             nature of our cultural and geographic origins as island-dwellers
             from different parts of the globe—the Caribbean and the
@@ -72,8 +83,21 @@ export default function About() {
             web-connected 21st century.
           </Paragraph>
           <Paragraph fill size="large" color="white">
-            This project was coded by Ajaibghar [Say more] and funded by the
-            Graham Foundation 2021-2023.
+            This project’s web experience is designed & produced by{" "}
+            <Anchor href={"https://www.ajaibghar.com/"} target={"_blank"}>
+              Ajaibghar
+            </Anchor>{" "}
+            (Ambika Joshi, Nanditi Khilnani, Anushka Trivedi, Denny George) and
+            funded by the{" "}
+            <Anchor
+              href={
+                "http://www.grahamfoundation.org/grantees/6226-coloso-a-factory-of-queer-digital-monuments-for-puerto-rico"
+              }
+              target={"_blank"}
+            >
+              Graham Foundation{" "}
+            </Anchor>
+            2021-2023.
           </Paragraph>
         </Box>
       </Box>

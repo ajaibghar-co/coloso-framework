@@ -294,7 +294,7 @@ export default function GalleryItem() {
                 You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
                 through the monuments created by all of Coloso’s visitors from
                 all around the world. You’ll also be able to distribute any of
-                the monuments as you wish, by downloading, screen-shooting,
+                the monuments as you wish, by downloading, taking a screenshot,
                 emailing, sharing, and printing.
               </Paragraph>
             </Box>

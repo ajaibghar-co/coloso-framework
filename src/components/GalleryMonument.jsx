@@ -75,7 +75,7 @@ export function GalleryMonument({
             className="monument-name"
             style={{ textAlign: "center" }}
           >
-            {`${monumentMetadata.monument_name} - ${size}`}
+            {`${monumentMetadata.monument_name}`}
           </Heading>
         ) : null}
       </Box>

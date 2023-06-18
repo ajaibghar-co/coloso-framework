@@ -101,17 +101,19 @@ export default function Generator() {
       params,
     };
 
+    console.log(monumentPayload);
+
     const { data } = await axios.post(
       `${config.serverUrl}/monument`,
       monumentPayload
     );
 
     // clearing localstorage
-    for (var key in localStorage) {
-      if (key.startsWith("sketch-")) {
-        localStorage.removeItem(key);
-      }
-    }
+    // for (var key in localStorage) {
+    //   if (key.startsWith("sketch-")) {
+    //     localStorage.removeItem(key);
+    //   }
+    // }
 
     navigate(`/warehouse/${data.slug}`);
   }

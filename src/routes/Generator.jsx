@@ -359,7 +359,7 @@ export default function Generator() {
               width={"medium"}
               height={"fit-content"}
               background={"white"}
-              pad={"medium"}
+              pad={"large"}
               gap={"small"}
             >
               <Heading level="4">Store in warehouse</Heading>
@@ -367,23 +367,39 @@ export default function Generator() {
               <TextInput
                 placeholder="Monument Name"
                 value={monumentName}
-                onChange={(e) => setMonumentName(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value.length < 25) {
+                    setMonumentName(e.target.value);
+                  }
+                }}
               ></TextInput>
 
               <TextInput
                 placeholder="Creator Name"
                 value={creatorName}
-                onChange={(e) => setCreatorName(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value.length < 25) {
+                    setCreatorName(e.target.value);
+                  }
+                }}
               ></TextInput>
               <TextInput
                 placeholder="Creator Location"
                 value={creatorLocation}
-                onChange={(e) => setCreatorLocation(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value.length < 25) {
+                    setCreatorLocation(e.target.value);
+                  }
+                }}
               ></TextInput>
               <TextInput
                 placeholder="Monument Location"
                 value={monumentLocation}
-                onChange={(e) => setMonumentLocation(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value.length < 25) {
+                    setMonumentLocation(e.target.value);
+                  }
+                }}
               ></TextInput>
 
               <Box direction="row-responsive" gap="small">

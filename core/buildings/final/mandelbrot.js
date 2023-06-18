@@ -16,29 +16,22 @@ import { movement1 } from "../utils/movement.js";
 import { patterns } from "../utils/pattern.js";
 
 // storage variables
-let sDensity;
-let iDensity = localStorage.getItem("sketch-idensity");
-let min1 = 2;
-let max1 = 10;
-let it1 = localStorage.getItem("sketch-it1");
-let it2 = localStorage.getItem("sketch-it2");
-let it3 = localStorage.getItem("sketch-it3");
-if (it1 == null || it2 == null || it3 == null || iDensity == null) {
-  it1 = Math.floor(Math.random() * (max1 - min1) + min1);
-  it2 = Math.floor(Math.random() * (max1 - min1) + min1);
-  it3 = Math.floor(Math.random() * (max1 - min1) + min1);
-  iDensity = Math.floor(Math.random() * densities.length);
-  localStorage.setItem("sketch-it1", it1);
-  localStorage.setItem("sketch-it2", it2);
-  localStorage.setItem("sketch-it3", it3);
-  localStorage.setItem("sketch-idensity", iDensity);
-} else {
-  it1 = parseFloat(it1);
-  it2 = parseFloat(it2);
-  it3 = parseFloat(it3);
-  iDensity = parseInt(iDensity);
-  sDensity = densities[iDensity];
-}
+let min1 = 2
+let max1 = 10
+let it1 = Math.floor(Math.random() * (max1 - min1) + min1);
+let it2 = Math.floor(Math.random() * (max1 - min1) + min1);
+let it3 = Math.floor(Math.random() * (max1 - min1) + min1);
+let iDensity = Math.floor(Math.random() * densities.length);
+let sDensity = densities[iDensity]
+localStorage.setItem("sketch-it1", it1);
+localStorage.setItem("sketch-it2", it2);
+localStorage.setItem("sketch-it3", it3);
+localStorage.setItem("sketch-idensity", iDensity);
+// it1 = parseFloat(it1);
+// it2 = parseFloat(it2);
+// it3 = parseFloat(it3);
+// iDensity = parseInt(iDensity);
+// sDensity = densities[iDensity];
 console.log("density: ", sDensity);
 
 function squareImaginary(number) {

@@ -21,24 +21,19 @@ import { patterns } from '../utils/pattern.js';
 
 
 // storage variables 
-let sDensity
-let iDensity = localStorage.getItem('sketch-idensity')
-let seed = localStorage.getItem('sketch-seed')
-let dim = localStorage.getItem('sketch-dim')
-if(seed == null || dim == null || iDensity == null) {
-  seed = Math.random()*10000.0
-	dim = 4.0
-	iDensity = Math.floor(Math.random() * densities.length)
-	localStorage.setItem('sketch-seed', seed)
-	localStorage.setItem('sketch-dim', dim)
-	localStorage.setItem('sketch-idensity', iDensity)
-}
-else {
-	seed = parseFloat(seed)
-	dim = parseInt(dim)
-  iDensity = parseInt(iDensity)
-	sDensity = densities[iDensity]
-}
+
+let seed = Math.random()*10000.0
+let dim = 4.0
+let iDensity = Math.floor(Math.random() * densities.length)
+let sDensity = densities[iDensity]  
+localStorage.setItem('sketch-seed', seed)
+localStorage.setItem('sketch-dim', dim)
+localStorage.setItem('sketch-idensity', iDensity)
+
+// seed = parseFloat(seed)
+// dim = parseInt(dim)
+// iDensity = parseInt(iDensity)
+// sDensity = densities[iDensity]
 console.log("sDensity: ", sDensity)
 
 export function main(coord, context, cursor, buffer, data) {

@@ -26,7 +26,7 @@ let sDensity = densities[iDensity]
 localStorage.setItem("sketch-it1", it1);
 localStorage.setItem("sketch-it2", it2);
 localStorage.setItem("sketch-it3", it3);
-localStorage.setItem("sketch-idensity", iDensity);
+localStorage.setItem("sketch-idmandelbrot", iDensity);
 console.log("density: ", sDensity);
 
 function squareImaginary(number) {
@@ -51,7 +51,7 @@ function iterateMandelbrot(coord, maxIterations) {
 export function main(coord, context, cursor, buffer, data) {
   // console.log(data.param);
     if (data.param != undefined) {
-      iDensity = parseInt(data.param["sketch-idensity"])
+      iDensity = parseInt(data.param["sketch-idmandelbrot"])
       it1 = parseFloat(data.param["sketch-it1"])
       it2 = parseFloat(data.param["sketch-it2"])
       it3 = parseFloat(data.param["sketch-it3"])

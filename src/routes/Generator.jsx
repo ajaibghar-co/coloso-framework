@@ -169,18 +169,30 @@ export default function Generator() {
 
   return (
     <Box fill background="#222">
-      <Box direction="row-responsive" pad={"small"}>
-        <Box align="end">
-          <Text size={"xlarge"} color="white" style={{ fontFamily: "wethard" }}>
-            COLOSO
-          </Text>
-          <Text size={"small"} weight={100} color="#E1C79C" margin={"none"}>
-            factory{" "}
-          </Text>
+      <Box direction="row-responsive" wrap={true} pad={"small"} flex={"grow"}>
+        <Box align="start">
+          <Box>
+            <Text
+              size={"xlarge"}
+              weight={900}
+              color="white"
+              style={{ fontFamily: "wethard" }}
+            >
+              COLOSO
+            </Text>
+            <Text
+              textAlign="end"
+              size={"small"}
+              weight={100}
+              color="#E1C79C"
+              margin={"none"}
+            >
+              factory
+            </Text>
+          </Box>
         </Box>
         <Box flex="grow"></Box>
 
-        <Box width={"0.4em"}></Box>
         <Box align="center" direction="row-responsive" gap={"small"}>
           <Button plain>
             <Box background={"white"} pad="xsmall" round={"xxsmall"}>
@@ -208,8 +220,13 @@ export default function Generator() {
         </Box>
       </Box>
 
-      <Box direction={"row-responsive"} wrap={false} responsive={true}>
-        <Box width={{ min: "28vw", max: "32rem" }} gap="medium" pad={"medium"}>
+      <Box
+        direction={"row-responsive"}
+        wrap={true}
+        responsive={true}
+        flex={"grow"}
+      >
+        <Box responsive={true} gap="medium" pad={"medium"}>
           <GeneratorWordSelector
             set={structureSet}
             map={structureMap}
@@ -276,6 +293,7 @@ export default function Generator() {
         ) : (
           <Box
             flex={"grow"}
+            justify="center"
             background={"#222"}
             border={DEBUG ? { color: "red" } : false}
             height={"fit-content"}

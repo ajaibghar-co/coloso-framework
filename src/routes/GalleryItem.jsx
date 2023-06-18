@@ -1,6 +1,15 @@
 import axios, { all } from "axios";
-import { Box, Heading, Text, TextInput, Button, Paragraph } from "grommet";
-import { useEffect, useRef, useState } from "react";
+import {
+  Box,
+  Heading,
+  Text,
+  TextInput,
+  Button,
+  Paragraph,
+  ResponsiveContext,
+  Layer,
+} from "grommet";
+import { useContext, useEffect, useRef, useState } from "react";
 import { run } from "../../core/src/run";
 import * as blockchain from "../../core/buildings/final/block_chain";
 import * as lissajous from "../../core/buildings/final/lissajous";
@@ -14,6 +23,7 @@ import { CircleInformation, Search } from "grommet-icons";
 import { PlainLink } from "../components/PlainLink";
 import html2canvas from "html2canvas";
 import { config } from "../../server/config";
+import { GalleryMonument } from "../components/GalleryMonument";
 
 const programs = [
   mandelbrot,
@@ -37,34 +47,183 @@ function downloadData(linkData, filename) {
   target.removeChild(link); // remove the link when done
 }
 
+function CNavigation() {
+  return (
+    <Box direction="row-responsive" wrap={true} pad={"small"} flex={"grow"}>
+      <Box align="start">
+        <Box>
+          <Text
+            size={"xlarge"}
+            weight={900}
+            color="white"
+            style={{ fontFamily: "wethard" }}
+          >
+            COLOSO
+          </Text>
+          <Text
+            textAlign="end"
+            size={"small"}
+            weight={100}
+            color="#E1C79C"
+            margin={"none"}
+          >
+            factory
+          </Text>
+        </Box>
+      </Box>
+      <Box flex="grow"></Box>
+
+      <Box align="center" direction="row-responsive" gap={"small"}>
+        <Button plain>
+          <Box background={"white"} pad="xsmall" round={"xxsmall"}>
+            <PlainLink to="/">
+              <Text> Go to Home</Text>
+            </PlainLink>
+          </Box>
+        </Button>
+        <Button plain>
+          <PlainLink to="/factory">
+            <Box background={"white"} pad="xsmall" round={"xxsmall"}>
+              <Text> Go to Factory</Text>
+            </Box>
+          </PlainLink>
+        </Button>
+        <Button
+          icon={
+            <Box>
+              <Link to={"/about"}>
+                <CircleInformation size={"medium"} />
+              </Link>
+            </Box>
+          }
+        ></Button>
+      </Box>
+    </Box>
+  );
+}
+
+function CMonumentMetadata({
+  monumentMetadata,
+  onShareClicked,
+  setShowShareModal,
+}) {
+  return (
+    <Box direction="row-responsive" wrap={true}>
+      {monumentMetadata && (
+        <Box flex="grow" justify="center" pad={"small"}>
+          <Heading level={4} color={"white"}>
+            {monumentMetadata.string_list}
+          </Heading>
+          <Text
+            size={"medium"}
+            color={"white"}
+          >{`Built By: ${monumentMetadata.creator_name}, ${monumentMetadata.creator_location}`}</Text>
+          <Text
+            size={"medium"}
+            color={"white"}
+          >{`Located at: ${monumentMetadata.monument_location}`}</Text>
+
+          <Box direction="row-responsive" gap={"small"} align="center">
+            <Button
+              plain
+              onClick={() => {
+                html2canvas(document.querySelector("#sketch")).then(
+                  (canvas) => {
+                    // document.body.appendChild(canvas);
+                    // console.log(canvas);
+                    var image = canvas
+                      .toDataURL("image/png")
+                      .replace("image/png", "image/octet-stream"); // here is the most important part because if you dont replace you will get a DOM 18 exception.
+
+                    // window.location.href = image;
+                    downloadData(
+                      image,
+                      `${monumentMetadata.monument_name}.png`
+                    );
+                  }
+                );
+              }}
+            >
+              <Box
+                pad={"xsmall"}
+                round="xsmall"
+                background={"white"}
+                width={"xsmall"}
+                align="center"
+                margin={{ top: "small" }}
+              >
+                <Text>SAVE</Text>
+              </Box>
+            </Button>
+            <Button
+              onClick={() => {
+                // console.log(location);
+                // navigator.clipboard.writeText(window.location.href);
+                // alert("Monument URL has been copied to your clipboard");
+                console.log("hello");
+                setShowShareModal(true);
+              }}
+            >
+              <Box
+                pad={"xsmall"}
+                round="xsmall"
+                background={"#CDD8E3"}
+                width={"xsmall"}
+                align="center"
+                margin={{ top: "small" }}
+              >
+                <Text>SHARE</Text>
+              </Box>
+            </Button>
+          </Box>
+        </Box>
+      )}
+    </Box>
+  );
+}
+
+function CResponsiveSidebar({ children }) {
+  const size = useContext(ResponsiveContext);
+  const [dim, setDim] = useState("100%");
+
+  useEffect(() => {
+    switch (size) {
+      case "small":
+      case "xsmall":
+        setDim("100%");
+        break;
+      case "medium":
+        setDim("medium");
+        break;
+      default:
+        setDim("medium");
+    }
+  }, [size]);
+
+  return (
+    <Box width={dim} pad="small">
+      {children}
+    </Box>
+  );
+}
+
+function CMonument({ children }) {
+  const size = useContext(ResponsiveContext);
+  return <Box width={"fit-content"}>{children}</Box>;
+}
+
 export default function GalleryItem() {
   const generatorRef = useRef(null);
   const [structure, setStructure] = useState(-1);
   const [color, setColor] = useState(-1);
   const [movement, setMovement] = useState(-1);
+  const [params, setParams] = useState(undefined);
   const [monumentMetadata, setMonumentMetadata] = useState(undefined);
   const [allMonumentsList, setAllMonumentsList] = useState([]);
   const [uptoPageNum, setUptoPageNum] = useState(0);
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
-
-  function render(param) {
-    if (generatorRef && structure != -1) {
-      run(
-        programs[structure],
-        { element: generatorRef.current },
-        { structure, color, movement, param }
-      )
-        .then(function (e) {
-          // console.log(e);
-        })
-        .catch(function (e) {
-          // console.log(e);
-          // console.warn(e.message);
-          // console.log(e.error);
-        });
-    }
-  }
+  const [showShareModal, setShowShareModal] = useState(false);
 
   useEffect(() => {
     const monumentId = location.pathname.split("/")[2];
@@ -76,34 +235,30 @@ export default function GalleryItem() {
           `${config.serverUrl}/monument/slug/${monumentId}`
         );
 
-        console.log({ monument });
+        // console.log({ monument });
         setStructure(monument.structure);
         setColor(monument.color);
         setMovement(monument.movement);
         setMonumentMetadata({ ...monument });
+        setParams(JSON.parse(monument.params));
 
-        const params = JSON.parse(monument.params);
+        // deprecated
+        // for (let key in params) {
+        //   localStorage.setItem(key, params[key]);
+        // }
 
-        for (let key in params) {
-          localStorage.setItem(key, params[key]);
+        if (!allMonumentsList) {
+          const { data: monumentPage } = await axios.get(
+            `${config.serverUrl}/monument/page/${uptoPageNum}`
+          );
+          // console.log(monumentPage);
+          setAllMonumentsList(monumentPage);
         }
-
-        const { data: monumentPage } = await axios.get(
-          `${config.serverUrl}/monument/page/${uptoPageNum}`
-        );
-        // console.log(monumentPage);
-        setAllMonumentsList(monumentPage);
-        render(params);
+        // render(params);
       })();
     }
     return () => {};
   }, [location]);
-
-  useEffect(() => {
-    if (structure != -1) {
-      render();
-    }
-  }, [structure, color, movement]);
 
   useEffect(() => {
     (async function search() {
@@ -124,192 +279,86 @@ export default function GalleryItem() {
   }, [searchTerm]);
 
   return (
-    <Box background={"#222"} fill>
-      <Box direction="row-responsive" pad={"small"}>
-        <Box align="end">
-          <Text size={"xlarge"} color="white" style={{ fontFamily: "wethard" }}>
-            COLOSO
-          </Text>
-          <Text size={"small"} weight={100} color="#E1C79C" margin={"none"}>
-            warehouse{" "}
-          </Text>
-        </Box>
-        <Box flex="grow"></Box>
-
-        <Box width={"0.4em"}></Box>
-        <Box align="center" direction="row-responsive" gap={"small"}>
-          <Button plain>
-            <Box background={"white"} pad="xsmall" round={"xxsmall"}>
-              <PlainLink to="/factory">
-                <Text> Go to Home</Text>
-              </PlainLink>
+    <Box fill>
+      <CNavigation />
+      <Box
+        direction={"row-responsive"}
+        wrap={true}
+        overflow={"hidden"}
+        flex={"grow"}
+      >
+        <CResponsiveSidebar>
+          <Box flex={"grow"}>
+            <Box pad={"small"} gap={"small"} flex={"grow"}>
+              <Paragraph fill={true} color={"white"}>
+                You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
+                through the monuments created by all of Coloso’s visitors from
+                all around the world. You’ll also be able to distribute any of
+                the monuments as you wish, by downloading, screen-shooting,
+                emailing, sharing, and printing.
+              </Paragraph>
             </Box>
-          </Button>
-          <Button plain>
-            <Box background={"white"} pad="xsmall" round={"xxsmall"}>
-              <PlainLink to="/factory">
-                <Text> Go to Factory</Text>
-              </PlainLink>
-            </Box>
-          </Button>
-          <Button
-            icon={
-              <Box>
-                <PlainLink to={"/about"}>
-                  <CircleInformation size={"medium"} />
-                </PlainLink>
-              </Box>
-            }
-          ></Button>
-        </Box>
-      </Box>
-
-      <Box direction={"row-responsive"} pad="small">
-        <Box gap={"small"}>
-          <Box
-            background={"#222"}
-            width={"medium"}
-            pad={"small"}
-            gap={"small"}
-            flex={"grow"}
-          >
-            <Paragraph fill={true}>
-              You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
-              through the monuments created by all of Coloso’s visitors from all
-              around the world. You’ll also be able to distribute any of the
-              monuments as you wish, by downloading, screen-shooting, emailing,
-              sharing, and printing.
-            </Paragraph>
-          </Box>
-          <Box
-            background={"#222"}
-            width={"medium"}
-            pad={"small"}
-            gap={"small"}
-            overflow={"scroll"}
-            border={{ color: "#E0C7A3" }}
-            round="small"
-            fill={"vertical"}
-          >
             <Box
-              direction="row-responsive"
-              gap="small"
-              align="center"
-              flex={"grow"}
+              pad={"small"}
+              gap={"small"}
+              overflow={"scroll"}
+              border={{ color: "#E0C7A3" }}
+              round="small"
+              fill
             >
-              <TextInput
-                placeholder="Search by Monument Name"
-                value={searchTerm}
-                onChange={async (e) => {
-                  setSearchTerm(e.target.value);
-                  // await clickSearch();
-                }}
-              ></TextInput>
-              {/* <Search size={"medium"} /> */}
-            </Box>
-            {allMonumentsList &&
-              allMonumentsList.map((monument, ix) => {
-                return (
-                  <Box key={ix} flex={"grow"}>
-                    <Link to={`/warehouse/${monument.slug}`}>
-                      <Text color={"white"}>{monument.monument_name}</Text>
-                    </Link>
-                  </Box>
-                );
-              })}
-          </Box>
-        </Box>
-        <Box direction="row-responsive" wrap={true}>
-          <Box
-            width={"large"}
-            height={"large"}
-            id="sketch"
-            align="center"
-            background={"#222"}
-          >
-            {monumentMetadata ? (
-              <Heading
-                level={3}
-                margin="none"
-                className="monument-name"
-                style={{ textAlign: "center" }}
-              >
-                {`${monumentMetadata.monument_name}`}
-              </Heading>
-            ) : null}
-            {structure != -1 ? (
-              <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
-            ) : null}
-          </Box>
-          {monumentMetadata && (
-            <Box flex="grow" justify="center" pad={"small"}>
-              <Heading level={4} color={"white"}>
-                {monumentMetadata.string_list}
-              </Heading>
-              <Text
-                size={"medium"}
-                color={"white"}
-              >{`Built By: ${monumentMetadata.creator_name}, ${monumentMetadata.creator_location}`}</Text>
-              <Text
-                size={"medium"}
-                color={"white"}
-              >{`Located at: ${monumentMetadata.monument_location}`}</Text>
-
-              <Box direction="row-responsive" gap={"small"} align="center">
-                <Button
-                  plain
-                  onClick={() => {
-                    html2canvas(document.querySelector("#sketch")).then(
-                      (canvas) => {
-                        // document.body.appendChild(canvas);
-                        // console.log(canvas);
-                        var image = canvas
-                          .toDataURL("image/png")
-                          .replace("image/png", "image/octet-stream"); // here is the most important part because if you dont replace you will get a DOM 18 exception.
-
-                        // window.location.href = image;
-                        downloadData(
-                          image,
-                          `${monumentMetadata.monument_name}.png`
-                        );
-                      }
+              <Box direction="row-responsive" gap="small" align="center">
+                <TextInput
+                  placeholder="Search by Monument Name"
+                  value={searchTerm}
+                  onChange={async (e) => {
+                    setSearchTerm(e.target.value);
+                    // await clickSearch();
+                  }}
+                ></TextInput>
+                {/* <Search size={"medium"} /> */}
+              </Box>
+              <Box flex={"grow"}>
+                {allMonumentsList &&
+                  allMonumentsList.map((monument, ix) => {
+                    return (
+                      <Box key={ix}>
+                        <Link to={`/warehouse/${monument.slug}`}>
+                          <Text color={"white"}>{monument.monument_name}</Text>
+                        </Link>
+                      </Box>
                     );
-                  }}
-                >
-                  <Box
-                    pad={"xsmall"}
-                    round="xsmall"
-                    background={"white"}
-                    width={"xsmall"}
-                    align="center"
-                    margin={{ top: "small" }}
-                  >
-                    <Text>SAVE</Text>
-                  </Box>
-                </Button>
-                <Button
-                  onClick={() => {
-                    // console.log(location);
-                    navigator.clipboard.writeText(window.location.href);
-                    alert("Monument URL has been copied to your clipboard");
-                  }}
-                >
-                  <Box
-                    pad={"xsmall"}
-                    round="xsmall"
-                    background={"#CDD8E3"}
-                    width={"xsmall"}
-                    align="center"
-                    margin={{ top: "small" }}
-                  >
-                    <Text>SHARE</Text>
-                  </Box>
-                </Button>
+                  })}
               </Box>
             </Box>
-          )}
-        </Box>
+          </Box>
+        </CResponsiveSidebar>
+        <CMonument>
+          <Box width={"fit-content"} direction="row-responsive" wrap={true}>
+            <GalleryMonument
+              monumentMetadata={monumentMetadata}
+              structure={structure}
+              color={color}
+              movement={movement}
+              params={params}
+            />
+            <CMonumentMetadata
+              monumentMetadata={monumentMetadata}
+              setShowShareModal={setShowShareModal}
+            />
+          </Box>
+        </CMonument>
       </Box>
+      {showShareModal ? (
+        <Layer
+          onEsc={() => setShowShareModal(false)}
+          onClickOutside={() => setShowShareModal(false)}
+        >
+          <Box pad={"large"} background={"#222"}>
+            <Heading level={3}> Share Url with your Friends </Heading>
+            <Text>{window.location.href}</Text>
+          </Box>
+        </Layer>
+      ) : null}
     </Box>
   );
 }

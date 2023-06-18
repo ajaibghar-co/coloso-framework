@@ -36,12 +36,12 @@ localStorage.setItem("sketch-seed1", seed1);
 localStorage.setItem("sketch-seed2", seed2);
 localStorage.setItem("sketch-seed3", seed3);
 localStorage.setItem("sketch-seed4", seed4);
-localStorage.setItem("sketch-idensity", iDensity);
+localStorage.setItem("sketch-idwatermelon", iDensity);
 console.log("sDensity: ", sDensity);
 
 export function main(coord, context, cursor, buffer, data) {
   if (data.param != undefined) {
-    iDensity = parseInt(data.param["sketch-idensity"])
+    iDensity = parseInt(data.param["sketch-idwatermelon"])
     seed1 = parseFloat(data.param["sketch-seed1"])
     seed2 = parseFloat(data.param["sketch-seed2"])
     seed3 = parseFloat(data.param["sketch-seed3"])

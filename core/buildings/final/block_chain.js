@@ -28,12 +28,12 @@ let iDensity = Math.floor(Math.random() * densities.length)
 let sDensity = densities[iDensity]  
 localStorage.setItem('sketch-seed', seed)
 localStorage.setItem('sketch-dim', dim)
-localStorage.setItem('sketch-idensity', iDensity)
+localStorage.setItem('sketch-idblockchain', iDensity)
 console.log("sDensity: ", sDensity)
 
 export function main(coord, context, cursor, buffer, data) {
   if(data.param != undefined) {
-    iDensity = parseInt(data.param['sketch-idensity'])
+    iDensity = parseInt(data.param['sketch-idblockchain'])
     seed = parseFloat(data.param['sketch-seed'])
     dim = parseInt(data.param['sketch-dim'])
     sDensity = densities[iDensity]

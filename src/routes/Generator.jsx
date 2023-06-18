@@ -40,7 +40,7 @@ import { config } from "../../server/config";
 
 const sketchParams = {
   Mandelbrot: ["sketch-it1", "sketch-it2", "sketch-it3", "sketch-idmandelbrot"],
-  Blockchain: ["sketch-seed", "sketch-dim", "sketch-idblockhain"],
+  Blockchain: ["sketch-seed", "sketch-dim", "sketch-idblockchain"],
   Watermelon: [
     "sketch-seed1",
     "sketch-seed2",

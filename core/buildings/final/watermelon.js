@@ -26,48 +26,27 @@ import { pattern6, patterns } from "../utils/pattern.js";
 const { sin, cos, floor, pow, max, atan2, PI } = Math;
 
 // storage variables
-let denny;
-let sDensity;
-let iDensity = localStorage.getItem("sketch-idensity");
-let seed1 = localStorage.getItem("sketch-seed1");
-let seed2 = localStorage.getItem("sketch-seed2");
-let seed3 = localStorage.getItem("sketch-seed3");
-let seed4 = localStorage.getItem("sketch-seed4");
-if (
-  seed1 == null ||
-  seed2 == null ||
-  seed3 == null ||
-  seed4 == null ||
-  iDensity == null
-) {
-  seed1 = Math.random() * 10000.0;
-  seed2 = Math.random() * 10000.0;
-  seed3 = Math.random() * 10000.0;
-  seed4 = Math.random() * 10000.0;
-  iDensity = Math.floor(Math.random() * densities.length);
-  localStorage.setItem("sketch-seed1", seed1);
-  localStorage.setItem("sketch-seed2", seed2);
-  localStorage.setItem("sketch-seed3", seed3);
-  localStorage.setItem("sketch-seed4", seed4);
-  localStorage.setItem("sketch-idensity", iDensity);
-} else {
-  seed1 = parseFloat(seed1);
-  seed2 = parseFloat(seed2);
-  seed3 = parseFloat(seed3);
-  seed4 = parseFloat(seed4);
-  iDensity = parseInt(iDensity);
-  sDensity = densities[iDensity];
-}
+let seed1 = Math.random() * 10000.0;
+let seed2 = Math.random() * 10000.0;
+let seed3 = Math.random() * 10000.0;
+let seed4 = Math.random() * 10000.0;
+let iDensity = Math.floor(Math.random() * densities.length);
+let sDensity = densities[iDensity]
+localStorage.setItem("sketch-seed1", seed1);
+localStorage.setItem("sketch-seed2", seed2);
+localStorage.setItem("sketch-seed3", seed3);
+localStorage.setItem("sketch-seed4", seed4);
+localStorage.setItem("sketch-idensity", iDensity);
 console.log("sDensity: ", sDensity);
 
 export function main(coord, context, cursor, buffer, data) {
   if (data.param != undefined) {
-    iDensity = data.param["sketch-idensity"];
-    seed1 = data.param["sketch-seed1"];
-    seed2 = data.param["sketch-seed2"];
-    seed3 = data.param["sketch-seed3"];
-    seed4 = data.param["sketch-seed4"];
-    sDensity = densities[iDensity];
+    iDensity = parseInt(data.param["sketch-idensity"])
+    seed1 = parseFloat(data.param["sketch-seed1"])
+    seed2 = parseFloat(data.param["sketch-seed2"])
+    seed3 = parseFloat(data.param["sketch-seed3"])
+    seed4 = parseFloat(data.param["sketch-seed4"])
+    sDensity = densities[iDensity]
   }
 
   let sColors = data.color != -1 ? colors[data.color] : ['white']

@@ -60,7 +60,10 @@ export function main(coord, context, cursor, buffer, data) {
 
   let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
-	let t = data.movement != -1 ? context.time : 0
+	let t = data.movement != -1 ? context.time : 2
+  if(data.movement == 1) {
+    t = context.time * 0.0015
+  }
 
   const m = Math.max(context.cols, context.rows);
   const a = context.metrics.aspect;

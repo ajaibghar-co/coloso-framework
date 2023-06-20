@@ -51,7 +51,8 @@ export function main(coord, context, cursor, buffer, data) {
 
   let sColors = data.color != -1 ? colors[data.color] : ['white']
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0]
-	let t = data.movement != -1 ? 0 : 0
+	let t = data.movement != -1 ? context.time * 0.01 : 0
+	let t1 = 0
 
   const m = max(context.cols, context.rows);
   const a = context.metrics.aspect;
@@ -77,23 +78,26 @@ export function main(coord, context, cursor, buffer, data) {
   let b4 = block1(c4, context, data, -1.0, 1.0, seed4);
   let b = b1 + b2 + b3 + b4;
 
-  // if(coord.y < 5 || coord.y > (context.rows-5)) {
-  // 	b = 0
-  // }
+  if(coord.y < 8 || coord.y > (context.rows-8)) {
+  	b = 0
+  }
 
-  let mod1 = Math.floor(b + (b % 2) * t + (b % 3) * t);
+  let mod1 = Math.floor(b + (b % 2) * t1 + (b % 3) * t1);
 
-  let mod2 = pattern6(coord, context, t);
+  // let mod2 = pattern6(coord, context, t);
+  let mod2 = sPattern1(coord, context, t);
+
+  let mod3 = mod1 % 2 == 0 ? mod1+mod2 : mod1;
 
   return {
     // char: s1 > 0.0 ? d1[mod1]
     // 			: s2 > 0.0 ? d2[mod1]
     // 			: s3 > 0.0 ? d3[mod1]
     // 			: s4 > 0.0 ? d4[mod1] : '',
-    char: b ? sDensity[mod1 % sDensity.length] : "",
+    char: b ? sDensity[Math.abs(mod3) % sDensity.length] : "",
     // char: st.y,
     // char: clamp(coord.y, 20, context.rows/4),
-    color: b ? sColors[mod2 % sColors.length] : "white",
+    color: b ? sColors[mod3 % sColors.length] : "white",
     backgroundColor: "#222",
   };
 }

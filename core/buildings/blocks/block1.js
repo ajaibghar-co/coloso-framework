@@ -49,7 +49,7 @@ export function block1(coord, context, data, top, bottom, seed) {
   let dim = 4.0;
   let fy = Math.floor(st.y * dim);
   // let rn = gnoise(fy+dim+1)
-  let rn = gnoise(st.y * 2.0 + t + random(seed) * 100);
+  let rn = gnoise(st.y * 2.0 + t + random(seed) * 100)*0.5;
   let y = clamp(st.y, top, bottom);
 
   // let sdf1 = sdSegment(st, vec2(-rn, fract(st.y*4.0)*fy), vec2(rn, fract(st.y*4.0)*fy), 0.6)

@@ -5,7 +5,6 @@
 */
 
 export const settings = {
-  fontSize: "18px",
   backgroundColor: "#222",
 };
 
@@ -37,6 +36,9 @@ export function main(coord, context, cursor, buffer, data) {
   let sColors = data.color != -1 ? colors[data.color] : ["white"];
   let sPattern1 = data.movement != -1 ? patterns[data.movement] : patterns[0];
   let t = data.movement != -1 ? context.time * 0.001 : 0;
+  if(data.movement == 0) {
+    t = context.time * 0.008
+  }
 
   const m = Math.min(context.cols, context.rows);
   const a = context.metrics.aspect;
@@ -68,12 +70,18 @@ export function main(coord, context, cursor, buffer, data) {
   let s1 = sdSegment(st, vec2(-rxl, st.y), vec2(rxr, st.y), 0.01);
   // let s1 = sdSegment(st, vec2(-rx, st.y), vec2(rx1, st.y), 0.01)
 
-  let move = Math.abs(Math.sin(x + t) * sDensity.length);
+  
+  if(coord.y < 8 || coord.y > (context.rows-8)) {
+  	s1 = 0
+  }
 
-  index = Math.floor(index + move) % sDensity.length;
+  // let move = Math.abs(Math.sin(x + t) * sDensity.length);
+
   // index = Math.floor(index+move) % sDensity.length;
-
+  
   let mod1 = sPattern1(coord, context, t);
+
+  index = Math.floor(index + mod1) % sDensity.length;
 
   // return mody
   return {

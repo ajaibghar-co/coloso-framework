@@ -48,7 +48,7 @@ export function GalleryMonument({
         setDim("large");
         break;
       case "medium":
-        setDim("medium");
+        setDim("44rem");
         break;
       case "large":
       case "xlarge":
@@ -79,7 +79,7 @@ export function GalleryMonument({
           </Heading>
         ) : null}
       </Box>
-      <Box width={dim} height={dim}>
+      <Box width={dim} height={dim} background={"cyan"}>
         {structure != -1 ? (
           <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
         ) : null}

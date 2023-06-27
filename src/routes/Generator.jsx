@@ -38,6 +38,52 @@ import {
 import { PlainLink } from "../components/PlainLink";
 import { config } from "../../server/config";
 
+import styled from "styled-components";
+
+const breakpoints = {
+  small: "426px",
+  medium: "800px",
+  large: "1200px",
+};
+
+const mediaQuery = {
+  small: `(min-width : ${breakpoints.small})`,
+  medium: `(min-width : ${breakpoints.medium})`,
+  large: `(min-width : ${breakpoints.large})`,
+};
+
+const SideBarContainer = styled(Box)`
+  width: 100%;
+
+  @media ${mediaQuery.small} {
+    width: 100%;
+  }
+
+  @media ${mediaQuery.medium} {
+    width: 35%;
+  }
+
+  @media ${mediaQuery.large} {
+    width: 24rem;
+  }
+`;
+
+const MainContainer = styled(Box)`
+  width: 100%;
+
+  @media ${mediaQuery.small} {
+    width: 100%;
+  }
+
+  @media ${mediaQuery.medium} {
+    width: 65%;
+  }
+
+  @media ${mediaQuery.large} {
+    width: calc(100% - 24rem);
+  }
+`;
+
 const sketchParams = {
   Mandelbrot: ["sketch-it1", "sketch-it2", "sketch-it3", "sketch-idmandelbrot"],
   Blockchain: ["sketch-seed", "sketch-dim", "sketch-idblockchain"],
@@ -228,7 +274,7 @@ export default function Generator() {
         responsive={true}
         flex={"grow"}
       >
-        <Box responsive={true} gap="medium" pad={"medium"}>
+        <SideBarContainer responsive={true} gap="medium" pad={"medium"}>
           <GeneratorWordSelector
             set={structureSet}
             map={structureMap}
@@ -258,7 +304,7 @@ export default function Generator() {
             cta={"Distil"}
             onReset={() => setMovement(-1)}
           />
-        </Box>
+        </SideBarContainer>
         {firstTime ? (
           <Box flex={"grow"} justify="center">
             <Box
@@ -299,15 +345,7 @@ export default function Generator() {
             </Box>
           </Box>
         ) : (
-          <Box
-            flex={"grow"}
-            justify="center"
-            background={"#222"}
-            border={DEBUG ? { color: "red" } : false}
-            height={"fit-content"}
-            gap="medium"
-            pad={"medium"}
-          >
+          <MainContainer>
             <Box id="sketch" background={"#222"}>
               <Box direction="row-responsive" justify="center">
                 <Box
@@ -354,7 +392,7 @@ export default function Generator() {
                 </Box>
               </Box>
             ) : null}
-          </Box>
+          </MainContainer>
         )}
         {showSaveModel ? (
           <Layer

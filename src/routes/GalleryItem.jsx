@@ -24,6 +24,51 @@ import { PlainLink } from "../components/PlainLink";
 import html2canvas from "html2canvas";
 import { config } from "../../server/config";
 import { GalleryMonument } from "../components/GalleryMonument";
+import styled from "styled-components";
+
+const breakpoints = {
+  small: "426px",
+  medium: "800px",
+  large: "1200px",
+};
+
+const mediaQuery = {
+  small: `(min-width : ${breakpoints.small})`,
+  medium: `(min-width : ${breakpoints.medium})`,
+  large: `(min-width : ${breakpoints.large})`,
+};
+
+const SideBarContainer = styled(Box)`
+  width: 100%;
+
+  @media ${mediaQuery.small} {
+    width: 100%;
+  }
+
+  @media ${mediaQuery.medium} {
+    width: 35%;
+  }
+
+  @media ${mediaQuery.large} {
+    width: 24rem;
+  }
+`;
+
+const MainContainer = styled(Box)`
+  width: 100%;
+
+  @media ${mediaQuery.small} {
+    width: 100%;
+  }
+
+  @media ${mediaQuery.medium} {
+    width: 65%;
+  }
+
+  @media ${mediaQuery.large} {
+    width: calc(100% - 24rem);
+  }
+`;
 
 const programs = [
   mandelbrot,
@@ -287,7 +332,7 @@ export default function GalleryItem() {
         overflow={"hidden"}
         flex={"grow"}
       >
-        <CResponsiveSidebar>
+        <SideBarContainer>
           <Box flex={"grow"}>
             <Box pad={"small"} gap={"small"} flex={"grow"}>
               <Paragraph fill={true} color={"white"}>
@@ -331,22 +376,25 @@ export default function GalleryItem() {
               </Box>
             </Box>
           </Box>
-        </CResponsiveSidebar>
-        <CMonument>
-          <Box width={"fit-content"} direction="row-responsive" wrap={true}>
-            <GalleryMonument
-              monumentMetadata={monumentMetadata}
-              structure={structure}
-              color={color}
-              movement={movement}
-              params={params}
-            />
+        </SideBarContainer>
+        <MainContainer>
+          <Box direction="row-responsive" wrap={true}>
+            <Box flex={"grow"}>
+              <GalleryMonument
+                monumentMetadata={monumentMetadata}
+                structure={structure}
+                color={color}
+                movement={movement}
+                params={params}
+              />
+            </Box>
+
             <CMonumentMetadata
               monumentMetadata={monumentMetadata}
               setShowShareModal={setShowShareModal}
             />
           </Box>
-        </CMonument>
+        </MainContainer>
       </Box>
       {showShareModal ? (
         <Layer

@@ -41,7 +41,7 @@ export default function About() {
             icon={
               <Box>
                 <PlainLink to={"/about"}>
-                  <CircleInformation size={"medium"} />
+                  <CircleInformation color="white" size={"medium"} />
                 </PlainLink>
               </Box>
             }
@@ -98,6 +98,12 @@ export default function About() {
               Graham Foundation{" "}
             </Anchor>
             2021-2023.
+          </Paragraph>
+          <Paragraph fill size="large" color="white">
+            This project is completely open source and uses the library{" "}
+            <Anchor href={"https://play.ertdfgcvb.xyz/"} target={"_blank"}>
+              ASCII Play by ertdfgcvb
+            </Anchor>{" "}
           </Paragraph>
         </Box>
       </Box>

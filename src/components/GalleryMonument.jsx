@@ -62,7 +62,7 @@ export function GalleryMonument({
   return (
     <Box
       background={"#222"}
-      width={"fit-content"}
+      width={"100%"}
       height={"fit-content"}
       id="sketch"
       align="center"
@@ -79,7 +79,7 @@ export function GalleryMonument({
           </Heading>
         ) : null}
       </Box>
-      <Box width={dim} height={dim} background={"cyan"}>
+      <Box width={dim} height={dim} background={"#222"} alignSelf="center">
         {structure != -1 ? (
           <pre style={{ lineHeight: 1 }} ref={generatorRef}></pre>
         ) : null}

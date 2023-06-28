@@ -137,7 +137,7 @@ function CNavigation() {
           icon={
             <Box>
               <Link to={"/about"}>
-                <CircleInformation size={"medium"} />
+                <CircleInformation color="white" size={"medium"} />
               </Link>
             </Box>
           }
@@ -331,54 +331,58 @@ export default function GalleryItem() {
         wrap={true}
         overflow={"hidden"}
         flex={"grow"}
+        pad={"medium"}
       >
         <SideBarContainer>
-          <Box flex={"grow"}>
-            <Box pad={"small"} gap={"small"} flex={"grow"}>
-              <Paragraph fill={true} color={"white"}>
-                You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
-                through the monuments created by all of Coloso’s visitors from
-                all around the world. You’ll also be able to distribute any of
-                the monuments as you wish, by downloading, taking a screenshot,
-                emailing, sharing, and printing.
-              </Paragraph>
-            </Box>
+          <Box pad={"small"} gap={"small"}>
+            <Paragraph fill={true} color={"white"}>
+              You’ve entered Coloso’s warehouse! Here you’ll be able to scroll
+              through the monuments created by all of Coloso’s visitors from all
+              around the world. You’ll also be able to distribute any of the
+              monuments as you wish, by downloading, taking a screenshot,
+              emailing, sharing, and printing.
+            </Paragraph>
+          </Box>
+          <Box
+            pad={"small"}
+            gap={"small"}
+            overflow={"scroll"}
+            border={{ color: "#E0C7A3" }}
+            round="small"
+            height={"12em"}
+          >
             <Box
-              pad={"small"}
-              gap={"small"}
-              overflow={"scroll"}
-              border={{ color: "#E0C7A3" }}
-              round="small"
-              fill
+              direction="row-responsive"
+              gap="small"
+              align="center"
+              height={{ min: "3.2em" }}
             >
-              <Box direction="row-responsive" gap="small" align="center">
-                <TextInput
-                  placeholder="Search by Monument Name"
-                  value={searchTerm}
-                  onChange={async (e) => {
-                    setSearchTerm(e.target.value);
-                    // await clickSearch();
-                  }}
-                ></TextInput>
-                {/* <Search size={"medium"} /> */}
-              </Box>
-              <Box flex={"grow"}>
-                {allMonumentsList &&
-                  allMonumentsList.map((monument, ix) => {
-                    return (
-                      <Box key={ix}>
-                        <Link to={`/warehouse/${monument.slug}`}>
-                          <Text color={"white"}>{monument.monument_name}</Text>
-                        </Link>
-                      </Box>
-                    );
-                  })}
-              </Box>
+              <TextInput
+                placeholder="Search by Monument Name"
+                value={searchTerm}
+                onChange={async (e) => {
+                  setSearchTerm(e.target.value);
+                  // await clickSearch();
+                }}
+              ></TextInput>
+              {/* <Search size={"medium"} /> */}
+            </Box>
+            <Box flex={"grow"}>
+              {allMonumentsList &&
+                allMonumentsList.map((monument, ix) => {
+                  return (
+                    <Box key={ix}>
+                      <Link to={`/warehouse/${monument.slug}`}>
+                        <Text color={"white"}>{monument.monument_name}</Text>
+                      </Link>
+                    </Box>
+                  );
+                })}
             </Box>
           </Box>
         </SideBarContainer>
         <MainContainer>
-          <Box direction="row-responsive" wrap={true}>
+          <Box direction="row-responsive" wrap={true} pad={"small"}>
             <Box flex={"grow"}>
               <GalleryMonument
                 monumentMetadata={monumentMetadata}

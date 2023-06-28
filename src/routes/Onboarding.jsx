@@ -51,7 +51,7 @@ const PageTwo = () => (
         icon={
           <Box>
             <PlainLink to={"/about"}>
-              <CircleInformation size={"medium"} />
+              <CircleInformation color="white" size={"medium"} />
             </PlainLink>
           </Box>
         }
@@ -113,7 +113,7 @@ const PageThree = ({ monumentName }) => (
         icon={
           <Box>
             <PlainLink to={"/about"}>
-              <CircleInformation size={"medium"} />
+              <CircleInformation color="white" size={"medium"} />
             </PlainLink>
           </Box>
         }
@@ -179,6 +179,9 @@ export default function Onboarding() {
   useEffect(() => {
     console.log("onboarding mounted");
     program.init();
+    return () => {
+      disableCamera();
+    };
   }, []);
 
   function render() {
@@ -213,6 +216,7 @@ export default function Onboarding() {
     <Keyboard
       target="document"
       onKeyDown={(e) => {
+        console.log(e);
         if (e.key === "y" || e.key === "Y") {
           if (page !== 3) {
             setPage(page + 1);
@@ -223,9 +227,10 @@ export default function Onboarding() {
           if (e.key != "Enter") {
             if (
               (e.keyCode >= 65 && e.keyCode <= 90) ||
-              (e.keyCode >= 48 && e.keyCode <= 57)
+              (e.keyCode >= 48 && e.keyCode <= 57) ||
+              e.keyCode === 32
             ) {
-              // console.log("pressed :", e.key);
+              console.log("pressed :", e.key);
               if (monumentName.length < 30) {
                 setMonumentName(monumentName + e.key);
               }

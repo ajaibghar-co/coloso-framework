@@ -260,7 +260,7 @@ export default function Generator() {
             icon={
               <Box>
                 <Link to={"/about"}>
-                  <CircleInformation size={"medium"} />
+                  <CircleInformation color="white" size={"medium"} />
                 </Link>
               </Box>
             }

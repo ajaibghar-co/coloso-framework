@@ -162,8 +162,8 @@ const PageThree = ({ monumentName }) => (
             color="white"
           />
           <Text size="xsmall" color="red">{`${
-            30 - monumentName.length
-          }/30 characters remaining`}</Text>
+            50 - monumentName.length
+          }/50 characters remaining`}</Text>
         </Box>
       </Box>
     </Box>
@@ -231,7 +231,7 @@ export default function Onboarding() {
               e.keyCode === 32
             ) {
               console.log("pressed :", e.key);
-              if (monumentName.length < 30) {
+              if (monumentName.length < 50) {
                 setMonumentName(monumentName + e.key);
               }
             }

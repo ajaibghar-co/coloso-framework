@@ -414,7 +414,7 @@ export default function Generator() {
                 placeholder="Monument Name"
                 value={monumentName}
                 onChange={(e) => {
-                  if (e.target.value.length < 25) {
+                  if (e.target.value.length < 50) {
                     setMonumentName(e.target.value);
                   }
                 }}
@@ -424,7 +424,7 @@ export default function Generator() {
                 placeholder="Creator Name"
                 value={creatorName}
                 onChange={(e) => {
-                  if (e.target.value.length < 25) {
+                  if (e.target.value.length < 50) {
                     setCreatorName(e.target.value);
                   }
                 }}
@@ -433,7 +433,7 @@ export default function Generator() {
                 placeholder="Creator Location"
                 value={creatorLocation}
                 onChange={(e) => {
-                  if (e.target.value.length < 25) {
+                  if (e.target.value.length < 50) {
                     setCreatorLocation(e.target.value);
                   }
                 }}
@@ -442,7 +442,7 @@ export default function Generator() {
                 placeholder="Monument Location"
                 value={monumentLocation}
                 onChange={(e) => {
-                  if (e.target.value.length < 25) {
+                  if (e.target.value.length < 50) {
                     setMonumentLocation(e.target.value);
                   }
                 }}

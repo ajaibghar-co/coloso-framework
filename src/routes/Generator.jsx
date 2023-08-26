@@ -178,7 +178,7 @@ export default function Generator() {
 
   useEffect(() => {
     let nameFromPath = location.pathname.split("/")[2];
-    setMonumentName(nameFromPath);
+    setMonumentName(decodeURI(nameFromPath));
     render();
   }, [generatorRef]);
 

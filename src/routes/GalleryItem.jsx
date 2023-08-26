@@ -152,10 +152,21 @@ function CMonumentMetadata({
   onShareClicked,
   setShowShareModal,
 }) {
+  const size = useContext(ResponsiveContext);
   return (
     <Box direction="row-responsive" wrap={true}>
       {monumentMetadata && (
         <Box flex="grow" justify="center" pad={"small"}>
+          {size === "large" ? (
+            <Heading
+              level={3}
+              margin="none"
+              className="monument-name"
+              style={{ textAlign: "center" }}
+            >
+              {`${monumentMetadata.monument_name}`}
+            </Heading>
+          ) : null}
           <Heading level={4} color={"white"}>
             {monumentMetadata.string_list}
           </Heading>

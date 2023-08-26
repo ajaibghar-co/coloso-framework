@@ -68,7 +68,7 @@ export function GalleryMonument({
       align="center"
     >
       <Box>
-        {monumentMetadata ? (
+        {monumentMetadata && size !== "large" ? (
           <Heading
             level={3}
             margin="none"

@@ -15,14 +15,14 @@ function GeneratorWordSelector({
   const choiceSubSet = sample2Choices(set, map);
 
   const [sampledChoices, setSampledChoices] = useState(
-    getRandom(choiceSubSet, 5)
+    getRandom(choiceSubSet, 9)
   );
   console.log({ choiceSubSet, sampledChoices });
   const [choices, setChoices] = useState([]);
 
   function resampleChoices() {
     let choiceSubSet = sample2Choices(set, map);
-    setSampledChoices(getRandom(choiceSubSet, 5));
+    setSampledChoices(getRandom(choiceSubSet, 9));
     setChoices([]);
     onReset();
   }
@@ -74,7 +74,7 @@ function GeneratorWordSelector({
           <Box direction={"row-responsive"}>
             <Box>
               <Text style={{ fontStyle: "italic" }} size="small">
-                Pick 3 out of 5
+                Pick 3 out of 9
               </Text>
             </Box>
             <Box flex={"grow"}></Box>
@@ -83,7 +83,7 @@ function GeneratorWordSelector({
         </Box>
         <Box>
           <Box align="center" gap={"xxsmall"}>
-            {sampledChoices.slice(0, 5).map((choice, ix) => (
+            {sampledChoices.slice(0, 9).map((choice, ix) => (
               <Button
                 plain
                 key={ix}

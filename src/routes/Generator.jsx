@@ -306,7 +306,7 @@ export default function Generator() {
           />
         </SideBarContainer>
         {firstTime ? (
-          <Box flex={"grow"} justify="center">
+          <Box height={"80vh"} width={"80vw"} justify="center">
             <Box
               background={"#E0C7A3"}
               pad={"medium"}

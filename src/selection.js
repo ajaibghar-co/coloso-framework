@@ -217,7 +217,7 @@ function createMapOfCategoryAndItems(map) {
 function testSampling() {
   let structureSet = createMapOfCategoryAndItems(structureMap);
   let structureChoicesToGiveUser = sample2Choices(structureSet, structureMap);
-  let randomizedStructureChoices = getRandom(structureChoicesToGiveUser, 5);
+  let randomizedStructureChoices = getRandom(structureChoicesToGiveUser, 9);
   console.log("STRUCTURE CHOICES:", randomizedStructureChoices);
   console.log(
     "STRUCTURE MAPPED VALUES:",
@@ -225,8 +225,9 @@ function testSampling() {
   );
 
   let colorSet = createMapOfCategoryAndItems(colorMap);
+  console.log({ colorSet });
   let colorChoicesToGiveUser = sample2Choices(colorSet, colorMap);
-  let randomizedColorChoices = getRandom(colorChoicesToGiveUser, 5);
+  let randomizedColorChoices = getRandom(colorChoicesToGiveUser, 9);
   console.log("COLORS CHOICES: ", randomizedColorChoices);
   console.log(
     "COLOR MAPPED VALUES: ",
@@ -235,7 +236,7 @@ function testSampling() {
 
   let movementSet = createMapOfCategoryAndItems(movementMap);
   let movementChoicesToGiveUser = sample2Choices(movementSet, movementMap);
-  let randomizedMovementChoices = getRandom(movementChoicesToGiveUser, 5);
+  let randomizedMovementChoices = getRandom(movementChoicesToGiveUser, 9);
   console.log("MOVEMENT CHOICES: ", randomizedMovementChoices);
   console.log(
     "MOVEMENT MAPPED VALUES:",

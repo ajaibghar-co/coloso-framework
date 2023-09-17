@@ -154,7 +154,7 @@ function CMonumentMetadata({
 }) {
   const size = useContext(ResponsiveContext);
   return (
-    <Box direction="row-responsive" wrap={true}>
+    <Box direction="row-responsive" wrap={true} width="medium">
       {monumentMetadata && (
         <Box flex="grow" justify="center" pad={"small"}>
           {size === "large" ? (

@@ -274,39 +274,41 @@ export default function Generator() {
         responsive={true}
         flex={"grow"}
       >
-        <SideBarContainer responsive={true} gap="medium" pad={"medium"}>
-          <GeneratorWordSelector
-            set={structureSet}
-            map={structureMap}
-            onHarvestClicked={onHarvestClickedForFirstBox}
-            active={!firstTime}
-            instruction={"Time to harvest!"}
-            cta={"Harvest"}
-            onReset={() => setStructure(-1)}
-          />
+        {!firstTime ? (
+          <SideBarContainer responsive={true} gap="medium" pad={"medium"}>
+            <GeneratorWordSelector
+              set={structureSet}
+              map={structureMap}
+              onHarvestClicked={onHarvestClickedForFirstBox}
+              active={!firstTime}
+              instruction={"Time to harvest!"}
+              cta={"Harvest"}
+              onReset={() => setStructure(-1)}
+            />
 
-          <GeneratorWordSelector
-            set={colorSet}
-            map={colorMap}
-            onHarvestClicked={onHarvestClickedForSecondBox}
-            active={structure != -1}
-            instruction={"Crystalize that baby!"}
-            cta={"Crystallize"}
-            onReset={() => setColor(-1)}
-          />
+            <GeneratorWordSelector
+              set={colorSet}
+              map={colorMap}
+              onHarvestClicked={onHarvestClickedForSecondBox}
+              active={structure != -1}
+              instruction={"Crystalize that baby!"}
+              cta={"Crystallize"}
+              onReset={() => setColor(-1)}
+            />
 
-          <GeneratorWordSelector
-            set={movementSet}
-            map={movementMap}
-            onHarvestClicked={onHarvestClickedForThirdBox}
-            active={structure != -1}
-            instruction={"Finally, go ahead and distil!"}
-            cta={"Distil"}
-            onReset={() => setMovement(-1)}
-          />
-        </SideBarContainer>
+            <GeneratorWordSelector
+              set={movementSet}
+              map={movementMap}
+              onHarvestClicked={onHarvestClickedForThirdBox}
+              active={structure != -1}
+              instruction={"Finally, go ahead and distil!"}
+              cta={"Distil"}
+              onReset={() => setMovement(-1)}
+            />
+          </SideBarContainer>
+        ) : null}
         {firstTime ? (
-          <Box height={"80vh"} width={"80vw"} justify="center">
+          <Box height={"80vh"} width={"100vw"} justify="center">
             <Box
               background={"#E0C7A3"}
               pad={"medium"}
